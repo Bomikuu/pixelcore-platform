@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 44 33% 97%;
+    --foreground: 174 35% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 174 35% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 174 35% 12%;
+    --primary: 171 62% 29%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 165 26% 91%;
+    --secondary-foreground: 174 35% 12%;
+    --muted: 42 18% 92%;
+    --muted-foreground: 173 10% 38%;
+    --accent: 38 92% 58%;
+    --accent-foreground: 174 35% 12%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 164 13% 84%;
+    --input: 164 13% 84%;
+    --ring: 171 62% 29%;
+    --radius: 0.625rem;
+    --brand-primary: #1c786a;
+    --brand-secondary: #102a2a;
+    --brand-accent: #f5ad32;
+    --brand-link: #1c786a;
+    --button-radius: 0.5rem;
+    --card-radius: 0.75rem;
+    --input-radius: 0.5rem;
+    --modal-radius: 0.75rem;
+    --business-border-width: 1px;
+    --surface-shadow: 0 8px 24px -18px rgb(16 42 42 / 0.28);
+    --content-max-width: 100rem;
+    --business-font: 'Manrope', sans-serif;
+    --business-heading-font: 'Newsreader', serif;
+    --workspace-sidebar: #102a2a;
+    --workspace-sidebar-foreground: #ffffff;
+    --workspace-header: #ffffff;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply bg-background text-foreground antialiased;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.45) hsl(var(--muted));
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground;
+    font-family: var(--business-font, 'Manrope', sans-serif);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--brand-primary) 22%, transparent);
+    color: hsl(var(--foreground));
+  }
+
+  input,
+  textarea {
+    caret-color: var(--brand-primary);
+  }
+
+  table,
+  [class*='tabular-nums'] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply transition-colors duration-150;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .display-face {
+    font-family: var(--business-heading-font, 'Newsreader', serif);
+  }
+
+  .field-label {
+    @apply mb-2 block text-sm font-semibold text-foreground;
+  }
+
+  .status-pill {
+    @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold capitalize;
+  }
+
+  .resource-row {
+    @apply grid gap-3 border-b px-4 py-4 last:border-b-0 hover:bg-muted/45 sm:px-5;
+  }
+
+  .workspace-page {
+    @apply mx-auto w-full max-w-[1500px] px-4 py-4 sm:px-5 lg:px-6 lg:py-5;
+  }
+
+  .workspace-nav-scroll {
+    scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+    scrollbar-width: thin;
+  }
+
+  .workspace-nav-scroll::-webkit-scrollbar {
+    width: 0.375rem;
+  }
+
+  .workspace-nav-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .workspace-nav-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  @media (min-width: 1024px) {
+    .workspace-nav-scroll--collapsed {
+      scrollbar-width: none;
+    }
+
+    .workspace-nav-scroll--collapsed::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .editorial-enter {
+    animation: editorial-enter 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes editorial-enter {
+  from {
+    opacity: 0.65;
+    transform: translateY(10px);
+    filter: blur(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

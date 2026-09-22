@@ -1,0 +1,24 @@
+services:
+  frontend:
+    environment:
+      NODE_ENV: development
+
+  backend:
+    environment:
+      DJANGO_DEBUG: "True"
+
+  worker:
+    environment:
+      DJANGO_DEBUG: "True"
+
+  beat:
+    environment:
+      DJANGO_DEBUG: "True"
+
+  nginx:
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+
+networks:
+  pixelcore:
+    driver: bridge

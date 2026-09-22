@@ -1,0 +1,17 @@
+letsencrypt/
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+pixelcore-backend/db.sqlite3
+pixelcore-backend/media/
+pixelcore-backend/static/
+pixelcore-backend/venv/
+pixelcore-backend/celerybeat-schedule
+pixelcore-frontend/.nuxt/
+pixelcore-frontend/.output/
+pixelcore-frontend/node_modules/
+output/
+tmp/
+.impeccable/review/

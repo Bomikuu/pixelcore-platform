@@ -1,0 +1,525 @@
+.business-card-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  padding: clamp(1rem, 4.5cqi, 2rem);
+  backface-visibility: hidden;
+  font-family: var(--card-body-font, var(--card-font, Manrope, sans-serif));
+  isolation: isolate;
+}
+
+.business-card-face::before,
+.business-card-face::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+}
+
+.business-card-face--back {
+  transform: rotateY(180deg);
+}
+
+.business-card-background-image,
+.business-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.business-card-background-image {
+  z-index: -3;
+}
+
+.business-card-image-overlay {
+  z-index: -2;
+}
+
+.business-card-front-content,
+.business-card-back-content {
+  position: relative;
+  z-index: 4;
+  height: 100%;
+}
+
+.business-card-front-content {
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.business-card-back-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.business-card-brand,
+.business-card-contact-heading,
+.business-card-contact-layout,
+.business-card-detail {
+  display: flex;
+}
+
+.business-card-brand {
+  max-width: 82%;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.65rem, 2.5cqi, 1.25rem);
+}
+
+.business-card-contact-heading {
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.65rem, 2.5cqi, 1.25rem);
+}
+
+.business-card-logo,
+.business-card-mini-mark {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  width: clamp(2rem, 8cqi, 3.75rem);
+  aspect-ratio: 1;
+  font-size: clamp(0.8rem, 3.2cqi, 1.35rem);
+  font-weight: 800;
+}
+
+.business-card-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.business-card-company {
+  overflow-wrap: anywhere;
+  font-family: var(--card-heading-font, var(--card-font));
+  font-size: clamp(1.25rem, 5.1cqi, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.business-card-tagline,
+.business-card-role {
+  margin-top: 0.35rem;
+  font-size: clamp(0.72rem, 2.35cqi, 1rem);
+  line-height: 1.35;
+  opacity: 0.76;
+}
+
+.business-card-tagline {
+  font-family: var(--card-accent-font, var(--card-font));
+}
+
+.business-card-person {
+  overflow-wrap: anywhere;
+  font-family: var(--card-accent-font, var(--card-font));
+  font-size: clamp(1.4rem, 5.8cqi, 2.7rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.business-card-headline {
+  max-width: 38ch;
+  font-size: clamp(0.72rem, 2.35cqi, 1rem);
+  line-height: 1.45;
+  opacity: 0.8;
+}
+
+.business-card-contact-layout {
+  align-items: end;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 3cqi, 1.5rem);
+}
+
+.business-card-details {
+  min-width: 0;
+}
+
+.business-card-socials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.25rem, 1cqi, 0.45rem) clamp(0.65rem, 2.4cqi, 1.1rem);
+  max-width: 72%;
+}
+
+.business-card-social {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: clamp(0.62rem, 1.9cqi, 0.82rem);
+  line-height: 1.25;
+}
+
+.business-card-social-icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+.business-card-social span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.business-card-detail {
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: clamp(0.2rem, 0.8cqi, 0.4rem);
+  font-size: clamp(0.66rem, 2.1cqi, 0.9rem);
+  line-height: 1.35;
+}
+
+.business-card-detail span {
+  overflow-wrap: anywhere;
+}
+
+.business-card-address {
+  max-width: 38ch;
+}
+
+.business-card-qr {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.business-card-qr img {
+  width: clamp(3.6rem, 15.5cqi, 7rem);
+  aspect-ratio: 1;
+  padding: 0.2rem;
+  background: white;
+}
+
+.business-card-qr span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: clamp(0.56rem, 1.65cqi, 0.74rem);
+  font-weight: 700;
+}
+
+.business-card-face--signature {
+  color: var(--card-foreground);
+  background: linear-gradient(145deg, var(--card-secondary), color-mix(in srgb, var(--card-secondary) 76%, black));
+}
+
+.business-card-face--signature::before {
+  top: -32%;
+  right: -8%;
+  width: 58%;
+  aspect-ratio: 1;
+  border: clamp(0.35rem, 1.4cqi, 0.75rem) solid color-mix(in srgb, var(--card-accent) 72%, transparent);
+  transform: rotate(18deg);
+}
+
+.business-card-face--signature::after {
+  bottom: -52%;
+  left: -10%;
+  width: 68%;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--card-ornament) 56%, transparent);
+  border-radius: 50%;
+}
+
+.business-card-face--signature .business-card-logo,
+.business-card-face--signature .business-card-mini-mark {
+  border: 1px solid color-mix(in srgb, var(--card-border) 70%, white);
+  color: var(--card-accent);
+  background: color-mix(in srgb, var(--card-secondary) 78%, transparent);
+}
+
+.business-card-face--signature.business-card-face--back {
+  background: color-mix(in srgb, var(--card-secondary) 90%, black);
+}
+
+.business-card-face--editorial {
+  color: var(--card-foreground);
+  background: var(--card-primary);
+}
+
+.business-card-face--editorial::before {
+  inset: 0 18% 0 auto;
+  width: 1px;
+  background: color-mix(in srgb, var(--card-border) 52%, transparent);
+}
+
+.business-card-face--editorial::after {
+  top: 0;
+  right: 0;
+  width: 18%;
+  height: 100%;
+  background: var(--card-accent);
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.business-card-face--editorial.business-card-face--back {
+  color: var(--card-ink);
+  background: var(--card-paper);
+}
+
+.business-card-face--editorial .business-card-logo {
+  width: clamp(2.5rem, 10cqi, 4.75rem);
+}
+
+.business-card-face--editorial .business-card-mini-mark {
+  color: var(--card-on-accent);
+  background: var(--card-primary);
+}
+
+.business-card-face--studio {
+  color: var(--card-ink);
+  background: var(--card-paper);
+}
+
+.business-card-face--studio::before {
+  top: -48%;
+  left: -12%;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card-ornament) 78%, transparent);
+}
+
+.business-card-face--studio::after {
+  right: -12%;
+  bottom: -42%;
+  width: 62%;
+  aspect-ratio: 1;
+  transform: rotate(28deg);
+  background: var(--card-primary);
+}
+
+.business-card-face--studio .business-card-brand {
+  padding: clamp(0.75rem, 3cqi, 1.4rem);
+  border: 1px solid color-mix(in srgb, var(--card-border) 45%, transparent);
+  background: color-mix(in srgb, var(--card-paper) 90%, transparent);
+}
+
+.business-card-face--studio .business-card-logo,
+.business-card-face--studio .business-card-mini-mark {
+  color: var(--card-on-accent);
+  background: var(--card-primary);
+}
+
+.business-card-face--luxury {
+  color: var(--card-luxury-text);
+  background: var(--card-luxury-background);
+  font-family: var(--card-body-font, Manrope, sans-serif);
+  padding: clamp(1.35rem, 6cqi, 2.75rem);
+}
+
+.business-card-face--luxury::before {
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--card-luxury-accent) 7%, transparent), transparent 42%),
+    var(--card-luxury-background);
+}
+
+.business-card-face--luxury::after {
+  inset: 1px;
+  z-index: -1;
+  border: 1px solid color-mix(in srgb, var(--card-luxury-border) 22%, transparent);
+}
+
+.business-card-face--luxury.business-card-face--with-image::before {
+  background: radial-gradient(
+    circle at 50% 22%,
+    color-mix(in srgb, var(--card-luxury-accent) 7%, transparent),
+    transparent 42%
+  );
+}
+
+.business-card-luxury-frame {
+  position: absolute;
+  inset: clamp(0.55rem, 2.8cqi, 1.25rem);
+  z-index: 3;
+  border: 1px solid var(--card-luxury-border);
+  pointer-events: none;
+}
+
+.business-card-luxury-frame::before,
+.business-card-luxury-frame::after {
+  position: absolute;
+  top: 50%;
+  width: clamp(1rem, 5cqi, 2.3rem);
+  height: 1px;
+  content: '';
+  background: color-mix(in srgb, var(--card-luxury-border) 58%, transparent);
+}
+
+.business-card-luxury-frame::before {
+  left: 0;
+  transform: translate(-45%, -50%);
+}
+
+.business-card-luxury-frame::after {
+  right: 0;
+  transform: translate(45%, -50%);
+}
+
+.business-card-ornament {
+  position: absolute;
+  width: clamp(0.8rem, 3.4cqi, 1.55rem);
+  aspect-ratio: 1;
+  color: var(--card-luxury-ornament);
+}
+
+.business-card-ornament::before,
+.business-card-ornament::after {
+  position: absolute;
+  content: '';
+  border-color: currentcolor;
+  opacity: 0.9;
+}
+
+.business-card-ornament::before {
+  inset: 0;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.business-card-ornament::after {
+  top: 24%;
+  left: 24%;
+  width: 52%;
+  aspect-ratio: 1;
+  border: 1px solid;
+  transform: rotate(45deg);
+}
+
+.business-card-ornament--top-left {
+  top: clamp(0.18rem, 0.8cqi, 0.4rem);
+  left: clamp(0.18rem, 0.8cqi, 0.4rem);
+}
+
+.business-card-ornament--top-right {
+  top: clamp(0.18rem, 0.8cqi, 0.4rem);
+  right: clamp(0.18rem, 0.8cqi, 0.4rem);
+  transform: rotate(90deg);
+}
+
+.business-card-ornament--bottom-left {
+  bottom: clamp(0.18rem, 0.8cqi, 0.4rem);
+  left: clamp(0.18rem, 0.8cqi, 0.4rem);
+  transform: rotate(-90deg);
+}
+
+.business-card-ornament--bottom-right {
+  right: clamp(0.18rem, 0.8cqi, 0.4rem);
+  bottom: clamp(0.18rem, 0.8cqi, 0.4rem);
+  transform: rotate(180deg);
+}
+
+.business-card-face--luxury .business-card-brand {
+  max-width: 72%;
+  gap: clamp(0.7rem, 2.7cqi, 1.3rem);
+}
+
+.business-card-face--luxury .business-card-logo {
+  width: clamp(3rem, 12cqi, 5.4rem);
+  color: var(--card-luxury-accent);
+  border: 1px solid color-mix(in srgb, var(--card-luxury-border) 78%, transparent);
+  font-family: var(--card-heading-font);
+  font-weight: 600;
+}
+
+.business-card-face--luxury .business-card-company {
+  color: var(--card-luxury-text);
+  font-family: var(--card-heading-font);
+  font-size: clamp(1.55rem, 6.4cqi, 2.95rem);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.business-card-face--luxury .business-card-tagline {
+  color: var(--card-luxury-accent);
+  font-family: var(--card-accent-font);
+  font-size: clamp(0.95rem, 3.5cqi, 1.55rem);
+  opacity: 0.9;
+}
+
+.business-card-face--luxury .business-card-person {
+  color: var(--card-luxury-text);
+  font-family: var(--card-accent-font);
+  font-size: clamp(1.8rem, 6.6cqi, 3.1rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.business-card-face--luxury .business-card-role {
+  color: var(--card-luxury-accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.business-card-face--luxury .business-card-mini-mark {
+  color: var(--card-luxury-accent);
+  border: 1px solid var(--card-luxury-border);
+  font-family: var(--card-heading-font);
+  font-weight: 600;
+}
+
+.business-card-face--luxury .business-card-headline,
+.business-card-face--luxury .business-card-socials,
+.business-card-face--luxury .business-card-details {
+  color: color-mix(in srgb, var(--card-luxury-text) 88%, transparent);
+}
+
+.business-card-face--luxury .business-card-qr img {
+  border: 1px solid color-mix(in srgb, var(--card-luxury-border) 65%, transparent);
+}
+
+.business-card-face--luxury .business-card-qr span {
+  color: var(--card-luxury-accent);
+  font-family: var(--card-body-font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.business-card-face--studio.business-card-face--back {
+  color: white;
+  background: var(--card-primary);
+}
+
+.business-card-face--with-image::before,
+.business-card-face--with-image::after {
+  opacity: 0.32;
+}
+
+.business-card-face--editorial.business-card-face--with-image
+  .business-card-background-image {
+  right: auto;
+  width: 82%;
+}
+
+.business-card-face--studio.business-card-face--with-image
+  .business-card-background-image {
+  left: 34%;
+  width: 66%;
+}
+
+.business-card-face--with-image .business-card-brand {
+  padding: clamp(0.8rem, 3cqi, 1.5rem);
+  color: white;
+  background: color-mix(in srgb, var(--card-secondary) 72%, transparent);
+}
+
+.business-card-face--back.business-card-face--with-image .business-card-back-content {
+  margin: calc(clamp(0.35rem, 1.4cqi, 0.7rem) * -1);
+  padding: clamp(0.75rem, 3cqi, 1.35rem);
+  color: var(--card-ink);
+  background: color-mix(in srgb, var(--card-paper) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .business-card-face--back.business-card-face--with-image .business-card-back-content {
+    background: var(--card-paper);
+    backdrop-filter: none;
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-labelledby="title">
+  <title id="title">PixelCore</title>
+  <rect width="40" height="40" rx="9" fill="#102A2A"/>
+  <rect x="8" y="8" width="10" height="10" rx="2" fill="#F5AD32"/>
+  <rect x="22" y="8" width="10" height="10" rx="2" fill="#F7F4ED"/>
+  <rect x="8" y="22" width="10" height="10" rx="2" fill="#F7F4ED"/>
+  <rect x="22" y="22" width="10" height="10" rx="2" fill="#1C786A"/>
+</svg>
