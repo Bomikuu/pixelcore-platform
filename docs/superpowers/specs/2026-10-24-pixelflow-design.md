@@ -2,8 +2,10 @@
 
 Date: 2026-10-24 (Asia/Manila).
 
-Status: proposed design for review. No Pixelflow repository, application code,
-merchant account, credential, deployment, or host integration has been created.
+Status: design approved for implementation planning on 2026-10-24. The user
+selected native execution with no agents. No Pixelflow repository, application
+code, merchant account, credential, deployment, or host integration has been
+created. The implementation plan is the next review artifact.
 
 ## Intent and decisions already supplied
 
@@ -17,10 +19,10 @@ choice is React, Vite, TypeScript, Tailwind CSS, upstream shadcn/ui, React Route
 TanStack Query, React Hook Form, and Zod. GCash, Maya, cards, and recorded cash
 collection are the initial methods. Stripe informs the developer experience.
 
-The last complete brief explicitly requested planning deliverables only. The
-subsequent request says “implement that.” An explicit scope question is pending:
-planning first, or a new repository plus a working MVP. This specification can be
-reviewed independently of that answer; product implementation waits for it.
+The user's subsequent “proceed, natively, no agents” approves this specification
+and selects native execution for the new repository and working MVP. No agents
+or agent reviewers will be used. The detailed implementation plan must be
+presented for review before product code, as required by the planning workflow.
 
 Success means payment behavior changes are maintained once, compatible server
 updates reach connected hosts through one deployment, and each host retains
@@ -340,9 +342,9 @@ development configuration.
 
 ## Frontend scope and interaction contract
 
-The primary proposed users are business finance/collection operators and the
-developer connecting a host. This audience emphasis remains an inference until
-the product interview confirms it; the requested capabilities are settled.
+The primary users in the approved specification are business finance/collection
+operators and the developer connecting a host. Payers use the separate hosted
+checkout. These are the audiences to record in Pixelflow's product context.
 
 Dashboard routes: overview, payments, payment detail, refunds, cash collection,
 connections, developers/API keys, webhook deliveries and settings. Public
@@ -460,14 +462,16 @@ consumer lockfiles. Database changes follow expand/migrate/contract sequencing;
 rollback must preserve immutable payment/event history and avoid replaying
 financial writes.
 
-## Decisions still requiring review
+## Decisions and remaining review
 
-1. Scope of the current request: planning deliverables or repository plus MVP.
-2. Acceptance of this design, including business-owned merchant accounts and
-   the proposed operator roles/cash correction boundary.
-3. Impeccable product/direction confirmation before UI code; no identity exists
-   yet beyond the Pixelflow name and mandatory Tailwind/Shadcn stack.
-4. Deployment host/domain, merchant account ownership, retention policy and
+1. Approved: new repository plus working MVP, business-owned merchant accounts,
+   proposed operator roles and cash correction boundary.
+2. Approved: native execution, no agents or agent reviewers.
+3. Pending: detailed implementation-plan review and Impeccable direction
+   confirmation before UI code; no identity exists yet beyond the Pixelflow name
+   and mandatory Tailwind/Shadcn stack.
+4. Pending for activation: deployment host/domain, merchant account ownership,
+   retention policy and
    real provider credentials before operational activation. These need not
    prevent offline implementation after design approval.
 
