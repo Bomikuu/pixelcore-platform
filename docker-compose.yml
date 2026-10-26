@@ -2,13 +2,16 @@ services:
   frontend:
     build:
       context: ./pixelcore-frontend
+      additional_contexts:
+        website-builder: ../website-builder
     ports:
       - "3001:3000"
     volumes:
-      - ./pixelcore-frontend:/app
-      - frontend-node-modules:/app/node_modules
-      - frontend-nuxt:/app/.nuxt
-    working_dir: /app
+      - ./pixelcore-frontend:/workspace/pixelcore-platform/pixelcore-frontend
+      - ../website-builder:/workspace/website-builder:ro
+      - frontend-node-modules:/workspace/pixelcore-platform/pixelcore-frontend/node_modules
+      - frontend-nuxt:/workspace/pixelcore-platform/pixelcore-frontend/.nuxt
+    working_dir: /workspace/pixelcore-platform/pixelcore-frontend
     environment:
       NUXT_PUBLIC_API_BASE_URL: ${NUXT_PUBLIC_API_BASE_URL:-/api/}
       NUXT_API_INTERNAL_BASE_URL: ${NUXT_API_INTERNAL_BASE_URL:-http://backend:8000/api/}
@@ -21,11 +24,14 @@ services:
   backend:
     build:
       context: ./pixelcore-backend
+      additional_contexts:
+        website-builder: ../website-builder
     command: ./command.sh
     ports:
       - "8000:8000"
     volumes:
       - ./pixelcore-backend:/app
+      - ../website-builder:/website-builder:ro
       - static:/app/static
       - media:/app/media
     depends_on:
@@ -66,6 +72,8 @@ services:
   worker:
     build:
       context: ./pixelcore-backend
+      additional_contexts:
+        website-builder: ../website-builder
     command: celery -A pixelcore_backend worker --loglevel=INFO
     volumes:
       - ./pixelcore-backend:/app
@@ -93,6 +101,8 @@ services:
   beat:
     build:
       context: ./pixelcore-backend
+      additional_contexts:
+        website-builder: ../website-builder
     command: celery -A pixelcore_backend beat --loglevel=INFO
     volumes:
       - ./pixelcore-backend:/app

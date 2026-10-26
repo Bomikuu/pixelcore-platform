@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -14,6 +15,7 @@ RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel \
         --timeout 120 \
         -r requirements.txt
 
+COPY --from=website-builder /python /website-builder/python
 COPY . .
 
 EXPOSE 8000
