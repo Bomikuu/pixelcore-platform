@@ -1,0 +1,3347 @@
+{
+  "schema_version": 1,
+  "dataset": "pixelcore-monthly-demo-v1",
+  "description": "Fictional Northline demo business. Transaction day numbers are distributed across the elapsed part of the selected month; bookings and events span the full calendar month. Amounts are PHP. No external notifications, payments, or integrations are invoked.",
+  "business": {
+    "slug": "northline-monthly-demo",
+    "display_name": "Northline Supply Co. \u2014 Demo",
+    "tagline": "Useful things for the everyday route.",
+    "description": "A fictional lifestyle shop and workshop studio for exploring a month of PixelCore activity. All people, transactions and contact details are synthetic.",
+    "address": "32 Sample Avenue",
+    "city": "Makati",
+    "region": "Metro Manila",
+    "postal_code": "1200",
+    "country": "PH",
+    "timezone": "Asia/Manila",
+    "currency": "PHP"
+  },
+  "assets": [
+    {
+      "key": "transit-runner",
+      "file": "transit-runner.png",
+      "alt": "Transit Runner \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "ridge-utility-jacket",
+      "file": "ridge-utility-jacket.png",
+      "alt": "Ridge Utility Jacket \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "atlas-everyday-tee",
+      "file": "atlas-everyday-tee.png",
+      "alt": "Atlas Everyday Tee \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "field-day-tote",
+      "file": "field-day-tote.png",
+      "alt": "Field Day Tote \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "signal-bottle",
+      "file": "signal-bottle.png",
+      "alt": "Signal Bottle \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "relay-crossbody",
+      "file": "relay-crossbody.png",
+      "alt": "Relay Crossbody \u2014 original AI-generated demonstration photograph"
+    },
+    {
+      "key": "storefront-hero",
+      "file": "storefront-hero.png",
+      "alt": "Fictional Northline lifestyle store interior \u2014 AI-generated photograph"
+    },
+    {
+      "key": "event-venue",
+      "file": "event-venue.png",
+      "alt": "Community launch event venue \u2014 AI-generated photograph"
+    }
+  ],
+  "products": [
+    {
+      "id": "transit-runner",
+      "name": "Transit Runner",
+      "category": "Footwear",
+      "price": "5890.00",
+      "cost": "2380.00",
+      "summary": "Breathable knit trainers for city miles and weekend walks.",
+      "image": "transit-runner",
+      "variants": [
+        {
+          "id": "stone-8",
+          "name": "Stone / 8",
+          "sku": "DEMO-TRA-STONE-8"
+        },
+        {
+          "id": "stone-9",
+          "name": "Stone / 9",
+          "sku": "DEMO-TRA-STONE-9"
+        },
+        {
+          "id": "stone-10",
+          "name": "Stone / 10",
+          "sku": "DEMO-TRA-STONE-10"
+        }
+      ]
+    },
+    {
+      "id": "ridge-utility-jacket",
+      "name": "Ridge Utility Jacket",
+      "category": "Apparel",
+      "price": "4290.00",
+      "cost": "1720.00",
+      "summary": "A clay-brown weather-ready layer with practical everyday pockets.",
+      "image": "ridge-utility-jacket",
+      "variants": [
+        {
+          "id": "clay-m",
+          "name": "Clay / M",
+          "sku": "DEMO-RID-CLAY-M"
+        },
+        {
+          "id": "clay-l",
+          "name": "Clay / L",
+          "sku": "DEMO-RID-CLAY-L"
+        }
+      ]
+    },
+    {
+      "id": "atlas-everyday-tee",
+      "name": "Atlas Everyday Tee",
+      "category": "Apparel",
+      "price": "1490.00",
+      "cost": "520.00",
+      "summary": "A chalk-cream heavyweight cotton tee with a relaxed everyday fit.",
+      "image": "atlas-everyday-tee",
+      "variants": [
+        {
+          "id": "chalk-m",
+          "name": "Chalk / M",
+          "sku": "DEMO-ATL-CHALK-M"
+        },
+        {
+          "id": "chalk-l",
+          "name": "Chalk / L",
+          "sku": "DEMO-ATL-CHALK-L"
+        }
+      ]
+    },
+    {
+      "id": "field-day-tote",
+      "name": "Field Day Tote",
+      "category": "Everyday Carry",
+      "price": "2690.00",
+      "cost": "980.00",
+      "summary": "A sand canvas carry-all with a reinforced base and adjustable strap.",
+      "image": "field-day-tote",
+      "variants": [
+        {
+          "id": "sand",
+          "name": "Sand",
+          "sku": "DEMO-FIE-SAND"
+        }
+      ]
+    },
+    {
+      "id": "signal-bottle",
+      "name": "Signal Bottle",
+      "category": "Everyday Carry",
+      "price": "1290.00",
+      "cost": "430.00",
+      "summary": "A cobalt-blue insulated steel bottle for everyday hydration.",
+      "image": "signal-bottle",
+      "variants": [
+        {
+          "id": "cobalt-600",
+          "name": "Cobalt / 600 ml",
+          "sku": "DEMO-SIG-COBALT-600"
+        },
+        {
+          "id": "cobalt-900",
+          "name": "Cobalt / 900 ml",
+          "sku": "DEMO-SIG-COBALT-900"
+        }
+      ]
+    },
+    {
+      "id": "relay-crossbody",
+      "name": "Relay Crossbody",
+      "category": "Everyday Carry",
+      "price": "1890.00",
+      "cost": "710.00",
+      "summary": "An olive ripstop crossbody with three accessible compartments.",
+      "image": "relay-crossbody",
+      "variants": [
+        {
+          "id": "olive",
+          "name": "Olive",
+          "sku": "DEMO-REL-OLIVE"
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "personal-shopping",
+      "name": "Personal shopping appointment",
+      "price": "750.00",
+      "duration_minutes": 45,
+      "summary": "Book time with the Northline team for personal shopping appointment."
+    },
+    {
+      "id": "wardrobe-styling",
+      "name": "Wardrobe styling session",
+      "price": "1200.00",
+      "duration_minutes": 60,
+      "summary": "Book time with the Northline team for wardrobe styling session."
+    },
+    {
+      "id": "product-care-workshop",
+      "name": "Product care workshop",
+      "price": "1500.00",
+      "duration_minutes": 90,
+      "summary": "Book time with the Northline team for product care workshop."
+    }
+  ],
+  "customers": [
+    {
+      "id": "customer-01",
+      "first_name": "Maya",
+      "last_name": "Santos",
+      "email": "maya.santos@example.test",
+      "phone": "+639990010001",
+      "city": "Makati"
+    },
+    {
+      "id": "customer-02",
+      "first_name": "Nico",
+      "last_name": "Reyes",
+      "email": "nico.reyes@example.test",
+      "phone": "+639990010002",
+      "city": "Taguig"
+    },
+    {
+      "id": "customer-03",
+      "first_name": "Isabel",
+      "last_name": "Cruz",
+      "email": "isabel.cruz@example.test",
+      "phone": "+639990010003",
+      "city": "Pasig"
+    },
+    {
+      "id": "customer-04",
+      "first_name": "Paolo",
+      "last_name": "Garcia",
+      "email": "paolo.garcia@example.test",
+      "phone": "+639990010004",
+      "city": "Quezon City"
+    },
+    {
+      "id": "customer-05",
+      "first_name": "Lara",
+      "last_name": "Mendoza",
+      "email": "lara.mendoza@example.test",
+      "phone": "+639990010005",
+      "city": "Mandaluyong"
+    },
+    {
+      "id": "customer-06",
+      "first_name": "Enzo",
+      "last_name": "Ramos",
+      "email": "enzo.ramos@example.test",
+      "phone": "+639990010006",
+      "city": "San Juan"
+    },
+    {
+      "id": "customer-07",
+      "first_name": "Sofia",
+      "last_name": "Torres",
+      "email": "sofia.torres@example.test",
+      "phone": "+639990010007",
+      "city": "Makati"
+    },
+    {
+      "id": "customer-08",
+      "first_name": "Marco",
+      "last_name": "Flores",
+      "email": "marco.flores@example.test",
+      "phone": "+639990010008",
+      "city": "Taguig"
+    },
+    {
+      "id": "customer-09",
+      "first_name": "Bianca",
+      "last_name": "Navarro",
+      "email": "bianca.navarro@example.test",
+      "phone": "+639990010009",
+      "city": "Pasig"
+    },
+    {
+      "id": "customer-10",
+      "first_name": "Luis",
+      "last_name": "Castillo",
+      "email": "luis.castillo@example.test",
+      "phone": "+639990010010",
+      "city": "Quezon City"
+    },
+    {
+      "id": "customer-11",
+      "first_name": "Amara",
+      "last_name": "Bautista",
+      "email": "amara.bautista@example.test",
+      "phone": "+639990010011",
+      "city": "Mandaluyong"
+    },
+    {
+      "id": "customer-12",
+      "first_name": "Diego",
+      "last_name": "Rivera",
+      "email": "diego.rivera@example.test",
+      "phone": "+639990010012",
+      "city": "San Juan"
+    },
+    {
+      "id": "customer-13",
+      "first_name": "Clara",
+      "last_name": "Lim",
+      "email": "clara.lim@example.test",
+      "phone": "+639990010013",
+      "city": "Makati"
+    },
+    {
+      "id": "customer-14",
+      "first_name": "Rafael",
+      "last_name": "Tan",
+      "email": "rafael.tan@example.test",
+      "phone": "+639990010014",
+      "city": "Taguig"
+    },
+    {
+      "id": "customer-15",
+      "first_name": "Elena",
+      "last_name": "Chua",
+      "email": "elena.chua@example.test",
+      "phone": "+639990010015",
+      "city": "Pasig"
+    },
+    {
+      "id": "customer-16",
+      "first_name": "Adrian",
+      "last_name": "Sy",
+      "email": "adrian.sy@example.test",
+      "phone": "+639990010016",
+      "city": "Quezon City"
+    },
+    {
+      "id": "customer-17",
+      "first_name": "Camille",
+      "last_name": "Aquino",
+      "email": "camille.aquino@example.test",
+      "phone": "+639990010017",
+      "city": "Mandaluyong"
+    },
+    {
+      "id": "customer-18",
+      "first_name": "Gabriel",
+      "last_name": "David",
+      "email": "gabriel.david@example.test",
+      "phone": "+639990010018",
+      "city": "San Juan"
+    },
+    {
+      "id": "customer-19",
+      "first_name": "Julia",
+      "last_name": "Mercado",
+      "email": "julia.mercado@example.test",
+      "phone": "+639990010019",
+      "city": "Makati"
+    },
+    {
+      "id": "customer-20",
+      "first_name": "Miguel",
+      "last_name": "Valencia",
+      "email": "miguel.valencia@example.test",
+      "phone": "+639990010020",
+      "city": "Taguig"
+    },
+    {
+      "id": "customer-21",
+      "first_name": "Andrea",
+      "last_name": "Villanueva",
+      "email": "andrea.villanueva@example.test",
+      "phone": "+639990010021",
+      "city": "Pasig"
+    },
+    {
+      "id": "customer-22",
+      "first_name": "Nathan",
+      "last_name": "Santiago",
+      "email": "nathan.santiago@example.test",
+      "phone": "+639990010022",
+      "city": "Quezon City"
+    },
+    {
+      "id": "customer-23",
+      "first_name": "Katrina",
+      "last_name": "Fernandez",
+      "email": "katrina.fernandez@example.test",
+      "phone": "+639990010023",
+      "city": "Mandaluyong"
+    },
+    {
+      "id": "customer-24",
+      "first_name": "Daniel",
+      "last_name": "Salazar",
+      "email": "daniel.salazar@example.test",
+      "phone": "+639990010024",
+      "city": "San Juan"
+    }
+  ],
+  "staff": [
+    {
+      "id": "staff-01",
+      "name": "Alyssa Mercado",
+      "job_title": "Store manager",
+      "is_bookable": false,
+      "email": "alyssa.mercado@example.test"
+    },
+    {
+      "id": "staff-02",
+      "name": "Carlo Dizon",
+      "job_title": "Shopping consultant",
+      "is_bookable": true,
+      "email": "carlo.dizon@example.test"
+    },
+    {
+      "id": "staff-03",
+      "name": "Bea Villanueva",
+      "job_title": "Styling specialist",
+      "is_bookable": true,
+      "email": "bea.villanueva@example.test"
+    },
+    {
+      "id": "staff-04",
+      "name": "Jules Navarro",
+      "job_title": "Inventory coordinator",
+      "is_bookable": false,
+      "email": "jules.navarro@example.test"
+    },
+    {
+      "id": "staff-05",
+      "name": "Rina Santos",
+      "job_title": "Retail associate",
+      "is_bookable": false,
+      "email": "rina.santos@example.test"
+    },
+    {
+      "id": "staff-06",
+      "name": "Mateo Cruz",
+      "job_title": "Retail associate",
+      "is_bookable": false,
+      "email": "mateo.cruz@example.test"
+    },
+    {
+      "id": "staff-07",
+      "name": "Denise Flores",
+      "job_title": "Marketing coordinator",
+      "is_bookable": false,
+      "email": "denise.flores@example.test"
+    },
+    {
+      "id": "staff-08",
+      "name": "Anton Reyes",
+      "job_title": "Event and workshop host",
+      "is_bookable": true,
+      "email": "anton.reyes@example.test"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "textiles",
+      "name": "Sample Loom Textiles",
+      "category": "manufacturer",
+      "contact_name": "Patricia Luna",
+      "email": "textiles@example.test",
+      "image": "ridge-utility-jacket"
+    },
+    {
+      "id": "equipment",
+      "name": "Everyday Goods Distribution",
+      "category": "distributor",
+      "contact_name": "Ramon Velasco",
+      "email": "equipment@example.test",
+      "image": "signal-bottle"
+    },
+    {
+      "id": "packaging",
+      "name": "Green Parcel Packaging",
+      "category": "wholesaler",
+      "contact_name": "Tessa Domingo",
+      "email": "packaging@example.test",
+      "image": "field-day-tote"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-001",
+      "day": 1,
+      "hour": 10,
+      "minute": 0,
+      "customer": "customer-01",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-002",
+      "day": 1,
+      "hour": 11,
+      "minute": 13,
+      "customer": "customer-02",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-003",
+      "day": 1,
+      "hour": 12,
+      "minute": 26,
+      "customer": "customer-03",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-004",
+      "day": 1,
+      "hour": 13,
+      "minute": 39,
+      "customer": "customer-04",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-005",
+      "day": 2,
+      "hour": 14,
+      "minute": 52,
+      "customer": "customer-05",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-006",
+      "day": 2,
+      "hour": 15,
+      "minute": 5,
+      "customer": "customer-06",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-007",
+      "day": 2,
+      "hour": 10,
+      "minute": 18,
+      "customer": "customer-07",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-008",
+      "day": 2,
+      "hour": 11,
+      "minute": 31,
+      "customer": "customer-08",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-009",
+      "day": 3,
+      "hour": 12,
+      "minute": 44,
+      "customer": "customer-09",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-010",
+      "day": 3,
+      "hour": 13,
+      "minute": 57,
+      "customer": "customer-10",
+      "status": "confirmed",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-011",
+      "day": 3,
+      "hour": 14,
+      "minute": 10,
+      "customer": "customer-11",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-012",
+      "day": 3,
+      "hour": 15,
+      "minute": 23,
+      "customer": "customer-12",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-013",
+      "day": 4,
+      "hour": 10,
+      "minute": 36,
+      "customer": "customer-13",
+      "status": "refunded",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-014",
+      "day": 4,
+      "hour": 11,
+      "minute": 49,
+      "customer": "customer-14",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-015",
+      "day": 4,
+      "hour": 12,
+      "minute": 2,
+      "customer": "customer-15",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-016",
+      "day": 4,
+      "hour": 13,
+      "minute": 15,
+      "customer": "customer-16",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-017",
+      "day": 5,
+      "hour": 14,
+      "minute": 28,
+      "customer": "customer-17",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-018",
+      "day": 5,
+      "hour": 15,
+      "minute": 41,
+      "customer": "customer-18",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-019",
+      "day": 5,
+      "hour": 10,
+      "minute": 54,
+      "customer": "customer-19",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-020",
+      "day": 5,
+      "hour": 11,
+      "minute": 7,
+      "customer": "customer-20",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-021",
+      "day": 6,
+      "hour": 12,
+      "minute": 20,
+      "customer": "customer-21",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-022",
+      "day": 6,
+      "hour": 13,
+      "minute": 33,
+      "customer": "customer-22",
+      "status": "processing",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-023",
+      "day": 6,
+      "hour": 14,
+      "minute": 46,
+      "customer": "customer-23",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-024",
+      "day": 6,
+      "hour": 15,
+      "minute": 59,
+      "customer": "customer-24",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-025",
+      "day": 7,
+      "hour": 10,
+      "minute": 12,
+      "customer": "customer-01",
+      "status": "cancelled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-026",
+      "day": 7,
+      "hour": 11,
+      "minute": 25,
+      "customer": "customer-02",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-027",
+      "day": 7,
+      "hour": 12,
+      "minute": 38,
+      "customer": "customer-03",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-028",
+      "day": 7,
+      "hour": 13,
+      "minute": 51,
+      "customer": "customer-04",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-029",
+      "day": 8,
+      "hour": 14,
+      "minute": 4,
+      "customer": "customer-05",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        },
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-030",
+      "day": 8,
+      "hour": 15,
+      "minute": 17,
+      "customer": "customer-06",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-031",
+      "day": 8,
+      "hour": 10,
+      "minute": 30,
+      "customer": "customer-07",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-032",
+      "day": 9,
+      "hour": 11,
+      "minute": 43,
+      "customer": "customer-08",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-033",
+      "day": 9,
+      "hour": 12,
+      "minute": 56,
+      "customer": "customer-09",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-034",
+      "day": 9,
+      "hour": 13,
+      "minute": 9,
+      "customer": "customer-10",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-035",
+      "day": 9,
+      "hour": 14,
+      "minute": 22,
+      "customer": "customer-11",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-036",
+      "day": 10,
+      "hour": 15,
+      "minute": 35,
+      "customer": "customer-12",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-037",
+      "day": 10,
+      "hour": 10,
+      "minute": 48,
+      "customer": "customer-13",
+      "status": "pending",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        },
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-038",
+      "day": 10,
+      "hour": 11,
+      "minute": 1,
+      "customer": "customer-14",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-039",
+      "day": 10,
+      "hour": 12,
+      "minute": 14,
+      "customer": "customer-15",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-040",
+      "day": 11,
+      "hour": 13,
+      "minute": 27,
+      "customer": "customer-16",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-041",
+      "day": 11,
+      "hour": 14,
+      "minute": 40,
+      "customer": "customer-17",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-042",
+      "day": 11,
+      "hour": 15,
+      "minute": 53,
+      "customer": "customer-18",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-043",
+      "day": 11,
+      "hour": 10,
+      "minute": 6,
+      "customer": "customer-19",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-044",
+      "day": 12,
+      "hour": 11,
+      "minute": 19,
+      "customer": "customer-20",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-045",
+      "day": 12,
+      "hour": 12,
+      "minute": 32,
+      "customer": "customer-21",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-046",
+      "day": 12,
+      "hour": 13,
+      "minute": 45,
+      "customer": "customer-22",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-047",
+      "day": 12,
+      "hour": 14,
+      "minute": 58,
+      "customer": "customer-23",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-048",
+      "day": 13,
+      "hour": 15,
+      "minute": 11,
+      "customer": "customer-24",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-049",
+      "day": 13,
+      "hour": 10,
+      "minute": 24,
+      "customer": "customer-01",
+      "status": "confirmed",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-050",
+      "day": 13,
+      "hour": 11,
+      "minute": 37,
+      "customer": "customer-02",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-051",
+      "day": 13,
+      "hour": 12,
+      "minute": 50,
+      "customer": "customer-03",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-052",
+      "day": 14,
+      "hour": 13,
+      "minute": 3,
+      "customer": "customer-04",
+      "status": "refunded",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-053",
+      "day": 14,
+      "hour": 14,
+      "minute": 16,
+      "customer": "customer-05",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-054",
+      "day": 14,
+      "hour": 15,
+      "minute": 29,
+      "customer": "customer-06",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-055",
+      "day": 14,
+      "hour": 10,
+      "minute": 42,
+      "customer": "customer-07",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-056",
+      "day": 15,
+      "hour": 11,
+      "minute": 55,
+      "customer": "customer-08",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-057",
+      "day": 15,
+      "hour": 12,
+      "minute": 8,
+      "customer": "customer-09",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-058",
+      "day": 15,
+      "hour": 13,
+      "minute": 21,
+      "customer": "customer-10",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-059",
+      "day": 15,
+      "hour": 14,
+      "minute": 34,
+      "customer": "customer-11",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-060",
+      "day": 16,
+      "hour": 15,
+      "minute": 47,
+      "customer": "customer-12",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-061",
+      "day": 16,
+      "hour": 10,
+      "minute": 0,
+      "customer": "customer-13",
+      "status": "processing",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-062",
+      "day": 16,
+      "hour": 11,
+      "minute": 13,
+      "customer": "customer-14",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-063",
+      "day": 17,
+      "hour": 12,
+      "minute": 26,
+      "customer": "customer-15",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-064",
+      "day": 17,
+      "hour": 13,
+      "minute": 39,
+      "customer": "customer-16",
+      "status": "cancelled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-065",
+      "day": 17,
+      "hour": 14,
+      "minute": 52,
+      "customer": "customer-17",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-066",
+      "day": 17,
+      "hour": 15,
+      "minute": 5,
+      "customer": "customer-18",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-067",
+      "day": 18,
+      "hour": 10,
+      "minute": 18,
+      "customer": "customer-19",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-068",
+      "day": 18,
+      "hour": 11,
+      "minute": 31,
+      "customer": "customer-20",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-069",
+      "day": 18,
+      "hour": 12,
+      "minute": 44,
+      "customer": "customer-21",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-070",
+      "day": 18,
+      "hour": 13,
+      "minute": 57,
+      "customer": "customer-22",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-071",
+      "day": 19,
+      "hour": 14,
+      "minute": 10,
+      "customer": "customer-23",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-072",
+      "day": 19,
+      "hour": 15,
+      "minute": 23,
+      "customer": "customer-24",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-073",
+      "day": 19,
+      "hour": 10,
+      "minute": 36,
+      "customer": "customer-01",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        },
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-074",
+      "day": 19,
+      "hour": 11,
+      "minute": 49,
+      "customer": "customer-02",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-075",
+      "day": 20,
+      "hour": 12,
+      "minute": 2,
+      "customer": "customer-03",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-076",
+      "day": 20,
+      "hour": 13,
+      "minute": 15,
+      "customer": "customer-04",
+      "status": "pending",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-077",
+      "day": 20,
+      "hour": 14,
+      "minute": 28,
+      "customer": "customer-05",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-078",
+      "day": 20,
+      "hour": 15,
+      "minute": 41,
+      "customer": "customer-06",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-079",
+      "day": 21,
+      "hour": 10,
+      "minute": 54,
+      "customer": "customer-07",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-080",
+      "day": 21,
+      "hour": 11,
+      "minute": 7,
+      "customer": "customer-08",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-081",
+      "day": 21,
+      "hour": 12,
+      "minute": 20,
+      "customer": "customer-09",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        },
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-082",
+      "day": 21,
+      "hour": 13,
+      "minute": 33,
+      "customer": "customer-10",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-083",
+      "day": 22,
+      "hour": 14,
+      "minute": 46,
+      "customer": "customer-11",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-084",
+      "day": 22,
+      "hour": 15,
+      "minute": 59,
+      "customer": "customer-12",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-085",
+      "day": 22,
+      "hour": 10,
+      "minute": 12,
+      "customer": "customer-13",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-086",
+      "day": 22,
+      "hour": 11,
+      "minute": 25,
+      "customer": "customer-14",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-087",
+      "day": 23,
+      "hour": 12,
+      "minute": 38,
+      "customer": "customer-15",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-088",
+      "day": 23,
+      "hour": 13,
+      "minute": 51,
+      "customer": "customer-16",
+      "status": "confirmed",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-089",
+      "day": 23,
+      "hour": 14,
+      "minute": 4,
+      "customer": "customer-17",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-090",
+      "day": 23,
+      "hour": 15,
+      "minute": 17,
+      "customer": "customer-18",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-091",
+      "day": 24,
+      "hour": 10,
+      "minute": 30,
+      "customer": "customer-19",
+      "status": "refunded",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-092",
+      "day": 24,
+      "hour": 11,
+      "minute": 43,
+      "customer": "customer-20",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-093",
+      "day": 24,
+      "hour": 12,
+      "minute": 56,
+      "customer": "customer-21",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-094",
+      "day": 25,
+      "hour": 13,
+      "minute": 9,
+      "customer": "customer-22",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-095",
+      "day": 25,
+      "hour": 14,
+      "minute": 22,
+      "customer": "customer-23",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-096",
+      "day": 25,
+      "hour": 15,
+      "minute": 35,
+      "customer": "customer-24",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-097",
+      "day": 25,
+      "hour": 10,
+      "minute": 48,
+      "customer": "customer-01",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-098",
+      "day": 26,
+      "hour": 11,
+      "minute": 1,
+      "customer": "customer-02",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-099",
+      "day": 26,
+      "hour": 12,
+      "minute": 14,
+      "customer": "customer-03",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-100",
+      "day": 26,
+      "hour": 13,
+      "minute": 27,
+      "customer": "customer-04",
+      "status": "processing",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-101",
+      "day": 26,
+      "hour": 14,
+      "minute": 40,
+      "customer": "customer-05",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-102",
+      "day": 27,
+      "hour": 15,
+      "minute": 53,
+      "customer": "customer-06",
+      "status": "pending",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-103",
+      "day": 27,
+      "hour": 10,
+      "minute": 6,
+      "customer": "customer-07",
+      "status": "cancelled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-104",
+      "day": 27,
+      "hour": 11,
+      "minute": 19,
+      "customer": "customer-08",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-105",
+      "day": 27,
+      "hour": 12,
+      "minute": 32,
+      "customer": "customer-09",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 1
+        },
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-106",
+      "day": 28,
+      "hour": 13,
+      "minute": 45,
+      "customer": "customer-10",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-107",
+      "day": 28,
+      "hour": 14,
+      "minute": 58,
+      "customer": "customer-11",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-108",
+      "day": 28,
+      "hour": 15,
+      "minute": 11,
+      "customer": "customer-12",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-109",
+      "day": 28,
+      "hour": 10,
+      "minute": 24,
+      "customer": "customer-13",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 1
+        },
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-110",
+      "day": 29,
+      "hour": 11,
+      "minute": 37,
+      "customer": "customer-14",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-111",
+      "day": 29,
+      "hour": 12,
+      "minute": 50,
+      "customer": "customer-15",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-112",
+      "day": 29,
+      "hour": 13,
+      "minute": 3,
+      "customer": "customer-16",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-113",
+      "day": 29,
+      "hour": 14,
+      "minute": 16,
+      "customer": "customer-17",
+      "status": "processing",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 1
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-114",
+      "day": 30,
+      "hour": 15,
+      "minute": 29,
+      "customer": "customer-18",
+      "status": "confirmed",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-115",
+      "day": 30,
+      "hour": 10,
+      "minute": 42,
+      "customer": "customer-19",
+      "status": "pending",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-116",
+      "day": 30,
+      "hour": 11,
+      "minute": 55,
+      "customer": "customer-20",
+      "status": "cancelled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-117",
+      "day": 30,
+      "hour": 12,
+      "minute": 8,
+      "customer": "customer-21",
+      "status": "refunded",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 1
+        },
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-118",
+      "day": 31,
+      "hour": 13,
+      "minute": 21,
+      "customer": "customer-22",
+      "status": "fulfilled",
+      "fulfillment": "pickup",
+      "payment_method": "cash",
+      "items": [
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 2
+        }
+      ]
+    },
+    {
+      "id": "order-119",
+      "day": 31,
+      "hour": 14,
+      "minute": 34,
+      "customer": "customer-23",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "bank_transfer",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "order-120",
+      "day": 31,
+      "hour": 15,
+      "minute": 47,
+      "customer": "customer-24",
+      "status": "fulfilled",
+      "fulfillment": "delivery",
+      "payment_method": "manual",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+  "purchase_orders": [
+    {
+      "id": "purchase-01",
+      "day": 1,
+      "supplier": "textiles",
+      "status": "received",
+      "items": [
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 12
+        },
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "id": "purchase-02",
+      "day": 5,
+      "supplier": "equipment",
+      "status": "received",
+      "items": [
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 18
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 18
+        }
+      ]
+    },
+    {
+      "id": "purchase-03",
+      "day": 9,
+      "supplier": "packaging",
+      "status": "received",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 24
+        },
+        {
+          "variant": "atlas-everyday-tee:chalk-m",
+          "quantity": 24
+        }
+      ]
+    },
+    {
+      "id": "purchase-04",
+      "day": 13,
+      "supplier": "textiles",
+      "status": "received",
+      "items": [
+        {
+          "variant": "atlas-everyday-tee:chalk-l",
+          "quantity": 12
+        },
+        {
+          "variant": "field-day-tote:sand",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "id": "purchase-05",
+      "day": 17,
+      "supplier": "equipment",
+      "status": "received",
+      "items": [
+        {
+          "variant": "signal-bottle:cobalt-600",
+          "quantity": 18
+        },
+        {
+          "variant": "signal-bottle:cobalt-900",
+          "quantity": 18
+        }
+      ]
+    },
+    {
+      "id": "purchase-06",
+      "day": 21,
+      "supplier": "packaging",
+      "status": "received",
+      "items": [
+        {
+          "variant": "relay-crossbody:olive",
+          "quantity": 24
+        },
+        {
+          "variant": "transit-runner:stone-8",
+          "quantity": 24
+        }
+      ]
+    },
+    {
+      "id": "purchase-07",
+      "day": 25,
+      "supplier": "textiles",
+      "status": "partially_received",
+      "items": [
+        {
+          "variant": "transit-runner:stone-9",
+          "quantity": 12
+        },
+        {
+          "variant": "transit-runner:stone-10",
+          "quantity": 12
+        }
+      ]
+    },
+    {
+      "id": "purchase-08",
+      "day": 29,
+      "supplier": "equipment",
+      "status": "ordered",
+      "items": [
+        {
+          "variant": "ridge-utility-jacket:clay-m",
+          "quantity": 18
+        },
+        {
+          "variant": "ridge-utility-jacket:clay-l",
+          "quantity": 18
+        }
+      ]
+    }
+  ],
+  "quotations": [
+    {
+      "id": "quote-01",
+      "day": 2,
+      "customer": "customer-01",
+      "status": "converted",
+      "service": "personal-shopping",
+      "quantity": 1,
+      "invoice": "invoice-01"
+    },
+    {
+      "id": "quote-02",
+      "day": 6,
+      "customer": "customer-02",
+      "status": "accepted",
+      "service": "wardrobe-styling",
+      "quantity": 2,
+      "invoice": null
+    },
+    {
+      "id": "quote-03",
+      "day": 10,
+      "customer": "customer-03",
+      "status": "sent",
+      "service": "product-care-workshop",
+      "quantity": 3,
+      "invoice": null
+    },
+    {
+      "id": "quote-04",
+      "day": 14,
+      "customer": "customer-04",
+      "status": "expired",
+      "service": "personal-shopping",
+      "quantity": 1,
+      "invoice": null
+    },
+    {
+      "id": "quote-05",
+      "day": 18,
+      "customer": "customer-05",
+      "status": "draft",
+      "service": "wardrobe-styling",
+      "quantity": 2,
+      "invoice": null
+    },
+    {
+      "id": "quote-06",
+      "day": 22,
+      "customer": "customer-06",
+      "status": "declined",
+      "service": "product-care-workshop",
+      "quantity": 3,
+      "invoice": null
+    }
+  ],
+  "invoices": [
+    {
+      "id": "invoice-01",
+      "day": 1,
+      "customer": "customer-01",
+      "status": "paid",
+      "service": "personal-shopping",
+      "quantity": 1
+    },
+    {
+      "id": "invoice-02",
+      "day": 3,
+      "customer": "customer-02",
+      "status": "partially_paid",
+      "service": "wardrobe-styling",
+      "quantity": 2
+    },
+    {
+      "id": "invoice-03",
+      "day": 5,
+      "customer": "customer-03",
+      "status": "issued",
+      "service": "product-care-workshop",
+      "quantity": 3
+    },
+    {
+      "id": "invoice-04",
+      "day": 7,
+      "customer": "customer-04",
+      "status": "overdue",
+      "service": "personal-shopping",
+      "quantity": 1
+    },
+    {
+      "id": "invoice-05",
+      "day": 9,
+      "customer": "customer-05",
+      "status": "paid",
+      "service": "wardrobe-styling",
+      "quantity": 2
+    },
+    {
+      "id": "invoice-06",
+      "day": 11,
+      "customer": "customer-06",
+      "status": "partially_paid",
+      "service": "product-care-workshop",
+      "quantity": 3
+    },
+    {
+      "id": "invoice-07",
+      "day": 13,
+      "customer": "customer-07",
+      "status": "issued",
+      "service": "personal-shopping",
+      "quantity": 1
+    },
+    {
+      "id": "invoice-08",
+      "day": 15,
+      "customer": "customer-08",
+      "status": "overdue",
+      "service": "wardrobe-styling",
+      "quantity": 2
+    },
+    {
+      "id": "invoice-09",
+      "day": 17,
+      "customer": "customer-09",
+      "status": "paid",
+      "service": "product-care-workshop",
+      "quantity": 3
+    },
+    {
+      "id": "invoice-10",
+      "day": 19,
+      "customer": "customer-10",
+      "status": "partially_paid",
+      "service": "personal-shopping",
+      "quantity": 1
+    },
+    {
+      "id": "invoice-11",
+      "day": 21,
+      "customer": "customer-11",
+      "status": "issued",
+      "service": "wardrobe-styling",
+      "quantity": 2
+    },
+    {
+      "id": "invoice-12",
+      "day": 23,
+      "customer": "customer-12",
+      "status": "overdue",
+      "service": "product-care-workshop",
+      "quantity": 3
+    }
+  ],
+  "expenses": [
+    {
+      "id": "expense-01",
+      "day": 1,
+      "description": "Studio and shop rent",
+      "category": "Rent",
+      "amount": "28000.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-02",
+      "day": 3,
+      "description": "Electricity for shop and studio",
+      "category": "Utilities",
+      "amount": "6850.00",
+      "payment_method": "cash"
+    },
+    {
+      "id": "expense-03",
+      "day": 5,
+      "description": "Internet subscription",
+      "category": "Utilities",
+      "amount": "2499.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-04",
+      "day": 7,
+      "description": "Courier collection fees",
+      "category": "Delivery",
+      "amount": "1450.00",
+      "payment_method": "cash"
+    },
+    {
+      "id": "expense-05",
+      "day": 9,
+      "description": "Recycled dispatch packaging",
+      "category": "Packaging",
+      "amount": "3800.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-06",
+      "day": 11,
+      "description": "Social campaign photography",
+      "category": "Marketing",
+      "amount": "6500.00",
+      "payment_method": "cash"
+    },
+    {
+      "id": "expense-07",
+      "day": 13,
+      "description": "Community workshop refreshments",
+      "category": "Events",
+      "amount": "2450.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-08",
+      "day": 15,
+      "description": "Supplier pickup transport",
+      "category": "Transport",
+      "amount": "950.00",
+      "payment_method": "cash"
+    },
+    {
+      "id": "expense-09",
+      "day": 17,
+      "description": "Window and display materials",
+      "category": "Marketing",
+      "amount": "2800.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-10",
+      "day": 19,
+      "description": "Cleaning and shop supplies",
+      "category": "Maintenance",
+      "amount": "1575.00",
+      "payment_method": "cash"
+    },
+    {
+      "id": "expense-11",
+      "day": 21,
+      "description": "Weekend market booth fee",
+      "category": "Events",
+      "amount": "4000.00",
+      "payment_method": "bank_transfer"
+    },
+    {
+      "id": "expense-12",
+      "day": 23,
+      "description": "Courier delivery settlement",
+      "category": "Delivery",
+      "amount": "1890.00",
+      "payment_method": "cash"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "booking-01",
+      "position": 0.0,
+      "customer": "customer-01",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-02",
+      "position": 0.02564102564102564,
+      "customer": "customer-02",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-03",
+      "position": 0.05128205128205128,
+      "customer": "customer-03",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-04",
+      "position": 0.07692307692307693,
+      "customer": "customer-04",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-05",
+      "position": 0.10256410256410256,
+      "customer": "customer-05",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-06",
+      "position": 0.1282051282051282,
+      "customer": "customer-06",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-07",
+      "position": 0.15384615384615385,
+      "customer": "customer-07",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-08",
+      "position": 0.1794871794871795,
+      "customer": "customer-08",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-09",
+      "position": 0.20512820512820512,
+      "customer": "customer-09",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "cancelled",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-10",
+      "position": 0.23076923076923078,
+      "customer": "customer-10",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "no_show",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-11",
+      "position": 0.2564102564102564,
+      "customer": "customer-11",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-12",
+      "position": 0.28205128205128205,
+      "customer": "customer-12",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-13",
+      "position": 0.3076923076923077,
+      "customer": "customer-13",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-14",
+      "position": 0.3333333333333333,
+      "customer": "customer-14",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-15",
+      "position": 0.358974358974359,
+      "customer": "customer-15",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-16",
+      "position": 0.38461538461538464,
+      "customer": "customer-16",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-17",
+      "position": 0.41025641025641024,
+      "customer": "customer-17",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-18",
+      "position": 0.4358974358974359,
+      "customer": "customer-18",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-19",
+      "position": 0.46153846153846156,
+      "customer": "customer-19",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "cancelled",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-20",
+      "position": 0.48717948717948717,
+      "customer": "customer-20",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "no_show",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-21",
+      "position": 0.5128205128205128,
+      "customer": "customer-21",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-22",
+      "position": 0.5384615384615384,
+      "customer": "customer-22",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-23",
+      "position": 0.5641025641025641,
+      "customer": "customer-23",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-24",
+      "position": 0.5897435897435898,
+      "customer": "customer-24",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-25",
+      "position": 0.6153846153846154,
+      "customer": "customer-01",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-26",
+      "position": 0.6410256410256411,
+      "customer": "customer-02",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-27",
+      "position": 0.6666666666666666,
+      "customer": "customer-03",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-28",
+      "position": 0.6923076923076923,
+      "customer": "customer-04",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-29",
+      "position": 0.717948717948718,
+      "customer": "customer-05",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "cancelled",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-30",
+      "position": 0.7435897435897436,
+      "customer": "customer-06",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "no_show",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-31",
+      "position": 0.7692307692307693,
+      "customer": "customer-07",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-32",
+      "position": 0.7948717948717948,
+      "customer": "customer-08",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-33",
+      "position": 0.8205128205128205,
+      "customer": "customer-09",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-34",
+      "position": 0.8461538461538461,
+      "customer": "customer-10",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-35",
+      "position": 0.8717948717948718,
+      "customer": "customer-11",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-36",
+      "position": 0.8974358974358975,
+      "customer": "customer-12",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-37",
+      "position": 0.9230769230769231,
+      "customer": "customer-13",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "completed",
+      "future_status": "pending"
+    },
+    {
+      "id": "booking-38",
+      "position": 0.9487179487179487,
+      "customer": "customer-14",
+      "service": "wardrobe-styling",
+      "staff": "staff-03",
+      "historical_status": "completed",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-39",
+      "position": 0.9743589743589743,
+      "customer": "customer-15",
+      "service": "product-care-workshop",
+      "staff": "staff-08",
+      "historical_status": "cancelled",
+      "future_status": "confirmed"
+    },
+    {
+      "id": "booking-40",
+      "position": 1.0,
+      "customer": "customer-16",
+      "service": "personal-shopping",
+      "staff": "staff-02",
+      "historical_status": "no_show",
+      "future_status": "confirmed"
+    }
+  ],
+  "events": [
+    {
+      "id": "launch",
+      "title": "Everyday Essentials Launch",
+      "day": 7,
+      "event_type": "community",
+      "description": "A community preview of the new Northline essentials collection."
+    },
+    {
+      "id": "buyers-preview",
+      "title": "Weekend Buyers Preview",
+      "day": 14,
+      "event_type": "corporate",
+      "description": "A small wholesale and community partner preview."
+    },
+    {
+      "id": "care-workshop",
+      "title": "Repair and Care Saturday",
+      "day": 21,
+      "event_type": "community",
+      "description": "Learn practical ways to maintain canvas, knitwear and everyday carry."
+    },
+    {
+      "id": "studio-evening",
+      "title": "Northline Studio Evening",
+      "day": 28,
+      "event_type": "private_event",
+      "description": "An intimate customer appreciation gathering in the studio."
+    }
+  ],
+  "leave_requests": [
+    {
+      "id": "sick",
+      "staff": "staff-05",
+      "day": 8,
+      "length": 1,
+      "type": "sick",
+      "status": "approved",
+      "reason": "Fictional sick leave for workforce demonstration."
+    },
+    {
+      "id": "personal",
+      "staff": "staff-04",
+      "day": 15,
+      "length": 1,
+      "type": "personal",
+      "status": "approved",
+      "reason": "Planned personal appointment."
+    },
+    {
+      "id": "vacation",
+      "staff": "staff-06",
+      "day": 27,
+      "length": 2,
+      "type": "vacation",
+      "status": "pending",
+      "reason": "Family break requested for the end of the month."
+    }
+  ],
+  "attendance": {
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "start": "09:00",
+    "end": "18:00",
+    "late_staff": "staff-03",
+    "late_workday_indices": [
+      2,
+      3,
+      4
+    ],
+    "late_minutes": 18
+  }
+}

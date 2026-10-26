@@ -1,0 +1,38 @@
+{
+  "generator": "Built-in image_gen",
+  "provenance": "Original AI-generated demonstration imagery; no external photos, trademarks, or real people.",
+  "prompts": [
+    {
+      "slug": "transit-runner",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce product photograph for a fictional Northline demo catalog. Primary request: one pair of stone-beige lightweight everyday running shoes, breathable engineered knit upper, moss-green heel accents, natural rubber outsole. Premium photorealistic studio product photography, three-quarter side angle, entire shoes visible, warm off-white seamless backdrop, soft window lighting with true material texture and contact shadows. No text, logos, watermark, brand marks, illustration, border, or collage. A single professionally shot catalog image."
+    },
+    {
+      "slug": "ridge-utility-jacket",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce catalog photograph for a fictional Northline demonstration business. Primary request: one clay-brown cotton-nylon utility jacket with front zipper, four clean practical pockets and subtle cuff adjusters, hanging naturally as an invisible-mannequin product, complete jacket including sleeves. Premium studio product photography, centered three-quarter angle, warm off-white seamless background, generous margin around the complete item. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "atlas-everyday-tee",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce catalog photograph for a fictional Northline demonstration business. Primary request: one chalk-cream heavyweight cotton crewneck T-shirt with a relaxed cut and softly structured collar, realistic fabric drape, invisible mannequin product presentation, complete garment. Premium studio product photography, centered three-quarter angle, warm off-white seamless background, generous margin around the complete item. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "field-day-tote",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce catalog photograph for a fictional Northline demonstration business. Primary request: one sand-beige heavyweight canvas tote bag with reinforced base, brown webbing handles, an adjustable shoulder strap, visible fabric weave, complete bag. Premium studio product photography, centered three-quarter angle, warm off-white seamless background, generous margin around the complete item. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "signal-bottle",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce catalog photograph for a fictional Northline demonstration business. Primary request: one cobalt-blue double-wall stainless steel 600 ml water bottle with a matte powder-coated surface, a leak-resistant dark cap and carry loop, complete bottle. Premium studio product photography, centered three-quarter angle, warm off-white seamless background, generous margin around the complete item. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "relay-crossbody",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce catalog photograph for a fictional Northline demonstration business. Primary request: one olive-green compact recycled-ripstop crossbody bag with three zip compartments and adjustable black webbing shoulder strap, complete bag and visibly natural texture. Premium studio product photography, centered three-quarter angle, warm off-white seamless background, generous margin around the complete item. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "storefront-hero",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide editorial business photograph for a fictional Northline demonstration business. Primary request: a calm modern independent Philippine lifestyle retail shop interior with oak shelving, stone-beige running shoes, clay-brown jackets, chalk-cream T-shirts, sand-beige canvas totes and cobalt-blue reusable water bottles thoughtfully displayed. No legible signs, people or branded packaging. Landscape 16:9 composition, professional architectural photography, realistic spatial perspective. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    },
+    {
+      "slug": "event-venue",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide editorial business photograph for a fictional Northline demonstration business. Primary request: an intimate contemporary event space in the Philippines prepared for a community product launch, warm wood tables, linen textiles, subtle foliage, modest floral arrangements, empty chairs and soft late-afternoon light. No people or readable signage. Landscape 16:9 composition, professional architectural photography, realistic spatial perspective. Soft natural daylight, accurate materials and believable shadows, crisp professional finish. No text, logos, watermark, illustration, border, collage, or added product labels."
+    }
+  ]
+}
