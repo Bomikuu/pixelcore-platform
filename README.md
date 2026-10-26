@@ -81,6 +81,129 @@ docker-compose.yml    Local service topology
 
 ## Local setup
 
+### Lightweight development (no Docker)
+
+From the repository root, run:
+
+```bash
+npm run dev
+```
+
+Requires Node.js 20.19 or newer, npm, and Python 3.11 or newer with `venv`
+and pip (or `uv`, which the command uses when available). On Debian/Ubuntu,
+install the matching `python3-venv` package if `ensurepip` is unavailable
+and you do not use `uv`. Set `PYTHON=/path/to/python3` to choose the
+interpreter used to create `pixelcore-backend/venv` on the first run.
+
+The command creates the backend virtual environment and installs backend
+and frontend dependencies on the first run, then refreshes them when the
+requirements or frontend package files change. No root `npm install` is needed.
+It runs Django system checks, rejects model changes missing migration files,
+applies pending migrations, and verifies the database is up to date before
+starting Django and Nuxt with hot reload. A failed check stops startup.
+
+- Frontend: `http://localhost:3001`
+- API: `http://localhost:8000/api/`
+- Admin: `http://localhost:8000/admin/`
+
+Press Ctrl+C to stop both servers. If either server exits, the command also
+stops the other. Ports 3001 and 8000 must be available.
+Stop an existing Compose stack with `docker compose down` before switching
+to the default local ports (this preserves named database volumes). To use
+other ports, set `PIXELCORE_FRONTEND_PORT` and `PIXELCORE_BACKEND_PORT` in
+`.env.local` or the shell; API URLs and allowed origins follow those ports.
+
+This mode uses `pixelcore-backend/db.sqlite3`, local media storage, and
+synchronous Celery tasks. Verification and reset emails print in the same
+terminal. It starts no PostgreSQL, Redis, worker, scheduler, proxy, or Docker
+services. Scheduled reminder and reservation-cleanup jobs do not run
+automatically; use the Compose stack when developing those jobs or testing
+PostgreSQL behavior. SQLite has separate data from the Docker database.
+Django warns that SQLite skips the `nulls_distinct` unique constraints on
+`OfferingMedia` and `CartItem`; validate those constraints against PostgreSQL.
+
+Optional integration values and the Django secret are read from root `.env`,
+then `.env.local`, then the shell environment. These files are parsed as
+dotenv data. The command overrides database, task, email, storage, debug,
+and local URL settings for this mode, so an existing Docker `.env` can be
+reused. If no Django secret is configured, a temporary development secret
+is generated for that run. Keep a secret in `.env.local` for stable sessions
+across restarts. Docker and production settings are unaffected.
+
+To set up dependencies and run the same checks and migrations without
+starting either server:
+
+```bash
+npm run dev:check
+```
+
+### One month of sample data
+
+Run this from the repository root to populate the local SQLite database:
+
+```bash
+npm run seed:demo
+```
+
+The command sets up backend dependencies, checks and applies migrations,
+and imports the current month in `Asia/Manila`. It does not build either
+application, start servers, install frontend dependencies, or start Docker.
+Start the apps separately with `npm run dev`.
+
+Default demo access:
+
+- Email: `monthly.demo@example.test`
+- Initial password: `PixelCoreDemo123!`
+- Business: **Northline Supply Co. — Demo**
+- Storefront: `http://localhost:3001/site/northline-monthly-demo`
+
+To select another month or attach the separate demo business to an existing
+account without changing that account's password:
+
+```bash
+npm run seed:demo -- --month 2026-10
+npm run seed:demo -- --owner-email your-existing-account@example.com
+```
+
+Choose the current month or a past month. Reimporting a month refreshes its
+generated records using stable identifiers; it does not create duplicates,
+reset existing account passwords, or adopt an unrelated business. Importing
+another month adds that month's history while reusing the catalog and team.
+An existing demo business must be imported with its original owner. Staff
+accounts have unusable passwords; the owner account is the demo login.
+
+The [monthly fixture](pixelcore-backend/businesses/fixtures/monthly_demo/dataset.json)
+includes six products with eleven variants, three services, 24 customers,
+eight staff members, three suppliers, 120 retail orders, eight purchase
+orders, twelve service invoices, six quotations, twelve expenses, forty
+bookings, four events with guests, attendance and leave, a published
+storefront, and two display publications. Retail payments, invoice payments,
+receipts, reservations, returns, and stock balances are connected and
+reconciled. Transaction dates are distributed over the elapsed portion of
+the chosen month; bookings and events span the whole month. Future bookings
+are pending or confirmed. Attendance includes only elapsed scheduled days.
+
+Eight original AI-generated PNG photographs are bundled beside the fixture,
+with their prompts in `image-prompts.json`. They are copied into local media
+on import and reused on subsequent imports. No external image URLs, email,
+payment requests, or calendar integrations are used. All identities,
+products, suppliers, transactions, and imagery are fictional. This importer
+is restricted to development environments with `DEBUG=True`.
+
+This is an application JSON fixture rather than a raw `loaddata` dump: the
+importer resolves references, dates and media while avoiding primary-key
+collisions. See its [fixture guide](pixelcore-backend/businesses/fixtures/monthly_demo/README.md).
+
+Docker uses its own PostgreSQL database and named media volume. To populate
+that environment, run `docker compose exec backend python manage.py seed_month_demo --month 2026-10`.
+If records already exist there but images are missing, run
+`docker compose exec backend python manage.py seed_month_demo --media-only`
+to restore only the images without refreshing activity. Files in the host's
+`pixelcore-backend/media` folder are not automatically copied into Docker's
+named media volume.
+
+### Docker development
+
 1. Copy `.env.example` to `.env`.
 2. Replace both secret placeholders.
 3. Start the development stack:
@@ -144,3 +267,19 @@ Then set `GOOGLE_CALENDAR_CLIENT_ID`, `GOOGLE_CALENDAR_CLIENT_SECRET`, and `GOOG
 - CMS content is versioned JSON with allowlisted block settings; arbitrary HTML, JavaScript, CSS, shaders, and remote URLs are rejected.
 - Public tenant responses are explicit serializers rather than private model dumps.
 - PayMongo signatures are verified against the raw request body with replay and duplicate-event protection.
+
+## Shared visual website builder
+
+The separate `../website-builder` checkout of [PixelCore Studio](https://github.com/Bomikuu/pixelcore-studio) supplies PixelCore's Vue studio and shared Django revision/review service. From this repository root, clone it into the sibling directory expected by the package links and Docker contexts:
+
+```bash
+git clone https://github.com/Bomikuu/pixelcore-studio.git ../website-builder
+```
+
+Keep the two checkouts beside each other, install frontend dependencies with `npm install --ignore-scripts`, then use the normal root `npm run dev`; its migration check includes the shared package. No extra service or Docker container is needed. See [the builder README](https://github.com/Bomikuu/pixelcore-studio#readme) for standalone setup and adapter documentation.
+
+Open **Workspace → Site → Visual studio**, a page editor's **Visual studio**, or an event's **Website → Visual studio**. The first open creates a visual draft from existing content. Actual catalog and event fields are connected through the host adapter. Saving changes the draft; explicit **Publish** selects the shared layout on the existing public URL. Publishing from the older editor selects its renderer again without deleting the visual draft. Advanced legacy music/3D features remain available through that editor.
+
+Guest review links show an immutable saved revision and data snapshot. Reviewers enter a name to pin comments and reply; account holders with management access can resolve threads. Expired/revoked links and withdrawn assets are rejected.
+
+The shared React adapter is ready for a later Medframe rollout; this pass activates PixelCore only. Free-form layout remains experimental and disabled pending the planned browser performance checks. Automated checks are the default; no builds or visual inspections should be run without an explicit request.
