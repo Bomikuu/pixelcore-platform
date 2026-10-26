@@ -1,10 +1,11 @@
 <template>
-  <main
-    class="event-rsvp relative min-h-screen overflow-x-hidden"
-    :class="selectedTemplate.className"
-    :style="pageStyle"
+  <component
+    :is="embedded ? 'div' : 'main'"
+    class="event-rsvp relative overflow-x-hidden"
+    :class="[selectedTemplate.className, embedded ? 'event-rsvp-embedded' : 'min-h-screen']"
+    :style="{ ...pageStyle, ...presentation }"
   >
-    <header class="absolute inset-x-0 top-0 z-30 border-b border-white/15 bg-black/55 text-white backdrop-blur-md">
+    <header v-if="!embedded" class="absolute inset-x-0 top-0 z-30 border-b border-white/15 bg-black/55 text-white backdrop-blur-md">
       <div class="grid min-h-20 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-5 py-3 sm:px-8 lg:px-12">
         <NuxtLink
           :to="invitationUrl"
@@ -35,8 +36,8 @@
       </div>
     </header>
 
-    <div class="grid min-h-screen lg:grid-cols-[minmax(22rem,0.82fr)_minmax(34rem,1.18fr)]">
-      <section class="rsvp-visual relative isolate flex min-h-[34rem] overflow-hidden px-5 pb-10 pt-28 text-white sm:px-8 lg:min-h-screen lg:px-12 lg:pb-10 lg:pt-32">
+    <div :class="embedded ? 'w-full' : 'grid min-h-screen lg:grid-cols-[minmax(22rem,0.82fr)_minmax(34rem,1.18fr)]'">
+      <section v-if="!embedded" class="rsvp-visual relative isolate flex min-h-[34rem] overflow-hidden px-5 pb-10 pt-28 text-white sm:px-8 lg:min-h-screen lg:px-12 lg:pb-10 lg:pt-32">
         <img
           v-if="heroImage"
           :src="heroImage.image_url"
@@ -77,7 +78,7 @@
         </div>
       </section>
 
-      <section class="rsvp-panel flex min-h-screen items-center bg-[color:var(--event-bg)] px-5 pb-14 pt-28 text-[color:var(--event-text)] sm:px-10 lg:px-14 lg:pb-14 lg:pt-32 xl:px-20">
+      <section class="rsvp-panel flex items-center bg-[color:var(--event-bg)] text-[color:var(--event-text)]" :class="embedded ? 'p-6 sm:p-10' : 'min-h-screen px-5 pb-14 pt-28 sm:px-10 lg:px-14 lg:pb-14 lg:pt-32 xl:px-20'">
         <div class="mx-auto w-full max-w-2xl">
           <div class="border-b border-[color:color-mix(in_srgb,var(--event-text)_22%,transparent)] pb-8">
             <h2 class="text-balance text-5xl leading-none wedding-display sm:text-6xl">{{ rsvpConfig.heading }}</h2>
@@ -231,7 +232,7 @@
         </div>
       </section>
     </div>
-  </main>
+  </component>
 </template>
 
 <script setup>
@@ -267,6 +268,8 @@ const props = defineProps({
   payload: { type: Object, required: true },
   endpoint: { type: String, default: '' },
   previewMode: { type: Boolean, default: false },
+  embedded: {type:Boolean,default:false},
+  presentation: {type:Object,default:()=>({})},
 })
 
 const emit = defineEmits(['updated'])
@@ -507,6 +510,10 @@ function formatTimeRange(start, end) {
 .event-script {
   font-family: 'Playball', cursive;
   letter-spacing: -0.02em;
+}
+
+.event-rsvp-embedded .event-script {
+  font-family: var(--event-heading);
 }
 
 .rsvp-visual {

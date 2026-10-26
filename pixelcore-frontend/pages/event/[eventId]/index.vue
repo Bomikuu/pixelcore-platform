@@ -14,11 +14,14 @@
         message="This event website has not been published or is no longer available."
       />
     </div>
+    <WebsitePage v-else-if="payload.event?.builder" :document="payload.event.builder.document" :data="payload.event.builder.data" :base-url="payload.event.builder.baseUrl" />
     <WeddingInvitationPage v-else :payload="payload" @refresh="refresh" />
   </div>
 </template>
 
 <script setup>
+import { pageHead } from '@sitebuilder/core'
+import { WebsitePage } from '@sitebuilder/vue'
 import { Loader2 } from 'lucide-vue-next'
 import WeddingInvitationPage from '@/components/event/WeddingInvitationPage.vue'
 import { normalizePublicAssetUrls } from '@/utils/publicAssetUrls'
@@ -42,4 +45,5 @@ const { data: payload, pending, error: loadError, refresh } = await useAsyncData
     })
   },
 )
+useHead(() => payload.value?.event?.builder ? pageHead(payload.value.event.builder.document,payload.value.event.builder.data) : {})
 </script>

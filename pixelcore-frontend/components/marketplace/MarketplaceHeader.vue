@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-40 border-b bg-background shadow-sm">
+  <header :style="builderStyle" class="sticky top-0 z-40 border-b bg-background shadow-sm">
     <div class="border-b" :style="utilityStyle">
       <div class="mx-auto flex min-h-9 max-w-screen-2xl items-center justify-between gap-4 px-4 text-xs sm:px-6 lg:px-8">
         <p class="truncate font-medium">
@@ -133,8 +133,10 @@ const props = defineProps({
   identity: { type: Object, required: true },
   navigation: { type: Array, default: () => [] },
   base: { type: String, required: true },
+  builderLayout: {type:Object,default:()=>({})},
 });
 
+const builderStyle = computed(() => {const style=(props.builderLayout?.revisionId ? props.builderLayout.regions?.find(n=>n.type==='header') : undefined)?.style || {};return {backgroundColor:style.backgroundColor,color:style.color,padding:style.padding!==undefined?`${style.padding}px`:undefined}})
 const cart = useCartStore();
 const wishlist = useWishlistStore();
 const menuOpen = ref(false);

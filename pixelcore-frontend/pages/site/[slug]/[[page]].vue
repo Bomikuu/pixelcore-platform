@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { pageHead } from '@sitebuilder/core'
 definePageMeta({ layout: 'storefront' })
 const route = useRoute()
 const pageSlug = computed(() => Array.isArray(route.params.page) ? route.params.page.join('/') : route.params.page || '')
@@ -18,5 +19,5 @@ const customHost = !['localhost', '127.0.0.1', config.public.platformDomain].inc
 const siteBase = customHost ? '' : `/site/${route.params.slug}`
 const baseURL = import.meta.server ? config.apiInternalBaseUrl : config.public.apiBaseUrl
 const { data: offerings } = useAsyncData(`catalog:${route.params.slug}`, () => $fetch(`public/${route.params.slug}/catalog/`, { baseURL }))
-useHead(() => manifest.value ? { title: manifest.value.seo.title, meta: [{ name: 'description', content: manifest.value.seo.description }, { name: 'robots', content: manifest.value.seo.robots }, { property: 'og:title', content: manifest.value.seo.title }, { property: 'og:description', content: manifest.value.seo.description }], link: [{ rel: 'canonical', href: manifest.value.seo.canonical }], script: [{ type: 'application/ld+json', innerHTML: JSON.stringify(manifest.value.seo.json_ld).replaceAll('<', '\\u003c') }] } : {})
+useHead(() => manifest.value?.builder ? pageHead(manifest.value.builder.document,manifest.value.builder.data,{noIndex:manifest.value.seo.robots.includes('noindex'),canonical:manifest.value.seo.canonical,description:manifest.value.seo.description}) : manifest.value ? { title: manifest.value.seo.title, meta: [{ name: 'description', content: manifest.value.seo.description }, { name: 'robots', content: manifest.value.seo.robots }, { property: 'og:title', content: manifest.value.seo.title }, { property: 'og:description', content: manifest.value.seo.description }], link: [{ rel: 'canonical', href: manifest.value.seo.canonical }], script: [{ type: 'application/ld+json', innerHTML: JSON.stringify(manifest.value.seo.json_ld).replaceAll('<', '\\u003c') }] } : {})
 </script>

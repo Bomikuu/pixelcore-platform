@@ -1,5 +1,5 @@
 <template>
-  <footer :style="{ backgroundColor: footer.background_color, color: footer.text_color }">
+  <footer :data-builder-variant="builderFooter?.props?.variant" :style="{ backgroundColor: builderFooter?.style?.backgroundColor || footer.background_color, color: builderFooter?.style?.color || footer.text_color }">
     <div class="mx-auto max-w-[var(--content-max-width)] px-4 pb-6 pt-12 sm:px-6 lg:px-10 lg:pt-16">
       <div class="grid gap-x-10 gap-y-10 pb-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_1fr_1fr_1fr]">
         <div class="max-w-md sm:col-span-2 lg:col-span-1">
@@ -56,7 +56,8 @@
 import { Mail, Phone } from 'lucide-vue-next'
 import SandboxedCustomization from '@/components/business/SandboxedCustomization.vue'
 import SocialPlatformIcon from './SocialPlatformIcon.vue'
-const props = defineProps({ identity: { type: Object, required: true }, base: { type: String, required: true } })
+const props = defineProps({ identity: { type: Object, required: true }, base: { type: String, required: true }, builderLayout: {type:Object,default:()=>({})} })
+const builderFooter = computed(() => props.builderLayout?.revisionId ? props.builderLayout.regions?.find(n => n.type === 'footer') : undefined)
 const footer = computed(() => props.identity.branding?.storefront?.footer || {})
 const socials = computed(() => props.identity.branding?.socials || [])
 const assets = computed(() => props.identity.branding_assets || {})
@@ -68,3 +69,9 @@ function platformLabel(platform) {
   return ({ facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok', x: 'X', twitter: 'X', youtube: 'YouTube', linkedin: 'LinkedIn' })[platform] || platform
 }
 </script>
+
+<style scoped>
+[data-builder-variant="compact"] > div > div:first-child { padding-top:2rem;padding-bottom:2rem; }
+[data-builder-variant="wedding"] { text-align:center; }
+[data-builder-variant="wedding"] nav { display:none; }
+</style>

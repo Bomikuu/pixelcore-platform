@@ -2,7 +2,7 @@
   <section class="min-h-screen">
     <header class="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-3 border-b bg-background px-4 py-3 sm:px-6">
       <div class="flex min-w-0 items-center gap-3"><ButtonLink variant="outline"  to="/workspace/site" class="!px-3"><ArrowLeft class="h-4 w-4" aria-hidden="true" /><span class="sr-only">Back to pages</span></ButtonLink><div class="min-w-0"><p class="truncate font-bold">{{ page?.title || 'Page editor' }}</p><p class="text-xs text-muted-foreground">{{ saveState }}</p></div></div>
-      <div class="flex items-center gap-2"><Button variant="outline" type="button" :disabled="!page" @click="openPreview"><Eye class="h-4 w-4" aria-hidden="true" /> Preview</Button><Button type="button" :disabled="saving || !page" @click="publish"><Upload class="h-4 w-4" aria-hidden="true" /> Publish</Button></div>
+      <div class="flex items-center gap-2"><ButtonLink v-if="page" variant="outline" :to="`/workspace/site/builder?kind=page&source=${page.public_id}`">Visual studio</ButtonLink><Button variant="outline" type="button" :disabled="!page" @click="openPreview"><Eye class="h-4 w-4" aria-hidden="true" /> Preview</Button><Button type="button" :disabled="saving || !page" @click="publish"><Upload class="h-4 w-4" aria-hidden="true" /> Publish</Button></div>
     </header>
 
     <StatePanel v-if="loading" kind="loading" title="Opening editor" message="Loading the latest draft revision and reusable assets." />

@@ -2,6 +2,7 @@
   <section class="workspace-page space-y-8">
     <PageHeader title="Site" description="Publish a structured storefront without exposing raw HTML, scripts, styles, or unbounded 3D code.">
       <template #actions>
+        <ButtonLink v-if="pages.length" variant="outline" :to="`/workspace/site/builder?kind=page&source=${(publishedHome || pages[0]).public_id}`">Visual studio</ButtonLink>
         <Button variant="outline" type="button" @click="templateOpen = true"><ShoppingBag class="h-4 w-4" aria-hidden="true" /> Commerce template</Button>
         <ButtonLink variant="outline"  to="/workspace/site/domains"><Globe2 class="h-4 w-4" aria-hidden="true" /> Domains</ButtonLink>
         <Button type="button" @click="creating = !creating"><Plus class="h-4 w-4" aria-hidden="true" /> New page</Button>

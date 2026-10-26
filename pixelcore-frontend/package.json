@@ -34,7 +34,13 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.185.1",
     "vue": "^3.5.42",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "@sitebuilder/core": "file:../../website-builder/packages/core",
+    "@sitebuilder/renderer": "file:../../website-builder/packages/renderer",
+    "@sitebuilder/editor": "file:../../website-builder/packages/editor",
+    "@sitebuilder/vue": "file:../../website-builder/packages/vue",
+    "@sitebuilder/review": "file:../../website-builder/packages/review",
+    "@sitebuilder/freeform": "file:../../website-builder/packages/freeform"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",

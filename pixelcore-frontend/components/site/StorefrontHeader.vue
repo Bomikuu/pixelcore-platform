@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85" :class="isLuxury ? 'border-foreground/15' : ''" @pointerleave="scheduleCatalogClose">
+  <header :data-builder-variant="builderHeader?.props?.variant" :style="builderStyle" class="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85" :class="isLuxury ? 'border-foreground/15' : ''" @pointerleave="scheduleCatalogClose">
     <div class="grid min-h-[4.5rem] w-full grid-cols-[auto_1fr_auto] items-center gap-4 px-4 sm:px-7 lg:px-10">
       <a :href="base || '/'" class="group flex min-w-0 items-center gap-3 rounded-[var(--button-radius)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" :aria-label="`${identity.display_name} home`">
         <img v-if="identity.logo" :src="identity.logo" alt="" class="h-9 w-9 rounded-[var(--button-radius)] object-contain" />
@@ -76,7 +76,10 @@ const props = defineProps({
   identity: { type: Object, required: true },
   navigation: { type: Array, default: () => [] },
   base: { type: String, required: true },
+  builderLayout: {type:Object,default:()=>({})},
 })
+const builderHeader = computed(() => props.builderLayout?.revisionId ? props.builderLayout.regions?.find(n => n.type === 'header') : undefined)
+const builderStyle = computed(() => { const style = builderHeader.value?.style || {}; return {backgroundColor:style.backgroundColor,color:style.color,padding:style.padding !== undefined ? `${style.padding}px` : undefined} })
 const cart = useCartStore()
 const wishlist = useWishlistStore()
 const menuOpen = ref(false)
@@ -122,6 +125,12 @@ function scheduleCatalogClose() { clearTimeout(catalogCloseTimer); catalogCloseT
 </script>
 
 <style scoped>
+[data-builder-variant="center"] > div:first-child { grid-template-columns: 1fr auto 1fr; }
+[data-builder-variant="center"] .brand-name { text-align: center; }
+[data-builder-variant="center"] > div:first-child > a { grid-column: 2; }
+[data-builder-variant="center"] > div:first-child > nav { grid-row: 2; grid-column: 1 / -1; }
+[data-builder-variant="center"] > div:first-child > div { grid-column: 3; grid-row: 1; }
+
 .catalog-panel-enter-active,
 .catalog-panel-leave-active { transition: opacity 180ms ease, transform 180ms ease; }
 .catalog-panel-enter-from,

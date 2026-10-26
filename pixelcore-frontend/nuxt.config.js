@@ -1,8 +1,10 @@
+import { fileURLToPath } from 'node:url'
 export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: "2026-07-15",
   devtools: { enabled: process.env.NODE_ENV !== "production" },
   routeRules: {
+    '/studio-connect': { ssr: false },
     "/workspace/**": { ssr: false },
     "/settings/**": { ssr: false },
     "/login": { ssr: false },
@@ -22,6 +24,7 @@ export default defineNuxtConfig({
       process.env.NUXT_PUBLIC_API_BASE_URL ||
       "http://localhost:8000/api/",
     public: {
+      studioOrigin: process.env.NUXT_PUBLIC_STUDIO_ORIGIN || 'http://localhost:4173',
       apiBaseUrl:
         process.env.NUXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/",
       platformDomain:
@@ -52,11 +55,13 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ["~/assets/css/tailwind.css"],
+  css: ["~/assets/css/tailwind.css", "@sitebuilder/renderer/fonts.css"],
   modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@pinia/nuxt"],
   vite: {
+    resolve: { dedupe: ['vue'] },
     server: {
-      hmr: {
+      fs: { allow: [fileURLToPath(new URL('./', import.meta.url)), fileURLToPath(new URL('../../website-builder/', import.meta.url))] },
+      hmr: process.env.PIXELCORE_LOCAL_DEV === "1" ? undefined : {
         clientPort: 80,
         protocol: "ws",
       },

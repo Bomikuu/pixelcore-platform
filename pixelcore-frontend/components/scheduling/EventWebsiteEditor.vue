@@ -12,7 +12,8 @@
               Shape the public event page here. Private guest links open a separate RSVP page that keeps the same theme.
             </CardDescription>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <ButtonLink variant="outline" size="sm" :to="`/workspace/site/builder?kind=event&source=${eventId}`">Visual studio</ButtonLink>
             <Badge :variant="form.website_enabled ? 'secondary' : 'outline'">
               {{ form.website_enabled ? 'Published' : 'Draft' }}
             </Badge>

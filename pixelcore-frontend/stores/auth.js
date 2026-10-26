@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { clearRecoveryCopies } from '@sitebuilder/core'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -105,6 +106,12 @@ export const useAuthStore = defineStore('auth', {
           credentials: 'include',
         })
       } finally {
+        if (import.meta.client) {
+          try {
+            window.dispatchEvent(new Event('sitebuilder:session-ended'))
+            clearRecoveryCopies(window.localStorage)
+          } catch {}
+        }
         accessToken.value = null
         this.user = null
         this.initialized = true

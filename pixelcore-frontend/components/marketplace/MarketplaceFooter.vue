@@ -52,12 +52,14 @@
 const props = defineProps({
   identity: { type: Object, required: true },
   base: { type: String, required: true },
+  builderLayout: {type:Object,default:()=>({})},
 });
 
+const builderFooter = computed(() => (props.builderLayout?.revisionId ? props.builderLayout.regions?.find(n=>n.type==='footer') : undefined))
 const footer = computed(() => props.identity.branding?.storefront?.footer || {});
 const footerStyle = computed(() => ({
-  backgroundColor: footer.value.background_color || props.identity.branding?.secondary_color,
-  color: footer.value.text_color || props.identity.branding?.text_color,
+  backgroundColor: builderFooter.value?.style?.backgroundColor || footer.value.background_color || props.identity.branding?.secondary_color,
+  color: builderFooter.value?.style?.color || footer.value.text_color || props.identity.branding?.text_color,
 }))
 
 function resolveLink(value) {
