@@ -14,7 +14,7 @@ class CustomHeroTests(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user('hero-owner')
         self.business = Business.objects.create(display_name='Hero studio', created_by=self.user)
-        self.image = BusinessAsset.objects.create(business=self.business, title='Poster', asset_type='image', file='hero/poster.png', size_bytes=100, processing_status='ready')
+        self.image = BusinessAsset.objects.create(business=self.business, uploaded_by=self.user, title='Poster', asset_type='image', file='hero/poster.png', size_bytes=100, processing_status='ready')
         self.slide = {'id': 'custom-1', 'type': 'image', 'heading': 'A custom story', 'asset_id': str(self.image.public_id), 'path': '/shop', 'label': 'Explore'}
 
     def test_custom_collection_slides_and_public_media(self):
@@ -34,7 +34,7 @@ class CustomHeroTests(TestCase):
 
     def test_video_and_model_require_correct_approved_media_and_poster(self):
         for kind in ['video', 'model']:
-            media = BusinessAsset.objects.create(business=self.business, title=kind, asset_type=kind, file=f'hero/{kind}', size_bytes=100, processing_status='ready')
+            media = BusinessAsset.objects.create(business=self.business, uploaded_by=self.user, title=kind, asset_type=kind, file=f'hero/{kind}', size_bytes=100, processing_status='ready')
             slide = {**self.slide, 'type': kind, 'asset_id': str(media.public_id)}
             with self.assertRaises(ValidationError): validate_hero_slides([slide], self.business)
             slide['poster_asset_id'] = str(self.image.public_id)

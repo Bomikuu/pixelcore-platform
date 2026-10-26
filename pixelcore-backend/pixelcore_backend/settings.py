@@ -3,6 +3,7 @@
 from datetime import timedelta
 from pathlib import Path
 import os
+import sys
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -193,6 +194,8 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "UTC"
+CELERY_TASK_ALWAYS_EAGER = env_bool("CELERY_TASK_ALWAYS_EAGER", False)
+CELERY_TASK_EAGER_PROPAGATES = env_bool("CELERY_TASK_EAGER_PROPAGATES", False)
 CELERY_BEAT_SCHEDULE = {
     "release-expired-stock-reservations": {
         "task": "operations.tasks.release_expired_stock_reservations",
@@ -206,3 +209,25 @@ CELERY_BEAT_SCHEDULE = {
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "PixelCore <noreply@pixelcore.local>")
+
+# Optional installed shared builder; the sibling checkout is also a local development source.
+WEBSITE_BUILDER_ROOT = Path(os.getenv("WEBSITE_BUILDER_ROOT", str(BASE_DIR.parent.parent / "website-builder")))
+_builder_python = WEBSITE_BUILDER_ROOT / "python"
+if (_builder_python / "website_builder").is_dir():
+    sys.path.insert(0, str(_builder_python))
+    INSTALLED_APPS.append("website_builder")
+    WEBSITE_BUILDER_UPLOAD_MEDIA = "content.builder_bridge.upload_media"
+    WEBSITE_BUILDER_AUTHORIZE = "content.builder_bridge.authorize"
+    WEBSITE_BUILDER_RESOLVE_DATA = "content.builder_bridge.resolve_data"
+    WEBSITE_BUILDER_REVIEW_DATA = "content.builder_bridge.review_data"
+    WEBSITE_BUILDER_CAPABILITIES = "content.builder_bridge.capabilities"
+    WEBSITE_BUILDER_AFTER_PUBLISH = "content.builder_bridge.after_publish"
+    WEBSITE_BUILDER_VALIDATE_GLOBAL_PUBLISH = "content.builder_bridge.validate_global_publish"
+    WEBSITE_BUILDER_FRONTEND_URL = PIXELCORE_FRONTEND_URL
+
+STUDIO_FRONTEND_ORIGIN = os.getenv('STUDIO_FRONTEND_ORIGIN', 'http://localhost:4173')
+_studio_client_file = BASE_DIR.parent.parent / 'website-builder' / '.data' / 'platform-client.key'
+STUDIO_CLIENT_SECRET = os.getenv('STUDIO_CLIENT_SECRET', '') or (_studio_client_file.read_text().strip() if DEBUG and _studio_client_file.is_file() else '')
+
+# Public builder pages expose an explicit per-business analytics choice.
+WEBSITE_BUILDER_ANALYTICS_CONSENT_AVAILABLE = True

@@ -718,6 +718,8 @@ class VenueEventWebsiteView(APIView):
         )
         serializer.is_valid(raise_exception=True)
         event = serializer.save()
+        from content.builder_bridge import retire_publication
+        retire_publication(business,"event",event)
         project_venue_event(event, request.user)
         if event.website_enabled and not event.website_published_at:
             event.website_published_at = timezone.now()
@@ -1130,6 +1132,9 @@ def public_event_payload(event, request):
         event,
         context={"request": request, "public": True},
     ).data
+    from content.builder_bridge import public_payload
+    visual = public_payload(request,business,"event",event)
+    if visual:payload["builder"] = visual
     return payload
 
 
@@ -1253,6 +1258,13 @@ def event_rsvp_deadline(event):
 
 
 class PublicEventRsvpView(APIView):
+    def finalize_response(self, request, response, *args, **kwargs):
+        response=super().finalize_response(request,response,*args,**kwargs)
+        response['Cache-Control']='no-store, private'
+        response['X-Robots-Tag']='noindex, nofollow'
+        response['Referrer-Policy']='no-referrer'
+        return response
+
     permission_classes = [AllowAny]
     authentication_classes = []
 

@@ -26,7 +26,7 @@ def create_revision(page, content, actor):
         created_by=actor,
     )
     page.draft_revision = revision
-    page.status = "draft"
+    page.status = "published" if page.published_revision_id else "draft"
     page.save(update_fields=["draft_revision", "status", "updated_at"])
     record_audit(page.site.business, actor, "site.revision_created", "page_revision", revision.public_id, {"page": str(page.public_id)})
     return revision

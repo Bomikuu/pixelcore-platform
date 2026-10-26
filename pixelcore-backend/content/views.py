@@ -157,6 +157,8 @@ class PagePublishView(APIView):
         if revision is None:
             raise ValidationError({"revision_public_id": "Create a revision before publishing."})
         publish_revision(page, revision, request.user)
+        from .builder_bridge import retire_publication
+        retire_publication(business,"page",page)
         page.refresh_from_db()
         return Response(SitePageSerializer(page).data)
 
@@ -214,9 +216,15 @@ class SiteDomainVerifyView(APIView):
         return Response(SiteDomainSerializer(domain).data)
 
 
-def manifest_response(request, page, preview=False):
-    revision = page.draft_revision if preview else page.published_revision
+def manifest_response(request, page, preview=False, revision_override=None):
+    revision = revision_override or (page.draft_revision if preview else page.published_revision)
     if revision is None:
+        from .builder_bridge import public_payload, public_seo
+        visual = public_payload(request,page.site.business,"page",page) if not preview else None
+        if visual:
+            payload = {"identity":PublicBusinessIdentitySerializer(page.site.business,context={"request":request}).data,"site":{"navigation":page.site.navigation},"page":{"title":page.title},"assets":[],"builder":visual,"builderFrame":visual["data"].get("frame"),"seo":{"title":page.title,"description":page.seo_description,"robots":"noindex,nofollow" if page.no_index else "index,follow","canonical":f"{settings.PIXELCORE_FRONTEND_URL}/site/{page.site.business.slug}","json_ld":{}}}
+            payload['seo'] = public_seo(visual, payload['seo'])
+            return Response(payload)
         return Response({"error": {"code": "NOT_FOUND", "message": "Published page not found.", "details": {}}}, status=404)
     business = page.site.business
     canonical_host = page.site.domains.filter(is_active=True, verified_at__isnull=False).values_list("hostname", flat=True).first()
@@ -270,6 +278,13 @@ def manifest_response(request, page, preview=False):
             "json_ld": {"@context": "https://schema.org", "@graph": graph},
         },
     }
+    from .builder_bridge import public_payload, public_seo
+    visual = public_payload(request,business,"page",page) if not preview else None
+    if visual:
+        payload["builder"] = visual
+        payload["seo"] = public_seo(visual, payload["seo"])
+    from .builder_bridge import frame_data, enabled
+    if enabled() and not preview:payload["builderFrame"]=frame_data(business,page.site)
     return Response(payload)
 
 
@@ -292,7 +307,10 @@ class PublicSitemapView(APIView):
         if domain is None:
             return HttpResponse(status=404)
         urls = []
+        from .builder_bridge import hidden_builder_pages
+        hidden = hidden_builder_pages(domain.site.business)
         for page in domain.site.pages.filter(status="published", no_index=False).order_by("id"):
+            if f"page:{page.public_id}" in hidden: continue
             path = "" if page.page_type == "home" else f"/{page.slug}"
             urls.append(f"<url><loc>https://{domain.hostname}{path}</loc></url>")
         body = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(urls) + "</urlset>"
@@ -334,8 +352,9 @@ class PublicPagePreviewView(APIView):
             payload = read_preview_token(request.query_params.get("token", ""))
         except signing.BadSignature:
             return Response({"error": {"code": "INVALID_PREVIEW", "message": "This preview link is invalid or expired.", "details": {}}}, status=404)
-        page = get_object_or_404(SitePage.objects.select_related("site__business", "draft_revision"), public_id=payload["page"], draft_revision__public_id=payload["revision"])
-        return manifest_response(request, page, preview=True)
+        page = get_object_or_404(SitePage.objects.select_related("site__business", "draft_revision"), public_id=payload["page"], site__business__status="active")
+        revision = get_object_or_404(PageRevision, page=page, public_id=payload["revision"])
+        return manifest_response(request, page, preview=True, revision_override=revision)
 
 
 class PublicHostManifestView(APIView):

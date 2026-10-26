@@ -24,3 +24,8 @@ urlpatterns = [
     path("public/site/robots.txt", PublicRobotsView.as_view()),
     path("internal/domains/authorize/", InternalDomainAuthorizationView.as_view()),
 ]
+
+from .builder_bridge import BuilderWorkspaceView
+urlpatterns.append(path("businesses/<uuid:public_id>/website-builder/", BuilderWorkspaceView.as_view()))
+from .studio_bridge import HandoffView, exchange, gateway
+urlpatterns += [path('businesses/<uuid:public_id>/studio/handoffs/', HandoffView.as_view()), path('studio-bridge/exchange/', exchange), path('studio-bridge/gateway/', gateway)]

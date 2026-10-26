@@ -79,3 +79,20 @@ class SiteDomain(models.Model):
     def business(self):
         return self.site.business
 
+
+class StudioHandoff(models.Model):
+    digest = models.CharField(max_length=64, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    business = models.ForeignKey('businesses.Business', on_delete=models.CASCADE)
+    state = models.CharField(max_length=128)
+    audience = models.CharField(max_length=255)
+    expires_at = models.DateTimeField()
+    consumed_at = models.DateTimeField(null=True)
+
+
+class StudioGrant(models.Model):
+    digest = models.CharField(max_length=64, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    business = models.ForeignKey('businesses.Business', on_delete=models.CASCADE)
+    expires_at = models.DateTimeField()
+    revoked_at = models.DateTimeField(null=True)
