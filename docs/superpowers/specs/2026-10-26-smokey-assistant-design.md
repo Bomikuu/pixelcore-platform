@@ -1,7 +1,7 @@
 # Smokey business assistant design
 
 Date: 2026-10-26
-Status: proposed specification; conversational scope approved, written-spec review pending
+Status: approved by the user on 2026-10-26; implementation-plan review pending
 
 ## Purpose and agreed requirements
 
@@ -278,5 +278,5 @@ asset packaging must be verified when a build is explicitly authorized.
 
 ## Review checkpoint
 
-This written spec is ready for user review. Implementation planning begins after
-written-spec approval; product code has not been changed for this design.
+The user approved this written spec on 2026-10-26. The implementation plan is the
+next review artifact; product code has not been changed for this design.
