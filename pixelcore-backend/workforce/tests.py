@@ -72,6 +72,11 @@ class WorkforceIsolationTests(APITestCase):
         self.assertEqual(clock_in.status_code, 201)
         self.assertEqual(clock_in.data["action"], "clock_in")
         self.assertEqual(clock_in.data["employee_name"], "Casey")
+        self.assertEqual(clock_in.data["employee"], {
+            "display_name": "Casey",
+            "job_title": "",
+            "profile_image_url": None,
+        })
 
         reused = self.client.post(
             "/api/devices/attendance/",
@@ -80,6 +85,7 @@ class WorkforceIsolationTests(APITestCase):
             HTTP_X_DEVICE_TOKEN=token,
         )
         self.assertEqual(reused.status_code, 409)
+        self.assertNotIn("employee", reused.data)
 
         clock_out_code, _ = issue_attendance_action_code(self.profile, "clock_out")
         clock_out = self.client.post(
@@ -90,3 +96,47 @@ class WorkforceIsolationTests(APITestCase):
         )
         self.assertEqual(clock_out.status_code, 201)
         self.assertEqual(clock_out.data["action"], "clock_out")
+        self.assertEqual(clock_out.data["employee"], clock_in.data["employee"])
+
+    def test_terminal_confirmation_returns_only_display_profile_fields(self):
+        self.profile.profile_image = "staff/casey.png"
+        self.profile.job_title = "Team lead"
+        self.profile.email = "private@example.com"
+        self.profile.save(update_fields=["profile_image", "job_title", "email"])
+        device = BusinessDevice.objects.create(
+            business=self.business, name="Front terminal", device_type="attendance", created_by=self.owner,
+        )
+        _, token = pair_device(issue_device_pairing_code(device))
+        for action in ("clock_in", "clock_out"):
+            with self.subTest(action=action):
+                code, _ = issue_attendance_action_code(self.profile, action)
+                response = self.client.post(
+                    "/api/devices/attendance/", {"code": code}, format="json", HTTP_X_DEVICE_TOKEN=token,
+                )
+                self.assertEqual(response.status_code, 201)
+                self.assertEqual(response.data["employee"], {
+                    "display_name": "Casey",
+                    "job_title": "Team lead",
+                    "profile_image_url": f"http://testserver{self.profile.profile_image.url}",
+                })
+
+        session = self.client.get("/api/devices/attendance/", HTTP_X_DEVICE_TOKEN=token)
+        self.assertEqual(session.status_code, 200)
+        self.assertNotIn("employee", session.data)
+
+    def test_terminal_cannot_reveal_another_business_employee_profile(self):
+        other_business = Business.objects.create(display_name="Other business", created_by=self.outsider)
+        other_staff = StaffProfile.objects.create(
+            business=other_business, display_name="Other employee", employment_status="active",
+        )
+        device = BusinessDevice.objects.create(
+            business=self.business, name="Front terminal", device_type="attendance", created_by=self.owner,
+        )
+        _, token = pair_device(issue_device_pairing_code(device))
+        code, _ = issue_attendance_action_code(other_staff, "clock_in")
+        response = self.client.post(
+            "/api/devices/attendance/", {"code": code}, format="json", HTTP_X_DEVICE_TOKEN=token,
+        )
+        self.assertEqual(response.status_code, 409)
+        self.assertNotIn("employee", response.data)
+        self.assertNotIn("employee_name", response.data)

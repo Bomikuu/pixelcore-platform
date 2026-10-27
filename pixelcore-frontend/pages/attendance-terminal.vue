@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-dvh w-full min-w-0 bg-muted/35 text-foreground">
+  <main class="attendance-terminal min-h-dvh w-full min-w-0 bg-slate-50 text-foreground dark:bg-background">
     <DevicePairingPanel
       v-if="state === 'unpaired'"
       v-model="pairingCode"
@@ -15,7 +15,7 @@
       setup-source="Operate → Workforce → Terminals"
       :working="working"
       :message="message"
-      :icon="ContactRound"
+      illustration="attendance"
       @submit="pair"
     />
 
@@ -56,18 +56,20 @@
 
     <section
       v-else
-      class="flex min-h-dvh w-full min-w-0 items-center justify-center px-4 py-6 sm:px-6 sm:py-10"
+      class="flex min-h-dvh w-full min-w-0 items-center justify-center px-3 py-4 sm:px-6 sm:py-10"
     >
-      <div class="w-full min-w-0 max-w-5xl overflow-hidden rounded-xl border bg-card md:flex">
-        <aside class="min-w-0 border-b bg-secondary/40 p-5 sm:p-8 md:w-2/5 md:shrink-0 md:border-b-0 md:border-r">
+      <div
+        class="terminal-shell grid w-full min-w-0 max-w-[1232px] overflow-hidden rounded-2xl bg-card md:min-h-[780px] md:grid-cols-[minmax(0,0.39fr)_minmax(0,0.61fr)]"
+      >
+        <aside class="relative flex min-w-0 flex-col border-b bg-secondary/20 p-5 sm:p-8 md:border-b-0 md:border-r md:pb-0 lg:px-10">
           <div class="flex items-center gap-3">
-            <Avatar class="h-12 w-12 shrink-0 border">
+            <Avatar class="h-14 w-14 shrink-0 border border-primary/10">
               <AvatarImage
                 v-if="session.business.logo_url"
                 :src="session.business.logo_url"
                 :alt="`${session.business.display_name} logo`"
               />
-              <AvatarFallback class="bg-background font-bold text-primary">
+              <AvatarFallback class="bg-secondary/60 font-bold text-primary">
                 {{ businessInitials }}
               </AvatarFallback>
             </Avatar>
@@ -79,27 +81,31 @@
             </div>
           </div>
 
-          <div class="my-6 border-y py-6 sm:my-8 sm:py-8">
-            <p class="text-3xl font-bold tracking-tight tabular-nums sm:text-4xl">
+          <div class="my-5 border-y py-5 md:my-6 md:py-7">
+            <p class="whitespace-nowrap text-3xl font-extrabold tracking-tight tabular-nums lg:text-[2.65rem] lg:leading-tight">
               {{ currentTime }}
             </p>
             <p class="mt-2 text-sm leading-6 text-muted-foreground">
               {{ currentDate }}
             </p>
-            <p class="mt-4 flex items-start gap-2 text-xs font-semibold text-primary">
-              <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-              <span class="break-words">{{ session.device.name }} · Connected</span>
+            <p
+              class="mt-4 inline-flex max-w-full items-center gap-3 rounded-full bg-secondary/65 px-4 py-2.5 text-xs font-semibold"
+              :title="session.device.name"
+            >
+              <span class="h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+              <span>Terminal connected</span>
+              <Wifi class="ml-3 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
             </p>
           </div>
 
           <div class="hidden md:block">
-            <h2 class="flex items-center gap-2 text-sm font-bold">
+            <h2 class="flex items-center gap-3 text-sm font-bold lg:text-base">
               <CircleHelp class="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-              From your portal to your workday
+              How to record your attendance
             </h2>
-            <ol class="mt-5 space-y-4">
+            <ol class="mt-4 space-y-4">
               <li v-for="(step, index) in steps" :key="step" class="flex items-start gap-3">
-                <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full border bg-background text-xs font-bold text-primary">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-secondary/65 text-sm font-bold">
                   {{ index + 1 }}
                 </span>
                 <p class="text-sm leading-6 text-muted-foreground">{{ step }}</p>
@@ -107,24 +113,99 @@
             </ol>
           </div>
 
-          <Button
-            variant="ghost"
-            class="mt-4 h-auto max-w-full justify-start gap-2 whitespace-normal px-0 text-xs text-muted-foreground md:mt-8"
-            type="button"
-            @click="unpair"
-          >
-            <Unplug class="h-4 w-4 shrink-0" aria-hidden="true" />
-            Disconnect terminal
-          </Button>
+          <div class="relative mt-4 md:-mx-8 md:mt-auto md:min-h-[245px] md:flex-1 lg:-mx-10">
+            <img
+              src="/images/attendance/terminal-illustration.png"
+              alt=""
+              width="1586"
+              height="992"
+              class="pointer-events-none absolute bottom-0 hidden h-auto w-full select-none md:block"
+              decoding="async"
+            />
+            <div class="relative flex flex-wrap items-center gap-2 md:absolute md:inset-x-0 md:bottom-0 md:bg-gradient-to-t md:from-card md:to-transparent md:px-8 md:pb-6 md:pt-12 lg:px-10">
+              <Button
+                variant="outline"
+                class="h-11 max-w-full gap-2 whitespace-normal bg-card/95 text-xs text-muted-foreground"
+                type="button"
+                :disabled="working"
+                @click="unpair"
+              >
+                <Unplug class="h-4 w-4 shrink-0" aria-hidden="true" />
+                Disconnect terminal
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="h-11 w-11 shrink-0 bg-card/95 text-muted-foreground"
+                type="button"
+                :aria-label="soundEnabled ? 'Mute attendance sound' : 'Enable attendance sound'"
+                :aria-pressed="soundEnabled"
+                :title="soundEnabled ? 'Mute attendance sound' : 'Enable attendance sound'"
+                @click="toggleSound"
+              >
+                <Volume2 v-if="soundEnabled" class="h-4 w-4" aria-hidden="true" />
+                <VolumeX v-else class="h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
         </aside>
 
-        <div class="flex min-w-0 flex-1 items-center justify-center p-5 sm:p-8 lg:p-10">
-          <form class="w-full min-w-0 max-w-sm space-y-6" @submit.prevent="submitCode">
-            <div class="text-center">
-              <div class="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-xl bg-secondary text-primary">
-                <ScanLine class="h-5 w-5" aria-hidden="true" />
+        <div class="terminal-workspace relative flex min-w-0 items-center justify-center overflow-hidden px-5 py-8 sm:p-8 lg:px-14 lg:py-12">
+          <section
+            v-if="confirmation"
+            class="relative z-10 flex min-h-[580px] w-full min-w-0 max-w-lg flex-col items-center justify-center text-center"
+            aria-label="Attendance confirmation"
+          >
+            <div role="status" aria-live="polite" aria-atomic="true" class="w-full">
+              <div class="terminal-success-mark mx-auto mb-7 grid h-14 w-14 place-items-center rounded-full bg-secondary text-primary">
+                <CheckCircle2 class="terminal-success-icon h-7 w-7" aria-hidden="true" />
               </div>
-              <h1 class="text-2xl font-bold tracking-tight">Record your attendance</h1>
+              <Avatar class="mx-auto h-28 w-28 shrink-0 border-4 border-card shadow-sm sm:h-36 sm:w-36">
+                <AvatarImage v-if="confirmation.imageUrl" :src="confirmation.imageUrl" alt="" />
+                <AvatarFallback class="bg-secondary text-3xl font-bold text-primary sm:text-4xl">
+                  {{ confirmation.initials }}
+                </AvatarFallback>
+              </Avatar>
+              <h1
+                ref="confirmationHeading"
+                tabindex="-1"
+                class="mt-7 break-words text-2xl font-bold leading-snug tracking-tight outline-none sm:text-3xl"
+              >
+                {{ confirmation.message }}
+              </h1>
+              <p v-if="confirmation.jobTitle" class="mt-3 break-words text-base text-muted-foreground">
+                {{ confirmation.jobTitle }}
+              </p>
+              <p class="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-semibold text-primary">
+                <span>{{ confirmation.actionLabel }}</span>
+                <time v-if="confirmation.time" :datetime="confirmation.timestamp">
+                  at {{ confirmation.time }}
+                </time>
+              </p>
+            </div>
+            <div class="mt-12 w-full max-w-xs" aria-hidden="true">
+              <p class="text-sm text-muted-foreground">
+                Returning to terminal in {{ secondsRemaining }} {{ secondsRemaining === 1 ? 'second' : 'seconds' }}…
+              </p>
+              <div class="mt-4 h-1 overflow-hidden rounded-full bg-secondary">
+                <div class="h-full rounded-full bg-primary" :style="{ width: `${secondsRemaining / 5 * 100}%` }" />
+              </div>
+            </div>
+            <p class="sr-only">This profile will close automatically after five seconds.</p>
+          </section>
+
+          <form
+            v-else
+            class="relative z-10 w-full min-w-0 max-w-lg space-y-6"
+            novalidate
+            :aria-busy="working"
+            @submit.prevent="submitCode"
+          >
+            <div class="text-center">
+              <div class="mx-auto mb-6 grid h-14 w-14 place-items-center rounded-xl bg-secondary/70 text-primary">
+                <ScanLine class="h-6 w-6" aria-hidden="true" />
+              </div>
+              <h1 class="text-2xl font-bold tracking-tight lg:text-[1.75rem]">Record your attendance</h1>
               <p class="mt-2 text-sm leading-6 text-muted-foreground">
                 Enter the clock-in or clock-out code from your employee portal.
               </p>
@@ -132,26 +213,29 @@
 
             <div class="space-y-3">
               <CodeInput
+                ref="codeInput"
                 v-model="attendanceCode"
                 class="min-w-0"
-                input-class="h-12 w-0 min-w-0 text-xl sm:h-14"
+                input-class="h-12 w-0 min-w-0 rounded-xl bg-muted/15 font-sans text-xl font-semibold sm:h-16 lg:h-[68px]"
                 :length="6"
                 numeric-only
                 label="One-use attendance code"
+                :aria-invalid="messageTone === 'error' && !!message"
+                :aria-describedby="message ? 'attendance-code-help attendance-code-error' : 'attendance-code-help'"
                 :disabled="working"
               />
-              <p class="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <p id="attendance-code-help" class="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <ShieldCheck class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 Single use · Valid for five minutes
               </p>
             </div>
 
-            <div class="grid grid-cols-3 gap-2" aria-label="Attendance code keypad">
+            <div class="grid grid-cols-3 gap-2.5" role="group" aria-label="Attendance code keypad">
               <Button
                 v-for="key in keypad"
                 :key="key"
                 variant="outline"
-                class="h-12 min-w-0 text-lg font-semibold tabular-nums sm:h-14"
+                class="terminal-key h-14 min-w-0 rounded-xl bg-muted/15 text-xl font-semibold tabular-nums sm:h-16"
                 type="button"
                 :aria-label="keyLabel(key)"
                 :disabled="working"
@@ -166,23 +250,26 @@
 
             <Alert
               v-if="message"
+              id="attendance-code-error"
               class="break-words"
-              :variant="messageTone === 'error' ? 'destructive' : 'default'"
+              variant="destructive"
             >
-              <AlertCircle v-if="messageTone === 'error'" class="h-4 w-4" aria-hidden="true" />
-              <CheckCircle2 v-else class="h-4 w-4" aria-hidden="true" />
-              <AlertTitle>
-                {{ messageTone === "error" ? "Attendance not recorded" : "Attendance recorded" }}
-              </AlertTitle>
+              <AlertCircle class="h-4 w-4" aria-hidden="true" />
+              <AlertTitle>Attendance not recorded</AlertTitle>
               <AlertDescription>{{ message }}</AlertDescription>
             </Alert>
 
             <Button
-              class="h-12 w-full gap-2"
+              class="h-14 w-full gap-3 rounded-xl text-base font-semibold sm:h-16"
               type="submit"
               :disabled="working || attendanceCode.length !== 6"
             >
-              <CheckCircle2 class="h-4 w-4 shrink-0" aria-hidden="true" />
+              <LoaderCircle
+                v-if="working"
+                class="h-5 w-5 shrink-0 animate-spin motion-reduce:animate-none"
+                aria-hidden="true"
+              />
+              <CircleArrowRight v-else class="h-5 w-5 shrink-0" aria-hidden="true" />
               {{ working ? "Checking code…" : "Confirm attendance" }}
             </Button>
           </form>
@@ -196,14 +283,19 @@
 import {
   AlertCircle,
   CheckCircle2,
+  CircleArrowRight,
   CircleHelp,
-  ContactRound,
   Delete,
+  LoaderCircle,
   RefreshCw,
   ScanLine,
   ShieldCheck,
   Unplug,
+  Volume2,
+  VolumeX,
+  Wifi,
 } from "lucide-vue-next";
+import { useAttendanceConfirmation } from "@/composables/useAttendanceConfirmation";
 
 definePageMeta({ layout: "storefront" });
 
@@ -218,7 +310,19 @@ const messageTone = ref("info");
 const session = ref({ business: {}, device: {} });
 const currentTime = ref("");
 const currentDate = ref("");
+const codeInput = ref(null);
+const confirmationHeading = ref(null);
+const soundEnabled = ref(true);
+const {
+  confirmation,
+  secondsRemaining,
+  showConfirmation,
+  clearConfirmation,
+} = useAttendanceConfirmation(focusCode);
 let clockTimer;
+let attendanceRequest;
+let successAudio;
+let disposed = false;
 
 const keypad = [
   "1",
@@ -236,9 +340,9 @@ const keypad = [
 ];
 
 const steps = [
-  "Sign in to your employee portal on your own device.",
-  "Choose clock in or clock out and generate the code.",
-  "Enter that code here to record the attendance action.",
+  "Sign in to your employee portal on your device.",
+  "Choose Clock In or Clock Out and generate the code.",
+  "Enter the code here to record your attendance.",
 ];
 
 const businessInitials = computed(() => {
@@ -252,13 +356,83 @@ const businessInitials = computed(() => {
 
 onMounted(() => {
   deviceToken.value = localStorage.getItem("pixelcore_attendance_token") || "";
+  soundEnabled.value = localStorage.getItem("pixelcore_attendance_sound") !== "off";
   updateClock();
   clockTimer = window.setInterval(updateClock, 1000);
   if (deviceToken.value) loadSession();
   else state.value = "unpaired";
 });
 
-onBeforeUnmount(() => window.clearInterval(clockTimer));
+onBeforeUnmount(() => {
+  disposed = true;
+  window.clearInterval(clockTimer);
+  attendanceRequest?.abort();
+  closeSuccessAudio();
+});
+
+function prepareSuccessAudio() {
+  if (!soundEnabled.value || disposed) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    if (!successAudio || successAudio.state === "closed") successAudio = new AudioContext();
+    // Unlock audio during the submit gesture, before waiting for the attendance API.
+    if (successAudio.state === "suspended") void successAudio.resume().catch(() => {});
+  } catch {
+    // Audio availability must never prevent an attendance action.
+  }
+}
+
+function playSuccessSound() {
+  if (!soundEnabled.value || disposed || successAudio?.state !== "running") return;
+  try {
+    const context = successAudio;
+    const start = context.currentTime;
+    for (const [frequency, delay] of [[740, 0], [988, 0.12]]) {
+      const oscillator = context.createOscillator();
+      const envelope = context.createGain();
+      const noteStart = start + delay;
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      envelope.gain.setValueAtTime(0, noteStart);
+      envelope.gain.linearRampToValueAtTime(0.065, noteStart + 0.015);
+      envelope.gain.exponentialRampToValueAtTime(0.001, noteStart + 0.24);
+      oscillator.connect(envelope);
+      envelope.connect(context.destination);
+      oscillator.onended = () => {
+        oscillator.disconnect();
+        envelope.disconnect();
+      };
+      oscillator.start(noteStart);
+      oscillator.stop(noteStart + 0.26);
+    }
+  } catch {
+    // The recorded confirmation remains successful when sound cannot play.
+  }
+}
+
+function closeSuccessAudio() {
+  if (successAudio && successAudio.state !== "closed") void successAudio.close().catch(() => {});
+  successAudio = undefined;
+}
+
+function toggleSound() {
+  soundEnabled.value = !soundEnabled.value;
+  if (soundEnabled.value) prepareSuccessAudio();
+  else closeSuccessAudio();
+  try {
+    localStorage.setItem("pixelcore_attendance_sound", soundEnabled.value ? "on" : "off");
+  } catch {
+    // Retain the preference for this session if browser storage is unavailable.
+  }
+}
+
+async function focusCode() {
+  await nextTick();
+  if (!disposed && state.value === "ready" && !confirmation.value) {
+    codeInput.value?.focus();
+  }
+}
 
 async function pair() {
   if (working.value || pairingCode.value.length !== 8) return;
@@ -284,6 +458,7 @@ async function pair() {
 }
 
 async function loadSession() {
+  clearConfirmation();
   if (!deviceToken.value) {
     state.value = "unpaired";
     return;
@@ -303,24 +478,33 @@ async function loadSession() {
     state.value = "error";
   } finally {
     working.value = false;
+    await focusCode();
   }
 }
 
 async function submitCode() {
-  if (attendanceCode.value.length !== 6 || working.value) return;
+  if (attendanceCode.value.length !== 6 || working.value || confirmation.value) return;
+  prepareSuccessAudio();
   working.value = true;
   message.value = "";
+  const request = new AbortController();
+  attendanceRequest = request;
   try {
     const response = await $fetch("devices/attendance/", {
       baseURL: config.public.apiBaseUrl,
       method: "POST",
+      signal: request.signal,
       headers: deviceHeaders(),
       body: { code: attendanceCode.value },
     });
-    message.value = actionMessage(response);
-    messageTone.value = "success";
+    if (request.signal.aborted) return;
     attendanceCode.value = "";
+    showConfirmation(response, session.value.business?.timezone || undefined);
+    playSuccessSound();
+    await nextTick();
+    confirmationHeading.value?.focus();
   } catch (error) {
+    if (request.signal.aborted) return;
     if (error?.response?.status === 403 && error?.data?.error?.code === "DEVICE_ACCESS_DENIED") {
       message.value = error.data.error.message;
       state.value = "error";
@@ -331,10 +515,12 @@ async function submitCode() {
     }
   } finally {
     working.value = false;
+    if (!confirmation.value) await focusCode();
   }
 }
 
 function pressKey(key) {
+  if (working.value || confirmation.value) return;
   if (key === "clear") {
     attendanceCode.value = "";
     return;
@@ -353,6 +539,9 @@ function keyLabel(key) {
 }
 
 function unpair() {
+  attendanceRequest?.abort();
+  closeSuccessAudio();
+  clearConfirmation();
   localStorage.removeItem("pixelcore_attendance_token");
   deviceToken.value = "";
   pairingCode.value = "";
@@ -379,16 +568,60 @@ function updateClock() {
     timeZone,
   }).format(now);
 }
-
-function actionMessage(response) {
-  const timestamp = response.action === "clock_out"
-    ? response.record.clock_out
-    : response.record.clock_in;
-  const action = response.action === "clock_out" ? "Clock-out" : "Clock-in";
-  const time = new Date(timestamp).toLocaleTimeString("en-PH", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-  return `${action} recorded for ${response.employee_name} at ${time}.`;
-}
 </script>
+
+<style scoped>
+.terminal-shell {
+  box-shadow: 0 14px 48px -20px hsl(var(--foreground) / 0.2), 0 2px 8px -4px hsl(var(--foreground) / 0.08);
+}
+
+.terminal-workspace::before {
+  position: absolute;
+  right: -19rem;
+  bottom: -5rem;
+  width: 35rem;
+  height: 43rem;
+  border: 4rem solid hsl(var(--secondary) / 0.25);
+  border-radius: 50%;
+  transform: rotate(35deg);
+  content: "";
+  pointer-events: none;
+}
+
+.terminal-key {
+  box-shadow: 0 3px 4px -2px hsl(var(--foreground) / 0.16);
+}
+
+.terminal-key:active {
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .terminal-success-mark {
+    animation: terminal-success-pulse 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .terminal-success-icon :deep(circle) {
+    --terminal-stroke-length: 64;
+    stroke-dasharray: 64;
+    animation: terminal-success-draw 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .terminal-success-icon :deep(path) {
+    --terminal-stroke-length: 16;
+    stroke-dasharray: 16;
+    animation: terminal-success-draw 280ms 140ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes terminal-success-draw {
+  from { stroke-dashoffset: var(--terminal-stroke-length); }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes terminal-success-pulse {
+  from { transform: scale(0.88); }
+  55% { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+</style>

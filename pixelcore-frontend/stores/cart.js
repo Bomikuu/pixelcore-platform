@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { readOrderAccess, rememberOrderAccess } from '@/utils/orderAccess'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({ slug: '', cart: null, token: '', loading: false, error: '', drawerOpen: false }),
@@ -45,8 +46,21 @@ export const useCartStore = defineStore('cart', {
       this.cart = await $fetch(`public/${this.slug}/carts/${this.cart.public_id}/`, { baseURL: config.public.apiBaseUrl, method: 'PATCH', headers: { 'X-Cart-Token': this.token }, body: { discount_code: discountCode } })
       this.persist()
     },
+    orderAccessToken(slug, orderId) {
+      let saved = ''
+      try { if (import.meta.client) saved = readOrderAccess(localStorage, slug, orderId) } catch {}
+      return saved || (this.slug === slug ? this.token : '')
+    },
+    rememberOrder(orderId, token = this.token, slug = this.slug) {
+      try { if (import.meta.client) rememberOrderAccess(localStorage, slug, orderId, token) } catch {}
+    },
     async checkout(payload) {
-      const config = useRuntimeConfig(); const response = await $fetch(`public/${this.slug}/carts/${this.cart.public_id}/checkout/`, { baseURL: config.public.apiBaseUrl, method: 'POST', headers: { 'X-Cart-Token': this.token, 'Idempotency-Key': crypto.randomUUID() }, body: payload }); this.cart.status = 'converted'; this.persist(); return response
+      const config = useRuntimeConfig()
+      const slug = this.slug, cartId = this.cart.public_id, token = this.token
+      const response = await $fetch(`public/${slug}/carts/${cartId}/checkout/`, { baseURL: config.public.apiBaseUrl, method: 'POST', headers: { 'X-Cart-Token': token, 'Idempotency-Key': crypto.randomUUID() }, body: payload })
+      this.rememberOrder(response.public_id, token, slug)
+      if (this.slug === slug && this.cart?.public_id === cartId) { this.cart.status = 'converted'; this.persist() }
+      return response
     },
   },
 })

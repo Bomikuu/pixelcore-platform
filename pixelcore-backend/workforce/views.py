@@ -413,6 +413,15 @@ class AttendanceTerminalView(APIView):
             {
                 "action": action,
                 "employee_name": staff.display_name,
+                "employee": {
+                    "display_name": staff.display_name,
+                    "job_title": staff.job_title,
+                    "profile_image_url": (
+                        request.build_absolute_uri(staff.profile_image.url)
+                        if staff.profile_image
+                        else None
+                    ),
+                },
                 "record": AttendanceRecordSerializer(record).data,
             },
             status=status.HTTP_201_CREATED,

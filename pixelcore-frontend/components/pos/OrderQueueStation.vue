@@ -10,7 +10,7 @@
       :action-label="`Pair ${screenName}`"
       :working="pairing"
       :message="message"
-      :icon="mode === 'delivery' ? Truck : PackageCheck"
+      illustration="fulfillment"
       @submit="pair"
     />
 

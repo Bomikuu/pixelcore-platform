@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-dvh bg-muted/35 text-foreground">
+  <main class="pos-terminal min-h-dvh bg-muted/25 text-foreground">
     <DevicePairingPanel
       v-if="state === 'unpaired'"
       v-model="code"
@@ -14,7 +14,7 @@
       action-label="Pair counter"
       :working="working"
       :message="message"
-      :icon="ScanLine"
+      illustration="pos"
       @submit="pair"
     />
 
@@ -75,12 +75,13 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <Badge variant="outline" class="hidden gap-1.5 sm:flex"
+          <Badge variant="outline" class="hidden gap-1.5 sm:flex" role="status"
             ><span
-              class="h-2 w-2 rounded-full bg-emerald-500"
+              class="h-2 w-2 rounded-full"
+              :class="online ? 'bg-emerald-500' : 'bg-amber-500'"
               aria-hidden="true"
             />
-            Live · R{{ session.revision }}</Badge
+            {{ online ? 'Live' : 'Offline' }} · R{{ session.revision }}</Badge
           >
           <span
             class="hidden text-sm font-semibold tabular-nums text-muted-foreground md:inline"
@@ -94,19 +95,29 @@
             @click="load"
             ><RefreshCw class="h-4 w-4" aria-hidden="true" /> Refresh</Button
           >
-          <Button
-            variant="ghost"
-            size="sm"
-            type="button"
-            aria-label="Unpair this counter"
-            @click="unpair"
-            ><Unplug class="h-4 w-4" aria-hidden="true"
-          /></Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button variant="outline" size="sm" type="button" class="gap-2">
+                <Settings2 class="h-4 w-4" aria-hidden="true" />
+                <span class="hidden sm:inline">{{ strictMode ? 'Strict controls' : 'Standard controls' }}</span>
+                <ChevronDown class="h-3.5 w-3.5" aria-hidden="true" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" class="w-64">
+              <DropdownMenuLabel>Register controls</DropdownMenuLabel>
+              <p class="px-2 pb-3 text-xs leading-5 text-muted-foreground">{{ strictMode ? 'Item reductions, discounts, voids, and refunds require manager approval.' : 'Controls follow this station’s settings in Sell → POS.' }}</p>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem @select="shortcutsOpen = true"><Keyboard class="h-4 w-4" /> Keyboard shortcuts</DropdownMenuItem>
+              <DropdownMenuItem :disabled="working" @select="load"><RefreshCw class="h-4 w-4" /> Refresh counter</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem :disabled="working" class="text-destructive" @select="unpair"><Unplug class="h-4 w-4" /> Disconnect counter</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
       <nav
-        class="sticky top-16 z-20 flex min-h-12 items-center gap-1 border-b bg-background px-4 sm:px-6"
+        class="flex min-h-14 flex-wrap items-center gap-1 border-b bg-background px-4 py-1.5 sm:px-6"
         aria-label="Register mode"
       >
         <Button
@@ -115,7 +126,7 @@
           class="h-10 px-3"
           :class="
             registerMode === 'sale'
-              ? 'bg-secondary text-primary hover:bg-secondary'
+              ? 'bg-primary text-primary-foreground hover:bg-primary/90'
               : 'text-muted-foreground'
           "
           :aria-current="registerMode === 'sale' ? 'page' : undefined"
@@ -152,17 +163,17 @@
             type="button"
             @click="openTransactions"
             ><History class="h-4 w-4" aria-hidden="true" /> Recent</Button
-          ><Badge variant="outline" class="hidden gap-1.5 sm:flex"
-            ><ShieldCheck class="h-3.5 w-3.5" aria-hidden="true" />{{
-              strictMode ? "Strict controls" : "Standard controls"
-            }}</Badge
           >
+          <div v-if="registerMode === 'sale'" class="ml-2 flex items-center rounded-lg border bg-card p-0.5" role="group" aria-label="Catalog view">
+            <Button variant="ghost" size="icon" type="button" class="h-8 w-9" :class="catalogView === 'grid' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''" :aria-pressed="catalogView === 'grid'" aria-label="Grid view" @click="setCatalogView('grid')"><LayoutGrid class="h-4 w-4" aria-hidden="true" /></Button>
+            <Button variant="ghost" size="icon" type="button" class="h-8 w-9" :class="catalogView === 'list' ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''" :aria-pressed="catalogView === 'list'" aria-label="List view" @click="setCatalogView('list')"><List class="h-4 w-4" aria-hidden="true" /></Button>
+          </div>
         </div>
       </nav>
 
       <div
         v-if="registerMode === 'sale'"
-        class="grid min-h-0 flex-1 xl:grid-cols-[minmax(0,1fr)_28rem]"
+        class="pos-sale-layout grid min-h-0 flex-1 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_26rem] 2xl:grid-cols-[minmax(0,1fr)_28rem]"
       >
         <section class="min-w-0 p-4 sm:p-6" aria-labelledby="catalog-heading">
           <div
@@ -171,7 +182,7 @@
             <div>
               <h1
                 id="catalog-heading"
-                class="text-2xl font-extrabold tracking-[-0.025em]"
+                class="display-face text-3xl font-semibold tracking-[-0.025em]"
               >
                 Catalog
               </h1>
@@ -180,8 +191,8 @@
               </p>
             </div>
             <div class="relative w-full lg:max-w-md">
-              <ScanBarcode
-                class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              <Search
+                class="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-muted-foreground"
                 aria-hidden="true"
               /><label class="sr-only" for="terminal-search"
                 >Search or scan an item</label
@@ -189,54 +200,27 @@
                 id="terminal-search"
                 ref="searchInput"
                 v-model="search"
-                class="pl-10"
+                class="h-11 bg-card pl-10 pr-24 shadow-none"
                 placeholder="Search name, SKU, or scan barcode"
                 autocomplete="off"
-                @keyup.enter="addExactMatch"
+                @keydown.enter="handleSearchEnter"
               />
+              <div class="absolute right-1 top-1 flex items-center">
+                <Button v-if="search" variant="ghost" size="icon" class="h-9 w-9" type="button" aria-label="Clear product search" @click="clearSearch"><X class="h-4 w-4" aria-hidden="true" /></Button>
+                <Button variant="ghost" size="icon" class="h-9 w-10 border-l rounded-l-none" type="button" aria-label="Open barcode scanner (F4)" title="Scan barcode · F4" :disabled="working || !online" @click="scannerOpen = true"><ScanBarcode class="h-5 w-5" aria-hidden="true" /></Button>
+              </div>
+              <p class="mt-2 break-words text-xs text-muted-foreground" role="status" aria-live="polite" :class="scanFeedback.tone === 'error' ? 'text-destructive' : scanFeedback.tone === 'success' ? 'text-primary' : ''">
+                {{ scanFeedback.text || `${filtered.length} items · Scan a barcode, or press F2 to search` }}
+              </p>
             </div>
           </div>
 
-          <section
-            v-if="favoriteOfferings.length"
-            class="mt-5"
-            aria-labelledby="quick-items-heading"
-          >
-            <div class="flex items-center gap-2">
-              <Star class="h-4 w-4 text-primary" aria-hidden="true" />
-              <h2 id="quick-items-heading" class="text-sm font-extrabold">
-                Quick items
-              </h2>
-            </div>
-            <div class="mt-2 flex gap-2 overflow-x-auto pb-2">
-              <Button
-                v-for="offering in favoriteOfferings"
-                :key="offering.public_id"
-                variant="outline"
-                class="h-auto shrink-0 gap-3 px-3 py-2 text-left"
-                type="button"
-                @click="beginAdd(offering)"
-                ><ProductArtwork
-                  class="h-10 w-10 overflow-hidden rounded-md"
-                  :name="offering.name"
-                  :type="offering.offering_type"
-                  :media="offering.media"
-                /><span
-                  ><strong class="block max-w-36 truncate text-sm">{{
-                    offering.name
-                  }}</strong
-                  ><span class="block text-xs text-muted-foreground">{{
-                    money(offering.base_price)
-                  }}</span></span
-                ></Button
-              >
-            </div>
-          </section>
 
           <div
             class="mt-5 flex gap-2 overflow-x-auto pb-2"
             aria-label="Catalog categories"
           >
+            <Button v-if="favoriteOfferings.length" :variant="showFavoritesOnly ? 'default' : 'outline'" size="sm" class="shrink-0 gap-2 rounded-full" type="button" :aria-pressed="showFavoritesOnly" @click="showFavoritesOnly = !showFavoritesOnly"><Star class="h-3.5 w-3.5" aria-hidden="true" /> Quick items</Button>
             <Button
               v-for="category in categories"
               :key="category"
@@ -263,60 +247,31 @@
                 : 'Publish a product from the workspace before using this counter.'
             "
           />
-          <div
-            v-else
-            class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-          >
-            <Button
+          <div v-else class="mt-4" :class="catalogView === 'grid' ? 'pos-catalog-grid' : 'grid gap-3'">
+            <PosCatalogItem
               v-for="offering in filtered"
               :key="offering.public_id"
-              variant="ghost"
-              type="button"
-              class="group h-auto min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-2xl border bg-card p-0 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card hover:shadow-md"
-              @click="beginAdd(offering)"
-            >
-              <ProductArtwork
-                :name="offering.name"
-                :type="offering.offering_type"
-                :media="offering.media"
-              />
-              <div class="p-4">
-                <div class="flex items-start justify-between gap-3">
-                  <p class="line-clamp-2 font-extrabold leading-5">
-                    {{ offering.name }}
-                  </p>
-                  <Plus
-                    class="mt-0.5 h-5 w-5 shrink-0 text-primary transition-transform group-hover:scale-110"
-                    aria-hidden="true"
-                  />
-                </div>
-                <p class="mt-2 truncate text-xs text-muted-foreground">
-                  {{
-                    offering.category_name || typeLabel(offering.offering_type)
-                  }}<span v-if="offering.sku"> · {{ offering.sku }}</span>
-                </p>
-                <p
-                  class="mt-4 text-lg font-extrabold tabular-nums text-primary"
-                >
-                  {{ money(offering.base_price) }}
-                </p>
-              </div>
-            </Button>
+              :offering="offering"
+              :price="money(offering.base_price)"
+              :view="catalogView"
+              :favorite="favoriteOfferings.some((favorite) => favorite.public_id === offering.public_id)"
+              :disabled="working || !online"
+              @add="beginAdd"
+            />
           </div>
         </section>
 
         <aside
-          class="flex min-h-[34rem] flex-col border-t bg-background xl:sticky xl:top-16 xl:h-[calc(100dvh-4rem)] xl:border-l xl:border-t-0"
+          class="pos-current-order m-4 mt-0 flex min-h-[34rem] min-w-0 flex-col overflow-hidden rounded-2xl bg-card shadow-sm sm:mx-6 lg:sticky lg:top-20 lg:ml-0 lg:mt-4 lg:h-[calc(100dvh-9rem)] lg:min-h-0"
           aria-labelledby="sale-heading"
         >
-          <div class="flex items-center justify-between border-b px-5 py-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
             <div>
-              <h2 id="sale-heading" class="text-lg font-extrabold">
+              <h2 id="sale-heading" class="display-face text-2xl font-semibold">
                 Current order
               </h2>
               <p class="mt-0.5 text-xs text-muted-foreground">
-                {{ cartCount }} item{{ cartCount === 1 ? "" : "s" }} · Live on
-                paired display
+                {{ cartCount }} item{{ cartCount === 1 ? "" : "s" }} · {{ working ? 'Updating order' : 'Server-priced order' }}
               </p>
             </div>
             <div v-if="cart.length" class="flex gap-1">
@@ -420,7 +375,7 @@
                     :aria-label="`Remove ${item.name}`"
                     :disabled="working"
                     @click="requestRemoveItem(index)"
-                    >Remove</Button
+                    ><Trash2 class="h-4 w-4" aria-hidden="true" /></Button
                   >
                 </div>
               </article>
@@ -519,17 +474,21 @@
               ><AlertDescription>{{ message }}</AlertDescription></Alert
             >
             <Button
-              class="mt-4 h-12 w-full text-base"
+              class="mt-4 h-12 w-full min-w-0 text-sm sm:text-base"
               type="button"
-              :disabled="working || !cart.length"
+              :disabled="working || !cart.length || !online"
               @click="openPayment"
               ><CreditCard class="h-5 w-5" aria-hidden="true" />
-              {{
+              <span class="min-w-0 truncate">{{
                 working
                   ? "Updating…"
                   : `Take payment · ${money(session.cart.grand_total)}`
-              }}</Button
+              }}</span></Button
             >
+            <div class="mt-3 grid grid-cols-2 gap-3">
+              <Button variant="outline" type="button" class="h-11 gap-2 px-2 text-xs sm:text-sm" :disabled="working || !cart.length || !online" @click="openHold"><Bookmark class="h-4 w-4" aria-hidden="true" /> Save order</Button>
+              <Button variant="outline" type="button" class="h-11 gap-2 px-2 text-xs sm:text-sm" :disabled="working || !online" @click="openTransactions"><Printer class="h-4 w-4" aria-hidden="true" /> Receipts</Button>
+            </div>
           </div>
         </aside>
       </div>
@@ -1462,6 +1421,15 @@
           </form></DialogContent
         >
       </Dialog>
+      <PosScannerDialog v-model:open="scannerOpen" @scan="scanCode" />
+      <Dialog v-model:open="shortcutsOpen">
+        <DialogContent class="sm:max-w-md">
+          <DialogHeader><DialogTitle>Register shortcuts</DialogTitle><DialogDescription>Use these while the catalog is open. Product search also accepts USB and Bluetooth barcode readers.</DialogDescription></DialogHeader>
+          <dl class="divide-y">
+            <div v-for="shortcut in shortcuts" :key="shortcut.key" class="flex items-center justify-between gap-4 py-3 text-sm"><dt>{{ shortcut.label }}</dt><dd class="rounded-md border bg-muted px-2 py-1 font-semibold">{{ shortcut.key }}</dd></div>
+          </dl>
+        </DialogContent>
+      </Dialog>
     </section>
   </main>
 </template>
@@ -1470,10 +1438,15 @@
 import {
   AlertCircle,
   Banknote,
+  Bookmark,
   Check,
+  ChevronDown,
   CreditCard,
   History,
+  Keyboard,
   Landmark,
+  LayoutGrid,
+  List,
   Mail,
   MapPin,
   MessageSquareText,
@@ -1487,6 +1460,8 @@ import {
   RotateCcw,
   ScanBarcode,
   ScanLine,
+  Search,
+  Settings2,
   ShieldCheck,
   ShoppingBag,
   ShoppingBasket,
@@ -1498,8 +1473,13 @@ import {
   Unplug,
   UserRound,
   WalletCards,
+  X,
 } from "lucide-vue-next";
 import { toast } from "@/components/ui/toast";
+import PosCatalogItem from "@/components/pos/PosCatalogItem.vue";
+import PosScannerDialog from "@/components/pos/PosScannerDialog.vue";
+import { usePosBarcodeReader } from "@/composables/usePosBarcodeReader";
+import { findPosCodeMatches, matchesPosSearch } from "@/utils/posCatalog";
 
 definePageMeta({ layout: "storefront" });
 const config = useRuntimeConfig();
@@ -1522,6 +1502,12 @@ const session = ref({
 const cart = ref([]);
 const search = ref("");
 const searchInput = ref(null);
+const catalogView = ref("grid");
+const showFavoritesOnly = ref(false);
+const scannerOpen = ref(false);
+const shortcutsOpen = ref(false);
+const online = ref(true);
+const scanFeedback = ref({ text: "", tone: "info" });
 const activeCategory = ref("All");
 const discountCode = ref("");
 const configuring = ref(null);
@@ -1587,6 +1573,17 @@ const refundOpen = ref(false);
 const refundTarget = ref(null);
 const refundReason = ref("");
 const refundError = ref("");
+const shortcuts = [
+  { key: "F2 / Ctrl K", label: "Focus product search" },
+  { key: "F4", label: "Open barcode scanner" },
+  { key: "F8", label: "Take payment" },
+  { key: "Ctrl Shift H", label: "Hold current sale" },
+];
+
+usePosBarcodeReader({
+  enabled: () => state.value === "ready" && registerMode.value === "sale" && online.value && !working.value,
+  onScan: scanCode,
+});
 
 const categories = computed(() => [
   "All",
@@ -1602,10 +1599,8 @@ const filtered = computed(() =>
     const category = item.category_name || typeLabel(item.offering_type);
     return (
       (activeCategory.value === "All" || category === activeCategory.value) &&
-      (!query ||
-        `${item.name} ${item.sku || ""} ${item.metadata?.barcode || ""} ${category}`
-          .toLowerCase()
-          .includes(query))
+      (!showFavoritesOnly.value || (stationControls.value.favorite_offering_ids || []).includes(item.public_id)) &&
+      matchesPosSearch(item, query)
     );
   }),
 );
@@ -1685,9 +1680,15 @@ const deviceHeaders = () => ({ "X-Device-Token": token.value });
 
 onMounted(() => {
   token.value = localStorage.getItem("pixelcore_pos_token") || "";
+  online.value = navigator.onLine;
+  try {
+    const savedView = localStorage.getItem("pixelcore_pos_catalog_view");
+    if (["grid", "list"].includes(savedView)) catalogView.value = savedView;
+  } catch {}
   updateClock();
   clockTimer = window.setInterval(updateClock, 30000);
   window.addEventListener("online", handleOnline);
+  window.addEventListener("offline", handleOffline);
   window.addEventListener("keydown", handleShortcut);
   if (token.value) {
     load();
@@ -1698,6 +1699,7 @@ onBeforeUnmount(() => {
   window.clearInterval(clockTimer);
   window.clearInterval(deliveryPoller);
   window.removeEventListener("online", handleOnline);
+  window.removeEventListener("offline", handleOffline);
   window.removeEventListener("keydown", handleShortcut);
 });
 
@@ -1725,6 +1727,8 @@ async function pair() {
   }
 }
 async function load() {
+  scannerOpen.value = false;
+  scanFeedback.value = { text: "", tone: "info" };
   state.value = "loading";
   message.value = "";
   try {
@@ -1738,7 +1742,7 @@ async function load() {
     session.value = response.session;
     stationControls.value = response.station_controls || { strict_mode: false };
     heldSales.value = response.session.held_sales || [];
-    cart.value = response.session.cart.items || [];
+    cart.value = (response.session.cart.items || []).map((item) => ({ ...item }));
     discountCode.value = response.session.cart.discount_code || "";
     state.value = "ready";
     if (
@@ -1753,10 +1757,12 @@ async function load() {
     state.value = "error";
   }
 }
-function beginAdd(offering) {
+async function beginAdd(offering, preferredVariantId = "") {
+  if (working.value || !online.value) return false;
   configuring.value = offering;
   configurationError.value = "";
   selectedVariantId.value =
+    offering.variants.find((item) => item.is_active && item.public_id === preferredVariantId)?.public_id ||
     offering.variants.find((item) => item.is_active)?.public_id || "";
   selectedOptionIds.value = offering.option_groups.flatMap((group) =>
     group.minimum_choices
@@ -1768,22 +1774,59 @@ function beginAdd(offering) {
   );
   if (
     !offering.option_groups.length &&
-    !offering.variants.some((item) => item.is_active)
+    (!offering.variants.some((item) => item.is_active) || preferredVariantId)
   )
-    addConfigured();
+    return await addConfigured();
+  return null;
 }
-function addExactMatch() {
-  const query = search.value.trim().toLowerCase();
-  if (!query) return;
-  const exact = offerings.value.find((item) =>
-    [item.sku, item.metadata?.barcode]
-      .filter(Boolean)
-      .some((value) => String(value).toLowerCase() === query),
-  );
-  if (exact) {
-    beginAdd(exact);
-    search.value = "";
+async function addExactMatch() {
+  await scanCode(search.value, true);
+}
+function handleSearchEnter(event) {
+  if (event.isComposing) return;
+  event.preventDefault();
+  addExactMatch();
+}
+async function scanCode(value, allowName = false) {
+  if (working.value || state.value !== "ready" || !online.value) return;
+  const codeValue = String(value || "").trim().slice(0, 120);
+  if (!codeValue) return;
+  let matches = findPosCodeMatches(offerings.value, codeValue);
+  if (!matches.length && allowName) {
+    matches = offerings.value.filter((offering) => offering.name.toLowerCase() === codeValue.toLowerCase()).map((offering) => ({ offering, variantId: "" }));
   }
+  registerMode.value = "sale";
+  activeCategory.value = "All";
+  showFavoritesOnly.value = false;
+  if (matches.length !== 1) {
+    search.value = codeValue;
+    scanFeedback.value = { tone: "error", text: matches.length ? "More than one item uses this code. Choose the correct product and variant." : `No item matches “${codeValue}”. Check the code or search by name.` };
+    await focusSearch();
+    return;
+  }
+  const { offering, variantId } = matches[0];
+  search.value = "";
+  const added = await beginAdd(offering, variantId);
+  scanFeedback.value = added === null
+    ? { tone: "info", text: `Choose options for ${offering.name} to finish adding it.` }
+    : added
+      ? { tone: "success", text: `Added ${offering.name}${variantId ? ' · Matched variant' : ''}` }
+      : { tone: "error", text: `${offering.name} was not added. Review the order message and try again.` };
+  if (added) await focusSearch();
+}
+async function focusSearch() {
+  registerMode.value = "sale";
+  await nextTick();
+  searchInput.value?.$el?.focus?.();
+}
+function clearSearch() {
+  search.value = "";
+  scanFeedback.value = { text: "", tone: "info" };
+  focusSearch();
+}
+function setCatalogView(view) {
+  catalogView.value = view;
+  try { localStorage.setItem("pixelcore_pos_catalog_view", view); } catch {}
 }
 function handleConfiguringOpen(open) {
   if (!open) configuring.value = null;
@@ -1794,6 +1837,7 @@ function selectedCount(group) {
   ).length;
 }
 async function addConfigured() {
+  if (working.value || !online.value || !configuring.value) return false;
   const offering = configuring.value;
   const invalidGroup = offering.option_groups.find(
     (group) =>
@@ -1802,12 +1846,20 @@ async function addConfigured() {
   );
   if (invalidGroup) {
     configurationError.value = `Choose between ${invalidGroup.minimum_choices} and ${invalidGroup.maximum_choices} options for ${invalidGroup.name}.`;
-    return;
+    return false;
   }
   const options = offering.option_groups
     .flatMap((group) => group.options)
     .filter((option) => selectedOptionIds.value.includes(option.public_id));
-  cart.value.push({
+  const selectedIds = options.map((option) => option.public_id).sort();
+  const existing = cart.value.find((item) =>
+    item.offering_public_id === offering.public_id &&
+    (item.variant_public_id || "") === (selectedVariantId.value || "") &&
+    !item.note &&
+    JSON.stringify([...(item.option_public_ids || item.options?.map((option) => option.public_id) || [])].sort()) === JSON.stringify(selectedIds),
+  );
+  if (existing) existing.quantity = Number(existing.quantity) + 1;
+  else cart.value.push({
     offering_public_id: offering.public_id,
     variant_public_id: selectedVariantId.value || null,
     name: offering.name,
@@ -1817,8 +1869,9 @@ async function addConfigured() {
     options,
   });
   configuring.value = null;
-  await syncCart();
-  toast({ title: "Added to order", description: offering.name });
+  const added = await syncCart();
+  if (added) toast({ title: "Added to order", description: offering.name });
+  return added;
 }
 async function changeQuantity(index, delta, authorizationToken = "") {
   cart.value[index].quantity = Math.max(1, cart.value[index].quantity + delta);
@@ -1832,10 +1885,11 @@ async function clearCart(authorizationToken = "") {
   cart.value = [];
   discountCode.value = "";
   receipt.value = null;
-  await syncCart(authorizationToken);
-  toast({ title: "Sale voided", description: "The current cart was cleared." });
+  if (await syncCart(authorizationToken))
+    toast({ title: "Sale voided", description: "The current cart was cleared." });
 }
 function requestQuantityChange(index, delta) {
+  if (working.value || !online.value) return;
   if (delta < 0 && cart.value[index].quantity <= 1) return;
   if (delta >= 0) {
     changeQuantity(index, delta);
@@ -1848,6 +1902,7 @@ function requestQuantityChange(index, delta) {
   );
 }
 function requestRemoveItem(index) {
+  if (working.value || !online.value) return;
   requireStrictAuthorization(
     "void_items",
     `Remove ${cart.value[index].name} from this sale?`,
@@ -1906,13 +1961,14 @@ async function syncCart(authorizationToken = "") {
         discount_code: discountCode.value,
       },
     });
-    cart.value = session.value.cart.items || [];
+    cart.value = (session.value.cart.items || []).map((item) => ({ ...item }));
     messageTone.value = "info";
+    return true;
   } catch (error) {
-    if (error?.response?.status === 409) {
-      message.value =
-        "This order changed on another screen. The latest server version has been restored.";
+    if (error?.response?.status === 409 && error?.data?.error?.code === "POS_SESSION_CONFLICT") {
       await load();
+      message.value = "This order changed on another screen. The latest server version has been restored.";
+      messageTone.value = "error";
     } else if (
       error?.response?.status === 403 &&
       error?.data?.error?.code === "DEVICE_ACCESS_DENIED"
@@ -1924,14 +1980,16 @@ async function syncCart(authorizationToken = "") {
       message.value =
         error?.data?.error?.message || "The order could not be repriced.";
       messageTone.value = "error";
-      cart.value = session.value.cart.items || [];
+      cart.value = (session.value.cart.items || []).map((item) => ({ ...item }));
       discountCode.value = session.value.cart.discount_code || "";
     }
+    return false;
   } finally {
     working.value = false;
   }
 }
 function openPayment() {
+  if (working.value || !online.value || !cart.value.length) return;
   paymentError.value = "";
   amountTendered.value =
     tenderType.value === "cash"
@@ -1940,6 +1998,7 @@ function openPayment() {
   paymentOpen.value = true;
 }
 async function checkout() {
+  if (working.value || !online.value || !cart.value.length) return;
   if (tenderType.value === "cash" && changeDue.value < 0) {
     paymentError.value = "Cash received must cover the amount due.";
     return;
@@ -2023,10 +2082,12 @@ async function saveItemNote() {
   });
 }
 function openHold() {
+  if (working.value || !online.value || !cart.value.length) return;
   holdLabel.value = customerName.value || "";
   holdOpen.value = true;
 }
 async function holdCurrentSale() {
+  if (working.value || !online.value || !cart.value.length) return;
   working.value = true;
   try {
     session.value = await $fetch("devices/pos/holds/", {
@@ -2070,7 +2131,7 @@ async function resumeHeldSale(hold) {
         headers: deviceHeaders(),
       },
     );
-    cart.value = session.value.cart.items || [];
+    cart.value = (session.value.cart.items || []).map((item) => ({ ...item }));
     heldSales.value = session.value.held_sales || [];
     discountCode.value = session.value.cart.discount_code || "";
     heldOpen.value = false;
@@ -2236,6 +2297,8 @@ async function executeRefund(authorizationToken) {
   }
 }
 function unpair() {
+  scannerOpen.value = false;
+  shortcutsOpen.value = false;
   window.clearInterval(deliveryPoller);
   localStorage.removeItem("pixelcore_pos_token");
   token.value = "";
@@ -2243,7 +2306,13 @@ function unpair() {
   state.value = "unpaired";
 }
 function handleOnline() {
+  online.value = true;
   if (token.value) load();
+}
+function handleOffline() {
+  online.value = false;
+  scannerOpen.value = false;
+  scanFeedback.value = { tone: "error", text: "Offline. Reconnect before adding items or taking payment." };
 }
 function handleDeviceAccessError(error) {
   if (
@@ -2252,6 +2321,7 @@ function handleDeviceAccessError(error) {
   )
     return false;
   paymentOpen.value = false;
+  scannerOpen.value = false;
   deliveryPaymentOrder.value = null;
   transactionsOpen.value = false;
   message.value =
@@ -2260,13 +2330,21 @@ function handleDeviceAccessError(error) {
   return true;
 }
 function handleShortcut(event) {
-  if (
-    (event.ctrlKey || event.metaKey) &&
-    event.key.toLowerCase() === "k" &&
-    state.value === "ready"
-  ) {
+  if (event.isComposing || event.repeat || state.value !== "ready" || working.value || document.querySelector('[role="dialog"][data-state="open"], [role="menu"][data-state="open"]')) return;
+  const key = event.key.toLowerCase();
+  if (key === "f2" || ((event.ctrlKey || event.metaKey) && key === "k")) {
     event.preventDefault();
-    searchInput.value?.$el?.focus?.();
+    focusSearch();
+  } else if (key === "f4" && online.value) {
+    event.preventDefault();
+    registerMode.value = "sale";
+    scannerOpen.value = true;
+  } else if (key === "f8" && registerMode.value === "sale") {
+    event.preventDefault();
+    openPayment();
+  } else if ((event.ctrlKey || event.metaKey) && event.shiftKey && key === "h" && registerMode.value === "sale") {
+    event.preventDefault();
+    openHold();
   }
 }
 function updateClock() {
@@ -2441,6 +2519,22 @@ const money = (value) =>
 </script>
 
 <style>
+.pos-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.pos-terminal button {
+  column-gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .pos-catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  }
+}
+
 @media print {
   body * {
     visibility: hidden !important;

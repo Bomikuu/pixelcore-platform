@@ -17,7 +17,7 @@
       action-label="Pair customer display"
       :working="pairing"
       :message="message"
-      :icon="Monitor"
+      illustration="customer"
       @submit="pair"
     />
 
@@ -284,7 +284,7 @@
 </template>
 
 <script setup>
-import { Check, Monitor, Package, ShoppingBag } from "lucide-vue-next";
+import { Check, Package, ShoppingBag } from "lucide-vue-next";
 
 definePageMeta({ layout: "storefront" });
 const config = useRuntimeConfig();

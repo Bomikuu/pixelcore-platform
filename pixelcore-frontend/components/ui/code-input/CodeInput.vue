@@ -22,6 +22,8 @@ const characters = computed(() =>
   ),
 );
 
+defineExpose({ focus: () => inputs.value[0]?.focus() });
+
 function sanitize(value) {
   const pattern = props.numericOnly ? /[^0-9]/g : /[^A-Z0-9]/g;
   return String(value || "")
