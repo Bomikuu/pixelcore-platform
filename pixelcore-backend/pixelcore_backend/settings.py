@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "catalog",
     "content",
     "commerce",
+    "deliveries.apps.DeliveriesConfig",
     "scheduling",
     "operations",
     "workforce",
@@ -231,3 +232,14 @@ STUDIO_CLIENT_SECRET = os.getenv('STUDIO_CLIENT_SECRET', '') or (_studio_client_
 
 # Public builder pages expose an explicit per-business analytics choice.
 WEBSITE_BUILDER_ANALYTICS_CONSENT_AVAILABLE = True
+
+# Optional assistant package. Installed wheels take precedence over a local checkout.
+import importlib.util
+SMOKEY_ROOT = Path(os.getenv("SMOKEY_ROOT", str(BASE_DIR.parent.parent / "SmokeyChatbot")))
+_smokey_python = Path(os.getenv("SMOKEY_PYTHON_PATH", str(SMOKEY_ROOT / "python")))
+if importlib.util.find_spec("smokey_assistant") is None and (_smokey_python / "smokey_assistant").is_dir():
+    sys.path.insert(0, str(_smokey_python))
+if importlib.util.find_spec("smokey_assistant") is not None:
+    INSTALLED_APPS.append("smokey_assistant")
+    CELERY_BEAT_SCHEDULE["recover-expired-smokey-reports"] = {"task": "businesses.smokey.recover", "schedule": 300.0}
+SMOKEY_ENCRYPTION_KEYS = env_list("SMOKEY_ENCRYPTION_KEYS")

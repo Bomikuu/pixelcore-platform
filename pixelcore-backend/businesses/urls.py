@@ -1,5 +1,7 @@
+from .smokey_integration import SmokeyIntegrationView
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from .search import WorkspaceSearchView
 
 from .views import (
     BusinessAssetListCreateView,
@@ -44,6 +46,8 @@ router = DefaultRouter()
 router.register("businesses", BusinessViewSet, basename="business")
 
 urlpatterns = [
+    path("businesses/<uuid:public_id>/smokey-integration/", SmokeyIntegrationView.as_view(), name="smokey-integration"),
+    path("businesses/<uuid:public_id>/workspace-search/", WorkspaceSearchView.as_view(), name="workspace-search"),
     path("auth/register/", RegistrationView.as_view(), name="register"),
     path("auth/verify-email/", VerifyEmailView.as_view(), name="verify-email"),
     path("auth/resend-verification/", ResendVerificationView.as_view(), name="resend-verification"),
@@ -92,3 +96,8 @@ urlpatterns = [
     path("public/business-cards/<uuid:public_id>/", PublicBusinessCardView.as_view(), name="public-business-card"),
     path("", include(router.urls)),
 ]
+
+# No shared assistant imports when the optional distribution is absent.
+from django.conf import settings
+if "smokey_assistant" in settings.INSTALLED_APPS:
+    urlpatterns.insert(0, path("businesses/<uuid:public_id>/smokey/", include("businesses.smokey_urls")))

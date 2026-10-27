@@ -344,6 +344,8 @@ class MeView(APIView):
 
     def get(self, request):
         memberships = request.user.business_memberships.select_related("business").filter(status="active")
+        from deliveries.services import has_delivery_access
+        delivery_access = has_delivery_access(request.user)
         return Response(
             {
                 "id": request.user.id,
@@ -352,7 +354,8 @@ class MeView(APIView):
                 "last_name": request.user.last_name,
                 "username": request.user.username,
                 "phone": getattr(getattr(request.user, "account_profile", None), "phone", ""),
-                "needs_onboarding": not memberships.exists(),
+                "needs_onboarding": not memberships.exists() and not delivery_access,
+                "has_delivery_access": delivery_access,
                 "businesses": [
                     {
                         "public_id": str(membership.business.public_id),
@@ -669,6 +672,9 @@ class BusinessCapabilityView(APIView):
 
     def patch(self, request, public_id, code):
         business = member_business(request.user, public_id, management=True)
+        if code == "smokey":
+            from .models import BusinessCapability
+            BusinessCapability.objects.get_or_create(business=business, code=code, defaults={"status": "disabled"})
         capability = get_object_or_404(business.capabilities, code=code)
         serializer = BusinessCapabilitySerializer(capability, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)

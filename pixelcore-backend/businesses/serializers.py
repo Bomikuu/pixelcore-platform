@@ -29,7 +29,8 @@ from .services import bootstrap_business, set_capabilities, unique_location_code
 
 
 User = get_user_model()
-ALLOWED_MODULES = set(default_modules())
+from .models import supported_modules
+ALLOWED_MODULES = set(supported_modules())
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp"}
 MAX_IMAGE_SIZE = 5 * 1024 * 1024
 BUSINESS_CARD_SOCIAL_PLATFORMS = {

@@ -61,7 +61,8 @@ def sync_enabled_modules(business):
 @transaction.atomic
 def set_capabilities(business, codes, actor=None):
     normalized = set(codes)
-    for code in default_modules():
+    from .models import supported_modules
+    for code in supported_modules():
         capability, _ = BusinessCapability.objects.get_or_create(business=business, code=code)
         target = "active" if code in normalized else "disabled"
         if capability.status != target:

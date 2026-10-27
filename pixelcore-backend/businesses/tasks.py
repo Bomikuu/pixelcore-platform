@@ -39,3 +39,6 @@ def send_team_invitation(invitation_id, raw_token):
         settings.DEFAULT_FROM_EMAIL,
         [invitation.email],
     )
+
+# Celery autodiscovers tasks.py; assistant imports stay inside task execution.
+from .smokey_tasks import generate_smokey_report, recover_smokey_reports  # noqa: F401

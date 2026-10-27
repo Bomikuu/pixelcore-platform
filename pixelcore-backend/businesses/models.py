@@ -25,6 +25,10 @@ def default_modules():
     return ["site", "sell", "schedule", "operate"]
 
 
+def supported_modules():
+    return [*default_modules(), "smokey"]
+
+
 def business_asset_path(instance, filename):
     return f"businesses/{instance.public_id}/{filename}"
 
@@ -401,6 +405,7 @@ class BusinessCapability(models.Model):
         ("sell", "Sell"),
         ("schedule", "Schedule"),
         ("operate", "Operate"),
+        ("smokey", "Smokey assistant"),
     ]
     STATUS_CHOICES = [("setup", "Setup"), ("active", "Active"), ("disabled", "Disabled")]
 
