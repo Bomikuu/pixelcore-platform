@@ -24,6 +24,7 @@
         </div>
 
         <div class="flex items-center gap-2">
+          <ButtonLink variant="outline" to="/rider/deliveries">My deliveries</ButtonLink>
           <ButtonAnchor
             variant="outline"
             href="/attendance-terminal"

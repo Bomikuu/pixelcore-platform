@@ -140,6 +140,7 @@
                   :key="order.public_id"
                   :order="order"
                   :currency="currency"
+                  :base="base"
                 />
               </div>
               <p v-else class="mt-4 border-y py-8 text-sm text-muted-foreground">
@@ -201,6 +202,7 @@
               :key="order.public_id"
               :order="order"
               :currency="currency"
+              :base="base"
               detailed
             />
           </div>

@@ -676,9 +676,16 @@ watch(() => [view.value, businessId.value, route.query.supplier], () => {
 })
 
 onMounted(async () => {
+  window.addEventListener('pixelcore:operations-created', handleQuickCreate)
   if (!business.activeBusiness) await business.loadBusinesses()
   await Promise.all([loadReferences(), load()])
 })
+
+onBeforeUnmount(() => window.removeEventListener('pixelcore:operations-created', handleQuickCreate))
+
+async function handleQuickCreate(event) {
+  if (event.detail?.businessId === businessId.value) await Promise.all([loadReferences(), load()])
+}
 
 async function load() {
   if (!businessId.value) return
