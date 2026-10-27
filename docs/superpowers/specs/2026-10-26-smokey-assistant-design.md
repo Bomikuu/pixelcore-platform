@@ -1,7 +1,7 @@
 # Smokey business assistant design
 
 Date: 2026-10-26
-Status: approved by the user on 2026-10-26; implementation-plan review pending
+Status: implemented natively on 2026-10-27 after user approval; runtime activation requires deployment configuration
 
 ## Purpose and agreed requirements
 
@@ -278,5 +278,7 @@ asset packaging must be verified when a build is explicitly authorized.
 
 ## Review checkpoint
 
-The user approved this written spec on 2026-10-26. The implementation plan is the
-next review artifact; product code has not been changed for this design.
+The user approved the written spec and then selected native implementation.
+Implementation and permitted verification are complete. See
+`docs/smokey-assistant-verification.md` for actual results and verification limits,
+and `docs/smokey-assistant.md` for runtime activation requirements.

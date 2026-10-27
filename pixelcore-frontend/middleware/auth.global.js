@@ -1,27 +1,46 @@
-import { accountHome } from '@/utils/accountHome'
+import { accountHome } from "@/utils/accountHome";
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (import.meta.server) return
-  const auth = useAuthStore()
-  await auth.restoreSession()
+  if (import.meta.server) return;
+  const auth = useAuthStore();
+  await auth.restoreSession();
 
-  const protectedRoutes = ['/workspace', '/settings', '/employee', '/onboarding', '/accept-invitation']
-  const requiresAuth = protectedRoutes.some((path) => to.path === path || to.path.startsWith(`${path}/`))
+  const protectedRoutes = [
+    "/workspace",
+    "/settings",
+    "/employee",
+    "/rider",
+    "/onboarding",
+    "/accept-invitation",
+  ];
+  const requiresAuth = protectedRoutes.some(
+    (path) => to.path === path || to.path.startsWith(`${path}/`),
+  );
 
   if (requiresAuth && !auth.isAuthenticated) {
-    return navigateTo(`/login?next=${encodeURIComponent(to.fullPath)}`)
+    return navigateTo(`/login?next=${encodeURIComponent(to.fullPath)}`);
   }
   if (
     auth.isAuthenticated &&
-    accountHome(auth.user) === '/employee' &&
-    (to.path === '/workspace' || to.path.startsWith('/workspace/') || to.path === '/settings' || to.path.startsWith('/settings/'))
+    ["/employee", "/rider/deliveries"].includes(accountHome(auth.user)) &&
+    (to.path === "/workspace" ||
+      to.path.startsWith("/workspace/") ||
+      to.path === "/settings" ||
+      to.path.startsWith("/settings/"))
   ) {
-    return navigateTo('/employee')
+    return navigateTo(accountHome(auth.user));
   }
-  if (['/login', '/register', '/verify-email'].includes(to.path) && auth.isAuthenticated) {
-    return navigateTo(accountHome(auth.user))
+  if (
+    ["/login", "/register", "/verify-email"].includes(to.path) &&
+    auth.isAuthenticated
+  ) {
+    return navigateTo(accountHome(auth.user));
   }
-  if (to.path === '/onboarding' && auth.isAuthenticated && !auth.user?.needs_onboarding) {
-    return navigateTo('/workspace')
+  if (
+    to.path === "/onboarding" &&
+    auth.isAuthenticated &&
+    !auth.user?.needs_onboarding
+  ) {
+    return navigateTo(accountHome(auth.user));
   }
-})
+});

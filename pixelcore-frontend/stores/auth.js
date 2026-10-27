@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { clearRecoveryCopies } from '@sitebuilder/core'
+import { clearSmokeyConversations } from '~/utils/smokeyConversationSession'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -91,6 +92,7 @@ export const useAuthStore = defineStore('auth', {
         await refreshAccess()
         return await this.loadUser()
       } catch {
+        if (import.meta.client) clearSmokeyConversations()
         this.user = null
         this.initialized = true
         return null
@@ -106,6 +108,7 @@ export const useAuthStore = defineStore('auth', {
           credentials: 'include',
         })
       } finally {
+        if (import.meta.client) clearSmokeyConversations()
         if (import.meta.client) {
           try {
             window.dispatchEvent(new Event('sitebuilder:session-ended'))

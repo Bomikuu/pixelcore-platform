@@ -1,0 +1,15 @@
+services:
+  smokey-ui:
+    image: ${SMOKEY_UI_NODE_IMAGE:-node:24-bookworm-slim}
+    working_dir: /smokey
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev:module -- --host 0.0.0.0"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ../SmokeyChatbot/dashboard:/smokey
+      - smokey-ui-node-modules:/smokey/node_modules
+    networks:
+      - pixelcore
+
+volumes:
+  smokey-ui-node-modules:

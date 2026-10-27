@@ -1,10 +1,10 @@
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from "node:url";
 export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: "2026-07-15",
   devtools: { enabled: process.env.NODE_ENV !== "production" },
   routeRules: {
-    '/studio-connect': { ssr: false },
+    "/studio-connect": { ssr: false },
     "/workspace/**": { ssr: false },
     "/settings/**": { ssr: false },
     "/login": { ssr: false },
@@ -16,23 +16,35 @@ export default defineNuxtConfig({
     "/accept-invitation": { ssr: false },
     "/employee-onboarding": { ssr: false },
     "/employee": { ssr: false },
+    "/rider/**": { ssr: false },
     "/site/**": { ssr: true },
   },
   runtimeConfig: {
+    smokeyAssetProxyOrigin:
+      process.env.NUXT_SMOKEY_ASSET_PROXY_ORIGIN || "http://127.0.0.1",
     apiInternalBaseUrl:
       process.env.NUXT_API_INTERNAL_BASE_URL ||
       process.env.NUXT_PUBLIC_API_BASE_URL ||
       "http://localhost:8000/api/",
     public: {
-      studioOrigin: process.env.NUXT_PUBLIC_STUDIO_ORIGIN || 'http://localhost:4173',
+      smokeyUiMode:
+        process.env.NUXT_PUBLIC_SMOKEY_UI_MODE ||
+        (process.env.NODE_ENV === "production" ? "legacy" : "module"),
+      smokeyUiSource:
+        process.env.NUXT_PUBLIC_SMOKEY_UI_SOURCE ||
+        (process.env.NODE_ENV === "production" ? "release" : "development"),
+      smokeyUiManifest:
+        process.env.NUXT_PUBLIC_SMOKEY_UI_MANIFEST ||
+        "/smokey-assets/channels/stable-v1.json",
+      studioOrigin:
+        process.env.NUXT_PUBLIC_STUDIO_ORIGIN || "http://localhost:4173",
       apiBaseUrl:
         process.env.NUXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/",
       platformDomain:
         process.env.NUXT_PUBLIC_PLATFORM_DOMAIN || "pixelcore.localhost",
       googleIdentityClientId:
         process.env.NUXT_PUBLIC_GOOGLE_IDENTITY_CLIENT_ID || "",
-      mapboxAccessToken:
-        process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "",
+      mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "",
     },
   },
   app: {
@@ -57,14 +69,29 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/tailwind.css", "@sitebuilder/renderer/fonts.css"],
   modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@pinia/nuxt"],
+  colorMode: {
+    preference: "system",
+    fallback: "light",
+    classSuffix: "",
+    storage: "localStorage",
+    storageKey: "pixelcore-workspace-theme",
+  },
   vite: {
-    resolve: { dedupe: ['vue'] },
+    resolve: { dedupe: ["vue"] },
     server: {
-      fs: { allow: [fileURLToPath(new URL('./', import.meta.url)), fileURLToPath(new URL('../../website-builder/', import.meta.url))] },
-      hmr: process.env.PIXELCORE_LOCAL_DEV === "1" ? undefined : {
-        clientPort: 80,
-        protocol: "ws",
+      fs: {
+        allow: [
+          fileURLToPath(new URL("./", import.meta.url)),
+          fileURLToPath(new URL("../../website-builder/", import.meta.url)),
+        ],
       },
+      hmr:
+        process.env.PIXELCORE_LOCAL_DEV === "1"
+          ? undefined
+          : {
+              clientPort: 80,
+              protocol: "ws",
+            },
     },
   },
   shadcn: {

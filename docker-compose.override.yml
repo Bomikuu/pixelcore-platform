@@ -2,6 +2,8 @@ services:
   frontend:
     environment:
       NODE_ENV: development
+      NUXT_PUBLIC_SMOKEY_UI_MODE: ${NUXT_PUBLIC_SMOKEY_UI_MODE:-module}
+      NUXT_PUBLIC_SMOKEY_UI_SOURCE: ${NUXT_PUBLIC_SMOKEY_UI_SOURCE:-development}
 
   backend:
     environment:

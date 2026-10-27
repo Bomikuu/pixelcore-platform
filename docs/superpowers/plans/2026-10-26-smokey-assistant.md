@@ -1,5 +1,9 @@
 # Smokey Business Assistant Implementation Plan
 
+Status: implemented natively, 2026-10-27. The execution record at the end is the
+authoritative outcome; the original procedural checklists below remain the plan,
+not a claim that every command was run in precisely its proposed order.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Install Smokey into PixelCore as an optional business reporting assistant with business-owned AI connections, truthful mascot feedback, drawer/modal access, full reports and light/dark themes.
@@ -190,10 +194,33 @@ standalone themes and feedback (9); documentation/verification (10). The five re
 focus conditions have explicit tests or focused permitted checks in their owning
 tasks. Shared names, state mappings, routes and DTOs above are the source of truth.
 
-## Execution review checkpoint
+## Native execution record — 2026-10-27
 
-The written spec is approved; this plan awaits user review and selection of an
-execution method. Recommend Native execution because the package, host adapter and
-two UI implementations depend closely on the shared request/authorization contract.
-No product implementation has started. The worker must read both this plan and the
-approved spec before execution and keep task checkboxes current.
+- [x] Tasks 1–3: reusable package, encrypted connections, optional installation,
+  capability/role boundaries and all four provider adapters implemented.
+- [x] Tasks 4–6: authoritative facts, private snapshots, transactional accounting,
+  background requests, recovery/cancellation, assets and authenticated API implemented.
+- [x] Tasks 7–9: business-scoped client controller, drawer/modal, report/dashboard
+  pages, standalone white/dark/system themes and mascot feedback implemented.
+- [x] Task 10: installation/operations documentation and permitted checks completed.
+
+Actual evidence: 40 PostgreSQL backend checks, 10 frontend utility checks,
+`npm run check:ui`, Vue script compilation, standalone TypeScript checks, focused
+theme contracts, migration drift checks, Ruff and whitespace/Compose validation.
+An independent static reviewer found five issues; its follow-up scored all five
+resolved. This verdict is scoped to those findings, not browser or visual approval.
+
+Implementation adjustments: report history lives at `reports/index.vue` so Nuxt
+does not treat a non-outlet history page as the parent of report detail. Custom
+mascots are stored privately in the shared settings record; image/grid validation
+and authenticated reads avoid public media exposure. Existing workspace theme
+work changed during execution; integration follows the current shared controller
+and its actual storage key. Some API/client tests were introduced alongside code
+rather than in separately recorded red/green cycles; final behavior is verified.
+
+Product changes remain reviewable in the two feature-branch working directories,
+with pre-existing PixelCore edits preserved. No merge, push or application deployment
+was performed. Application builds, browser/visual checks, live provider calls and
+standalone test suites were not authorized/run. Runtime activation needs encryption
+configuration, migrations and worker/service reloads; it does not require another
+implementation stage. See `docs/smokey-assistant-verification.md`.
