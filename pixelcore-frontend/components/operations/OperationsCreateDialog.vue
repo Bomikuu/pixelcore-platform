@@ -1,6 +1,6 @@
 <template>
-  <Dialog :open="open" @update:open="emit('update:open', $event)">
-    <DialogContent class="flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-4xl flex-col gap-0 overflow-hidden p-0">
+  <Dialog :open="open" @update:open="handleOpenChange">
+    <DialogContent class="flex max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-4xl flex-col gap-0 overflow-hidden p-0 transition-none" @close-auto-focus="emit('closed', $event)">
       <DialogHeader class="shrink-0 border-b px-6 py-5 pr-14">
         <DialogTitle class="flex items-center gap-2">
           <component :is="dialogMeta.icon" class="h-5 w-5 text-primary" aria-hidden="true" />
@@ -9,7 +9,7 @@
         <DialogDescription>{{ dialogMeta.description }}</DialogDescription>
       </DialogHeader>
 
-      <form id="operations-create-form" class="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5" @submit.prevent="submit">
+      <form id="operations-create-form" class="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5" novalidate @submit.prevent="submit">
         <template v-if="view === 'inventory'">
           <div v-if="inventory.length" class="grid gap-2">
             <Label>Inventory action</Label>
@@ -356,7 +356,7 @@
       </form>
 
       <DialogFooter class="shrink-0 border-t bg-background px-6 py-4">
-        <Button type="button" variant="outline" @click="emit('update:open', false)">Cancel</Button>
+        <Button type="button" variant="outline" :disabled="saving" @click="emit('update:open', false)">Cancel</Button>
         <Button form="operations-create-form" type="submit" :disabled="saving || !canSubmit">
           <Loader2 v-if="saving" class="h-4 w-4 animate-spin" aria-hidden="true" />
           {{ saving ? 'Saving…' : dialogMeta.action }}
@@ -390,7 +390,7 @@ const props = defineProps({
   categories: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['update:open', 'created'])
+const emit = defineEmits(['update:open', 'created', 'closed'])
 const { apiFetch } = useApiClient()
 const saving = ref(false)
 const error = ref('')
@@ -431,7 +431,12 @@ watch(() => [props.open, props.view], ([open]) => {
   error.value = ''
 })
 
+function handleOpenChange(value) {
+  if (!saving.value) emit('update:open', value)
+}
+
 async function submit() {
+  if (saving.value || !canSubmit.value) return
   saving.value = true
   error.value = ''
   try {

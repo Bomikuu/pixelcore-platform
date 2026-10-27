@@ -11,7 +11,7 @@
 
         <nav v-if="auth.isAuthenticated && !auth.user?.needs_onboarding" aria-label="Primary navigation" class="flex items-center gap-1 sm:gap-3">
           <ButtonLink variant="outline" :to="accountHome(auth.user)">
-            {{ accountHome(auth.user) === '/employee' ? 'Employee portal' : 'Open workspace' }}
+            {{ accountHome(auth.user) === '/rider/deliveries' ? 'Rider portal' : accountHome(auth.user) === '/employee' ? 'Employee portal' : 'Open workspace' }}
           </ButtonLink>
         </nav>
 

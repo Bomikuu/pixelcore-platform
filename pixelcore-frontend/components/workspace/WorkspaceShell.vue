@@ -25,7 +25,7 @@
     >
       <div
         class="flex h-16 shrink-0 items-center justify-between border-b border-[color:var(--workspace-sidebar-border)] px-4"
-        :class="sidebarCollapsed ? 'lg:justify-center lg:px-2' : ''"
+        :class="sidebarCollapsed ? 'lg:gap-1 lg:px-2' : ''"
       >
         <NuxtLink
           to="/workspace"
@@ -35,6 +35,7 @@
         >
           <span
             class="grid h-9 w-9 shrink-0 grid-cols-2 gap-1 rounded-lg bg-white p-2"
+            :class="sidebarCollapsed ? 'lg:h-7 lg:w-7 lg:p-1.5' : ''"
             aria-hidden="true"
             ><i class="rounded-sm bg-[var(--brand-primary)]" /><i
               class="rounded-sm bg-[var(--brand-accent)]" /><i
@@ -49,6 +50,38 @@
             ></span
           >
         </NuxtLink>
+        <TooltipProvider :delay-duration="250">
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="hidden h-9 w-9 shrink-0 text-[var(--workspace-sidebar-muted)] hover:bg-[var(--workspace-sidebar-overlay)] hover:text-[var(--workspace-sidebar-foreground)] lg:inline-flex"
+                :class="sidebarCollapsed ? 'lg:h-8 lg:w-8' : ''"
+                type="button"
+                :aria-label="
+                  sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'
+                "
+                :aria-expanded="!sidebarCollapsed"
+                @click="toggleSidebar"
+              >
+                <PanelLeftOpen
+                  v-if="sidebarCollapsed"
+                  class="h-[17px] w-[17px] shrink-0"
+                  aria-hidden="true"
+                />
+                <PanelLeftClose
+                  v-else
+                  class="h-[17px] w-[17px] shrink-0"
+                  aria-hidden="true"
+                />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              {{ sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar" }}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <Button
           variant="ghost"
           class="grid h-9 w-9 place-items-center rounded-lg border border-[color:var(--workspace-sidebar-border)] text-[var(--workspace-sidebar-muted)] lg:hidden"
@@ -69,7 +102,7 @@
           :class="sidebarCollapsed ? 'lg:justify-center lg:p-2' : ''"
         >
           <div
-            class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-white text-sm font-black text-foreground"
+            class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-card text-sm font-black text-card-foreground"
           >
             <img
               v-if="business.activeBusiness?.logo"
@@ -169,35 +202,112 @@
         </section>
       </nav>
 
-      <div
+      <footer
+        aria-label="Workspace account controls"
         class="shrink-0 border-t border-[color:var(--workspace-sidebar-border)] p-3"
         :class="sidebarCollapsed ? 'lg:p-2' : ''"
       >
-        <TooltipProvider :delay-duration="250">
-          <Tooltip>
-            <TooltipTrigger as-child>
+        <div
+          class="flex min-w-0 items-center gap-2"
+          :class="sidebarCollapsed ? 'lg:flex-col' : ''"
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
               <Button
-                variant="ghost"
-                class="hidden min-h-10 w-full items-center gap-3 rounded-lg px-3 text-[13px] font-semibold text-[var(--workspace-sidebar-muted)] hover:bg-[var(--workspace-sidebar-overlay)] hover:text-[var(--workspace-sidebar-foreground)] lg:flex"
-                :class="sidebarCollapsed ? 'lg:justify-center lg:px-2' : ''"
                 type="button"
-                :aria-label="sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
-                :aria-expanded="!sidebarCollapsed"
-                @click="toggleSidebar"
+                variant="ghost"
+                class="h-12 min-w-0 flex-1 justify-start gap-3 px-2 text-[var(--workspace-sidebar-foreground)] hover:bg-[var(--workspace-sidebar-overlay)] hover:text-[var(--workspace-sidebar-foreground)]"
+                :class="
+                  sidebarCollapsed
+                    ? 'lg:h-10 lg:w-10 lg:flex-none lg:justify-center lg:px-0'
+                    : ''
+                "
+                :title="sidebarCollapsed ? userIdentity.displayName : undefined"
+                :aria-label="`Open account menu for ${userIdentity.displayName}`"
               >
-                <PanelLeftOpen v-if="sidebarCollapsed" class="h-[17px] w-[17px] shrink-0" aria-hidden="true" />
-                <PanelLeftClose v-else class="h-[17px] w-[17px] shrink-0" aria-hidden="true" />
-                <span :class="sidebarCollapsed ? 'lg:sr-only' : ''">
-                  {{ sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar" }}
+                <Avatar
+                  class="h-8 w-8 shrink-0 border border-[color:var(--workspace-sidebar-border)]"
+                  size="sm"
+                >
+                  <AvatarFallback
+                    class="bg-[var(--workspace-sidebar-overlay)] text-xs font-bold text-[var(--workspace-sidebar-foreground)]"
+                  >
+                    {{ userIdentity.initials }}
+                  </AvatarFallback>
+                </Avatar>
+                <span
+                  class="min-w-0 flex-1 text-left"
+                  :class="sidebarCollapsed ? 'lg:hidden' : ''"
+                >
+                  <span class="block truncate text-sm font-semibold">{{
+                    userIdentity.displayName
+                  }}</span>
+                  <span
+                    class="mt-0.5 block truncate text-xs font-normal text-[var(--workspace-sidebar-muted)]"
+                    >{{ userIdentity.email || "Workspace account" }}</span
+                  >
                 </span>
+                <ChevronUp
+                  class="h-4 w-4 shrink-0 text-[var(--workspace-sidebar-muted)]"
+                  :class="sidebarCollapsed ? 'lg:hidden' : ''"
+                  aria-hidden="true"
+                />
               </Button>
-            </TooltipTrigger>
-            <TooltipContent v-if="sidebarCollapsed" side="right">
-              Expand sidebar
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              side="top"
+              align="start"
+              :side-offset="8"
+              :collision-padding="12"
+              class="w-72 max-w-[calc(100vw-1.5rem)]"
+            >
+              <DropdownMenuLabel class="px-3 py-3">
+                <span class="block truncate text-sm font-bold">{{
+                  userIdentity.displayName
+                }}</span>
+                <span
+                  class="mt-1 block truncate text-xs font-normal text-muted-foreground"
+                >
+                  {{ userIdentity.email || "Signed-in workspace account" }}
+                </span>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem as-child>
+                <NuxtLink
+                  to="/settings/identity"
+                  class="cursor-pointer"
+                  @click="menuOpen = false"
+                >
+                  <Store class="h-4 w-4" aria-hidden="true" />
+                  Business identity
+                </NuxtLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem as-child>
+                <NuxtLink
+                  to="/settings/team"
+                  class="cursor-pointer"
+                  @click="menuOpen = false"
+                >
+                  <UsersRound class="h-4 w-4" aria-hidden="true" />
+                  Team & access
+                </NuxtLink>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                class="cursor-pointer text-destructive focus:text-destructive"
+                @select="signOutFromSidebar"
+              >
+                <LogOut class="h-4 w-4" aria-hidden="true" />
+                Sign out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <WorkspaceThemeToggle
+            class="text-[var(--workspace-sidebar-muted)] hover:bg-[var(--workspace-sidebar-overlay)] hover:text-[var(--workspace-sidebar-foreground)]"
+          />
+        </div>
+      </footer>
     </aside>
 
     <div class="min-w-0">
@@ -215,92 +325,75 @@
             @click="menuOpen = true"
             ><Menu class="h-5 w-5"
           /></Button>
-          <ol
-            class="flex min-w-0 items-center gap-2 text-xs font-semibold text-muted-foreground"
-            aria-label="Breadcrumb"
-          >
-            <li
-              v-for="(crumb, index) in breadcrumbs"
-              :key="`${crumb}-${index}`"
-              class="flex min-w-0 items-center gap-2"
+          <div class="min-w-0">
+            <ol
+              class="flex min-w-0 items-center gap-2 text-xs font-semibold text-muted-foreground"
+              aria-label="Breadcrumb"
             >
-              <ChevronRight
-                v-if="index"
-                class="h-3.5 w-3.5 shrink-0 text-border"
-                aria-hidden="true"
-              />
-              <span
-                class="truncate"
+              <li
+                v-for="(crumb, index) in breadcrumbs"
+                :key="`${crumb}-${index}`"
+                class="min-w-0 items-center gap-2"
                 :class="
-                  index === breadcrumbs.length - 1 ? 'text-foreground' : ''
+                  smokeyHeader && index < breadcrumbs.length - 1
+                    ? 'hidden sm:flex'
+                    : 'flex'
                 "
-                :aria-current="
-                  index === breadcrumbs.length - 1 ? 'page' : undefined
-                "
-                >{{ crumb }}</span
               >
-            </li>
-          </ol>
+                <ChevronRight
+                  v-if="index"
+                  :class="smokeyHeader ? 'hidden sm:block' : ''"
+                  class="h-3.5 w-3.5 shrink-0 text-border"
+                  aria-hidden="true"
+                />
+                <component
+                  :is="
+                    smokeyHeader && index === breadcrumbs.length - 1
+                      ? 'h1'
+                      : 'span'
+                  "
+                  class="truncate text-xs"
+                  :class="
+                    index === breadcrumbs.length - 1 ? 'text-foreground' : ''
+                  "
+                  :aria-current="
+                    index === breadcrumbs.length - 1 ? 'page' : undefined
+                  "
+                  >{{ crumb }}</component
+                >
+              </li>
+            </ol>
+            <p
+              v-if="smokeyHeader"
+              class="mt-1 hidden truncate text-xs leading-5 text-muted-foreground sm:block"
+              :title="smokeyHeader.description"
+            >
+              {{ smokeyHeader.description }}
+            </p>
+          </div>
         </div>
 
         <div class="flex shrink-0 items-center gap-1 sm:gap-2">
           <div class="hidden items-center gap-2 border-r pr-3 sm:flex">
             <Clock3 class="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <time :datetime="clock.dateTime" class="text-right tabular-nums">
-              <span class="block text-sm font-bold leading-none text-foreground">{{ clock.time }}</span>
-              <span class="mt-1 hidden text-[11px] leading-none text-muted-foreground md:block">{{ clock.date }}</span>
+              <span
+                class="block text-sm font-bold leading-none text-foreground"
+                >{{ clock.time }}</span
+              >
+              <span
+                class="mt-1 hidden text-[11px] leading-none text-muted-foreground md:block"
+                >{{ clock.date }}</span
+              >
             </time>
           </div>
 
+          <SmokeyChatToggle v-if="smokeyUiMode === 'module'" />
+          <SmokeyAssistantPanel v-else />
+          <WorkspaceSearch />
+          <WorkspaceQuickActions />
+
           <OrderNotifications />
-
-          <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-              <Button
-                type="button"
-                variant="ghost"
-                class="h-10 gap-2 px-1.5 sm:px-2"
-                :aria-label="`Open account menu for ${userIdentity.displayName}`"
-              >
-                <Avatar class="h-8 w-8 border" size="sm">
-                  <AvatarFallback class="bg-primary/10 text-xs font-bold text-primary">
-                    {{ userIdentity.initials }}
-                  </AvatarFallback>
-                </Avatar>
-                <span class="hidden max-w-32 truncate text-sm font-semibold lg:block">
-                  {{ userIdentity.displayName }}
-                </span>
-                <ChevronDown class="hidden h-4 w-4 text-muted-foreground sm:block" aria-hidden="true" />
-              </Button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent align="end" :side-offset="8" class="w-72">
-              <DropdownMenuLabel class="px-3 py-3">
-                <span class="block truncate text-sm font-bold">{{ userIdentity.displayName }}</span>
-                <span class="mt-1 block truncate text-xs font-normal text-muted-foreground">
-                  {{ userIdentity.email || "Signed-in workspace account" }}
-                </span>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem as-child>
-                <NuxtLink to="/settings/identity" class="cursor-pointer">
-                  <Store class="h-4 w-4" aria-hidden="true" />
-                  Business identity
-                </NuxtLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem as-child>
-                <NuxtLink to="/settings/team" class="cursor-pointer">
-                  <UsersRound class="h-4 w-4" aria-hidden="true" />
-                  Team & access
-                </NuxtLink>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem class="cursor-pointer text-destructive focus:text-destructive" @select="emit('sign-out')">
-                <LogOut class="h-4 w-4" aria-hidden="true" />
-                Sign out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </nav>
       <main class="min-w-0"><slot /></main>
@@ -309,12 +402,14 @@
 </template>
 
 <script setup>
+import SmokeyAssistantPanel from "~/components/smokey/SmokeyAssistantPanel.vue";
+import SmokeyChatToggle from "~/components/smokey/SmokeyChatToggle.vue";
 import {
   Activity,
   BarChart3,
   Boxes,
   CalendarDays,
-  ChevronDown,
+  ChevronUp,
   ChevronRight,
   ChevronsUpDown,
   ClipboardList,
@@ -335,6 +430,7 @@ import {
   Settings2,
   Store,
   UserRoundCog,
+  Truck,
   UsersRound,
   X,
 } from "lucide-vue-next";
@@ -353,12 +449,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { businessThemeStyle } from "@/utils/businessTheme";
 import {
   formatWorkspaceClock,
   workspaceUserPresentation,
 } from "@/utils/workspaceHeader";
 
+const smokeyUiMode = useRuntimeConfig().public.smokeyUiMode;
 const emit = defineEmits(["sign-out"]);
 const auth = useAuthStore();
 const business = useBusinessStore();
@@ -367,18 +463,14 @@ const menuOpen = ref(false);
 const sidebarCollapsed = ref(false);
 const now = ref(new Date());
 let clockTimer;
-const shellStyle = computed(() =>
-  businessThemeStyle(business.activeBusiness || {}, { workspace: true }),
-);
+const { style: shellStyle } = useWorkspaceTheme();
 const clock = computed(() =>
   formatWorkspaceClock(
     now.value,
     business.activeBusiness?.timezone || "Asia/Manila",
   ),
 );
-const userIdentity = computed(() =>
-  workspaceUserPresentation(auth.user || {}),
-);
+const userIdentity = computed(() => workspaceUserPresentation(auth.user || {}));
 
 const navigation = [
   {
@@ -391,6 +483,7 @@ const navigation = [
         match: (currentRoute) => currentRoute.path === "/workspace",
       },
       { label: "Orders", to: "/workspace/orders", icon: ClipboardList },
+      { label: "Deliveries", to: "/workspace/deliveries", icon: Truck },
       {
         label: "Product requests",
         to: "/workspace/sell/requests",
@@ -402,6 +495,7 @@ const navigation = [
     label: "Business insights",
     items: [
       { label: "Analytics", to: "/workspace/analytics", icon: BarChart3 },
+      { label: "Smokey", to: "/workspace/smokey", icon: Activity },
       { label: "Business tracker", to: "/workspace/tracker", icon: Activity },
     ],
   },
@@ -452,8 +546,9 @@ const navigation = [
         label: "Operations",
         to: "/workspace/operate",
         icon: Boxes,
-        match: (currentRoute) => currentRoute.path.startsWith("/workspace/operate")
-          && !currentRoute.path.startsWith("/workspace/operate/workforce"),
+        match: (currentRoute) =>
+          currentRoute.path.startsWith("/workspace/operate") &&
+          !currentRoute.path.startsWith("/workspace/operate/workforce"),
       },
       {
         label: "Workforce",
@@ -490,10 +585,52 @@ const activeNavigation = computed(() =>
     )
     .find((item) => isActive(item)),
 );
+const smokeyHeader = computed(() => {
+  if (
+    smokeyUiMode !== "module" ||
+    !/^\/workspace\/smokey(?:\/|$)/.test(route.path)
+  )
+    return null;
+  const section = route.path.split("/")[3] || "overview";
+  const entries = {
+    overview: {
+      title: "Overview",
+      description: "Your assistant, connections, and usage at a glance.",
+    },
+    assistant: {
+      title: "Ask Smokey",
+      description: "Useful answers from your authorized business records.",
+    },
+    connections: {
+      title: "AI connections",
+      description: "Choose the AI behind your business reports.",
+    },
+    usage: {
+      title: "Usage & limits",
+      description:
+        "Understand AI activity and stay within your application limits.",
+    },
+    reports: {
+      title: "Reports",
+      description: "Revisit the answers saved by your business.",
+    },
+    appearance: {
+      title: "Appearance",
+      description: "Make your assistant feel at home.",
+    },
+  };
+  return entries[section] || entries.overview;
+});
 const breadcrumbs = computed(() => {
   if (route.path === "/workspace") return ["Live dashboard"];
   const item = activeNavigation.value;
   const crumbs = item ? [item.group, item.label] : ["PixelCore"];
+  if (smokeyHeader.value)
+    crumbs.push(
+      route.path.startsWith("/workspace/smokey/reports/")
+        ? "Saved report"
+        : smokeyHeader.value.title,
+    );
   if (route.path === "/workspace/sell/products/new") crumbs.push("Add product");
   if (route.path.startsWith("/workspace/sell/catalog/"))
     crumbs.push("Edit product");
@@ -503,7 +640,9 @@ const breadcrumbs = computed(() => {
     crumbs.push("Edit promotion");
   if (route.path === "/workspace/operate/workforce/employees/new")
     crumbs.push("Create employee");
-  else if (/^\/workspace\/operate\/workforce\/employees\/[^/]+$/.test(route.path))
+  else if (
+    /^\/workspace\/operate\/workforce\/employees\/[^/]+$/.test(route.path)
+  )
     crumbs.push("Employee profile");
   return crumbs;
 });
@@ -559,6 +698,10 @@ function selectBusiness(event) {
     (item) => item.public_id === event.target.value,
   );
   if (selected) business.setActiveBusiness(selected);
+}
+function signOutFromSidebar() {
+  menuOpen.value = false;
+  emit("sign-out");
 }
 function toggleSidebar() {
   sidebarCollapsed.value = !sidebarCollapsed.value;

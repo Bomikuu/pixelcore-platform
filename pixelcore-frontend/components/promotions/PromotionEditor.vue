@@ -2,7 +2,7 @@
   <section class="workspace-page space-y-5">
     <header class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between"><div><NuxtLink to="/workspace/sell/promotions" class="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground"><ArrowLeft class="h-4 w-4" /> Back to promotions</NuxtLink><h1 class="mt-4 text-3xl font-extrabold tracking-[-.025em]">{{ promotionId ? 'Edit promotion' : 'Create a promotion' }}</h1><p class="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">Define the customer value, schedule, activation method, and exact catalog scope in one campaign workspace.</p></div><Button class="self-start xl:self-auto" type="button" :disabled="saving || loading || Boolean(loadError)" @click="save">{{ saving ? 'Saving…' : promotionId ? 'Save changes' : 'Create promotion' }}</Button></header>
 
-    <StatePanel v-if="loading" kind="loading" title="Loading promotion" />
+    <StatePanel v-if="loading" kind="loading" title="Loading promotion" message="Loading promotion details and catalog choices." />
     <StatePanel v-else-if="loadError" kind="error" title="Promotion unavailable" :message="loadError"><Button type="button" variant="outline" @click="load">Retry</Button></StatePanel>
     <form v-else class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]" @submit.prevent="save">
       <div class="space-y-6">
