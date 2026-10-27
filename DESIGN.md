@@ -18,6 +18,18 @@ PixelCore is the neutral operating layer beneath a business's own identity. The 
 - Component boundary: `pixelcore-frontend/components/ui` is the canonical Shadcn layer. Application pages and feature components must consume its `Button`, `Input`, `Textarea`, `Checkbox`, `Select`, `Dialog`, `Table`, `Tabs`, `Toast`, and related primitives instead of styling raw interactive HTML independently.
 - Native adapters: browser-specific behavior that cannot be represented safely by a Radix primitive—array-valued checkboxes, boolean radios, and select controls that require the original DOM change event—must use the thin adapters in `components/ui/native-*`. Raw interactive tags are allowed only inside `components/ui`.
 - Enforcement: run `npm run check:ui` for frontend work. New raw form, action, or table primitives outside `components/ui` fail this check.
+- Workspace appearance: the sidebar footer's moon/sun button follows the device theme until
+  explicitly changed, then remembers the user's light/dark choice in
+  `pixelcore-workspace-theme` local storage. Nuxt color-mode (installed by Shadcn)
+  owns persistence, device detection, and the root class. `useWorkspaceTheme` adapts
+  that owner into shared styles; `workspace-theme.client` applies root tokens and
+  native color-scheme for
+  `/workspace` and `/settings`, including portalled forms, menus, and toasts.
+  `businessThemeStyle` owns light/dark semantic token mapping. Dark surfaces use
+  deep green neutrals, light text, and a lighter accent retaining the business hue.
+  Search and Quick actions consume the same mapping. Public brand previews keep
+  their explicit light palette, and leaving administrative routes restores light
+  root tokens without discarding the saved workspace choice.
 
 ## Centralized business identity
 
@@ -34,6 +46,19 @@ PixelCore is the neutral operating layer beneath a business's own identity. The 
 - PixelCore generalizes the vocabulary and records; it does not discard the established admin workflows or reduce them to generic module links.
 - Navigation has one hierarchy. Do not repeat the same destinations as both shell tabs and page tabs.
 - Dashboard and analytics use actual orders, payments, bookings, inventory, and expense records. Empty periods still show truthful axes and zero-state context; never manufacture demo performance.
+- Analytics uses six individually bordered summary tiles, paired sales/orders and category charts,
+  and compact product/status/recent-order panels. All period aggregates come from the report API,
+  not a paginated order sample. Category charts use item totals and current catalog categories;
+  their basis is visible because these can differ from order grand totals.
+- Summary tiles expose explanations on hover and keyboard focus. Hover elevation moves at most
+  3px over 200ms; reduced-motion users receive border/focus feedback without movement. Actual
+  daily values may appear as sparklines; comparison percentages require real comparison data.
+- Analytics date ranges, sections, and chart intervals are URL-backed. The shared Popover hosts
+  existing native date Inputs (browser-owned calendar); authored interval selection uses Select.
+  Existing runtime CSS/Tailwind tokens own brand, surface, type, and focus colors.
+- Analytics summary tiles follow the selected section: business results for Overview,
+  order/payment states for Sales, complete-period item performance for Products, and
+  period expenses/bookings plus clearly labeled current stock/invoices for Operations.
 - The sidebar leads with Live dashboard, Orders, and Product requests. Analytics and business tracking are separate from these live queues; configuration and catalog destinations follow below.
 - The live sales desk shows period-based paid order value alongside all-time attention queues. Its series is aggregated on the server in the business timezone, not calculated from a paginated order list. Fully paid order value is labeled distinctly from net revenue or cash receipts.
 - Order and product-request desks use server pagination, URL-backed queues and search, readable compact rows that stack on mobile, and explicit review actions. Thirty-second polling pauses while a review is open or the tab is hidden. Overdue rentals carry an explicit text label; contact, agreed extension, and physical return are separate actions.
@@ -45,8 +70,24 @@ PixelCore is the neutral operating layer beneath a business's own identity. The 
 
 - `Sell → POS` is configuration only: administrators create devices, issue one-time codes, link customer displays, select promotional content, and launch each dedicated screen.
 - Counter, customer, fulfillment, and delivery work are separate full-screen surfaces. A user should never need to switch roles inside one crowded terminal.
+- Device setup uses the shared `DevicePairingPanel`: a pale illustrated introduction
+  beside a white pairing form, eight segmented code cells, a teal pairing action, and
+  an inline security note. Fulfillment, POS, customer display, and attendance each use
+  their own illustration from `public/images/pairing`. Narrow screens stack the
+  introduction above the form, keep the illustration compact, and prioritize code entry.
 - Pairing codes use eight individually focused character cells with complete keyboard, paste, and error behavior.
 - Counter screens prioritize product imagery, rapid search and category selection, the server-priced basket, payment, and receipt completion.
+- The active counter follows the compact illustrated reference with a photo-led catalog,
+  a persistent current-order pane, and clear held-sale, receipt, and payment actions.
+  Grid/list preference belongs to the device; Quick items uses only configured favorites.
+- Scanning accepts product SKU/metadata barcode and active variant SKU/barcode. A unique
+  variant scan selects that variant; required product options still open the configurator.
+  Unknown or ambiguous codes show feedback instead of choosing an arbitrary product.
+  Camera access begins only after opening the scanner and stops on close, hiding the tab,
+  or leaving the counter. Keyboard readers never capture text from other inputs or dialogs.
+- Cart additions merge only identical, unannotated product/variant/option combinations.
+  Cart editing uses a separate copy of the last confirmed server snapshot so rejected
+  updates restore confirmed quantities. Offline counters do not accept new sales or payment.
 - Counter screens expose distinct New sale and Deliveries modes. Delivery mode may collect an outstanding in-person payment but remains read-only for fulfillment progress.
 - Each counter can use standard controls or strict register controls. Strict controls require a short-lived owner, admin, or manager PIN approval before item reductions, voids, or promotions, and every approval is audited.
 - Customer screens prioritize business promotions and the live order from one explicitly linked counter.
@@ -81,11 +122,58 @@ PixelCore is the neutral operating layer beneath a business's own identity. The 
   time, and instructions share the supporting pane; the keypad has a compact maximum
   width and code cells can shrink. Panes stack on mobile without horizontal scrolling.
   The live clock includes seconds and updates every second.
+- The paired attendance screen follows the illustrated reference: a pale supporting
+  pane, a teal employee-and-terminal illustration, and large touch-friendly code cells
+  and keypad. After successful clock-in or clock-out, the task pane briefly shows only
+  the employee photo (or initials), name, job title, action, and business-local time.
+  After five seconds it clears that profile and restores empty code entry with keyboard
+  focus. Disconnecting or leaving cancels the confirmation; failures retain code entry.
+- A successful attendance action draws the checkmark once and plays a quiet two-note
+  chime. Reduced-motion users receive the static checkmark. The terminal's sound toggle
+  remembers the device preference; blocked or unavailable audio never affects recording.
 - Application UI uses the canonical Shadcn layer with Tailwind utilities and Lucide icons.
   Keep icon-label spacing explicit and source files formatted as readable multiline code;
   do not introduce minified feature files or hand-authored SVG icons.
 
 ## Interaction rules
+
+The sidebar collapse/expand icon sits beside the PixelCore title, with an accessible
+label and tooltip in both states. The collapsed rail keeps the logo and expand icon
+in its top row; mobile navigation retains its close control.
+
+The left navigation footer keeps the account menu and theme toggle outside the scrolling
+module list. Account details are visible in the expanded sidebar and mobile drawer;
+the collapsed desktop rail retains accessible avatar and theme icon controls. The account
+menu opens upward and closes the mobile drawer when navigating or signing out.
+
+The workspace header places an icon-only Search button immediately before a Quick actions
+button. Quick actions has no search field and opens directly to grouped shortcuts for
+eight frequent create flows: product/service, promotion, expense, invoice, quotation, purchase order,
+supplier, and employee. Actions use only the active membership's permitted role and
+enabled modules. Product, promotion, and employee creation open their canonical create
+pages directly; operations reuse OperationsCreateDialog over the current page. Shortcut
+buttons use Tab/Enter navigation, Escape, and trigger focus restoration. Reference choices load
+on demand; changing business or role cancels preparation. Submissions retain their captured business
+identity. Analytics and operations refresh after a successful same-business quick create.
+
+The separate Search dialog finds existing products, promotions, categories, and employees.
+Result rows include real product covers, category covers, and employee profile photos.
+Promotions and records without usable images use type icons; employees use initials.
+Images use the shared Avatar primitives and retain a fallback when loading fails.
+Initially show up to three recently updated records per type;
+typed searches return up to five matches per type, with explicit type filters. Match
+names, product SKUs/barcodes, promotion codes, and employee codes/job titles. Employee
+results follow the owner/admin permission of their profile destination. Search uses a
+300ms debounce, cancels superseded requests, and pauses during IME composition. The
+query is transient modal state and is not persisted to the URL or browser storage.
+Search focus uses the requested teal underline, with reduced-motion support.
+
+The `/login` surface is a full-height split composition with a warm paper background,
+Manrope headings, a focused left-side form, and a shop-owner illustration on the right.
+The form retains credential and Google sign-in, recovery and registration links, and
+the existing business-aware destination. Passwords begin masked with an accessible
+visibility toggle. Activity cards over the illustration are explicitly sample data;
+the illustration pane is hidden on narrow screens to prioritize signing in.
 
 1. Always show which business context is active before presenting business-scoped actions.
 2. Identity forms expose real persisted values and a live preview.
@@ -208,3 +296,9 @@ PixelCore is the neutral operating layer beneath a business's own identity. The 
 - Business-provided text is rendered as text. The only HTML exception is the sanitized, sandboxed identity customization described above.
 - API mutations reliably refresh the active identity.
 - Restaurant terminology is allowed inside the restaurant preset and restaurant-specific templates, but never as the global platform vocabulary.
+
+## Delivery tracking surfaces
+
+- Delivery tracking extends the existing operational workspace: a compact owner list beside a shared map/detail panel, a focused rider portal, and a tenant-branded customer order view. Reuse semantic runtime tokens and shared Shadcn controls; no new visual token system is introduced.
+- Mapbox markers update in the same map instance every 30 seconds. Textual status, address, rider and last-update information remain usable when the map or GPS is unavailable. Stale positions are explicitly labeled.
+- Owners manage rider access and assignments; independent riders receive delivery-only access. Customers see only their own delivery. The workflow and permission contract is maintained in `docs/delivery-tracking.md`.

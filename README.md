@@ -283,3 +283,8 @@ Open **Workspace → Site → Visual studio**, a page editor's **Visual studio**
 Guest review links show an immutable saved revision and data snapshot. Reviewers enter a name to pin comments and reply; account holders with management access can resolve threads. Expired/revoked links and withdrawn assets are rejected.
 
 The shared React adapter is ready for a later Medframe rollout; this pass activates PixelCore only. Free-form layout remains experimental and disabled pending the planned browser performance checks. Automated checks are the default; no builds or visual inspections should be run without an explicit request.
+
+## Optional Smokey assistant
+
+See [Smokey setup and usage](docs/smokey-assistant.md) for business-owned AI
+connections, reporting, mascot feedback, usage limits and module installation.

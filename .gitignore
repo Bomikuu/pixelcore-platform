@@ -16,3 +16,4 @@ output/
 tmp/
 .impeccable/review/
 graphify-out/
+.playwright-cli/
