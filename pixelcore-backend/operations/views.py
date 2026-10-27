@@ -2,6 +2,7 @@ import secrets
 from datetime import date, timedelta
 from decimal import Decimal
 from io import BytesIO
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from django.db.models import Count, F, Q, Sum
 from django.db import transaction
@@ -19,6 +20,7 @@ from businesses.api import BusinessScopedModelViewSet, BusinessScopedReadOnlyVie
 from businesses.models import Business
 from businesses.views import member_business
 from commerce.models import OrderItem
+from .analytics import report_analytics
 from .models import (
     Expense, ExpenseCategory, InventoryBalance, Invoice, PaymentAllocation, PurchaseOrder, Quotation,
     StockMovement, Supplier, SupplierProduct,
@@ -288,13 +290,22 @@ class BusinessReportView(APIView):
     def get(self, request, public_id):
         business = member_business(request.user, public_id)
         try:
+            business_timezone = ZoneInfo(business.timezone)
+        except (ZoneInfoNotFoundError, ValueError):
+            business_timezone = timezone.get_default_timezone()
+        with timezone.override(business_timezone):
+            return self.build_report(request, business)
+
+    def build_report(self, request, business):
+        try:
             date_from = date.fromisoformat(request.query_params.get("date_from", str(timezone.localdate().replace(day=1))))
             date_to = date.fromisoformat(request.query_params.get("date_to", str(timezone.localdate())))
         except ValueError:
             return Response({"error": {"code": "VALIDATION_ERROR", "message": "Use ISO dates for the report range.", "details": {}}}, status=400)
         if date_to < date_from or (date_to - date_from).days > 366:
             return Response({"error": {"code": "VALIDATION_ERROR", "message": "Choose a valid report range of up to 366 days.", "details": {}}}, status=400)
-        orders = business.orders.filter(placed_at__date__range=(date_from, date_to)).exclude(status="cancelled")
+        all_orders = business.orders.filter(placed_at__date__range=(date_from, date_to))
+        orders = all_orders.exclude(status="cancelled")
         sales = orders.aggregate(value=Sum("grand_total"))["value"] or Decimal("0")
         order_items = OrderItem.objects.filter(order__in=orders)
         cost_of_goods = sum(Decimal(str(item.offering_snapshot.get("unit_cost", "0"))) * item.quantity for item in order_items)
@@ -321,8 +332,8 @@ class BusinessReportView(APIView):
             for line in purchase_order.lines.all()
         )
         sales_by_date = {
-            row["placed_at__date"]: row["value"] or Decimal("0")
-            for row in orders.values("placed_at__date").annotate(value=Sum("grand_total"))
+            row["placed_at__date"]: row
+            for row in orders.values("placed_at__date").annotate(value=Sum("grand_total"), count=Count("id"))
         }
         expenses_by_date = {
             row["incurred_at"]: row["value"] or Decimal("0")
@@ -333,7 +344,8 @@ class BusinessReportView(APIView):
         while current_date <= date_to:
             daily_activity.append({
                 "date": current_date,
-                "sales": sales_by_date.get(current_date, Decimal("0")),
+                "sales": sales_by_date.get(current_date, {}).get("value", Decimal("0")),
+                "orders": sales_by_date.get(current_date, {}).get("count", 0),
                 "expenses": expenses_by_date.get(current_date, Decimal("0")),
             })
             current_date += timedelta(days=1)
@@ -345,6 +357,7 @@ class BusinessReportView(APIView):
         return Response({
             "range": {"date_from": date_from, "date_to": date_to},
             "currency": business.currency,
+            "timezone": timezone.get_current_timezone_name(),
             "sales": sales,
             "orders": {"total": orders.count(), "paid": orders.filter(payment_status="paid").count()},
             "bookings": {"total": business.bookings.filter(starts_at__date__range=(date_from, date_to)).count(), "confirmed": business.bookings.filter(starts_at__date__range=(date_from, date_to), status="confirmed").count()},
@@ -376,6 +389,7 @@ class BusinessReportView(APIView):
             },
             "daily_activity": daily_activity,
             "expense_breakdown": expense_breakdown,
+            "analytics": report_analytics(all_orders, order_items),
             "gross_profit": gross_profit,
             "net_operating_result": gross_profit - expense_total,
             "basis": "Actual recorded transactions only; no forecast values are included.",
