@@ -1,6 +1,6 @@
 # PixelMotion unified creative editor — design specification
 
-Date: 2026-10-28, Asia/Manila. Status: **written specification for user review**. The user approved the proposed architecture with “PROCEED”; this specification has not yet been reviewed or approved. No product repository, application code, dependency installation, GitHub publication, or deployment is included in this stage.
+Date: 2026-10-28, Asia/Manila. Status: **approved specification; implementation plan prepared for review**. The user approved the architecture with “PROCEED”, then approved this written specification by requesting implementation. No product repository, application code, dependency installation, GitHub publication, or deployment has occurred during specification/planning.
 
 ## 1. Product and first-release outcome
 
@@ -8,7 +8,7 @@ Date: 2026-10-28, Asia/Manila. Status: **written specification for user review**
 
 The first release is a single-user, local-first application with a browser studio and supervised local media workers. The standalone implementation destination is `/home/micxsz/projects/pixelmotion`. PixelCore remains a separate application. Current planning files are held in PixelCore and must travel into the new repository at implementation.
 
-A usable release must create an editable project from generated or uploaded media; let the creator trim, split and reorder footage, correct captions, set audio levels and add motion presets; save/reopen the project; and export the accepted edits together. Opening two unrelated upstream interfaces or importing only a flattened MP4 does not satisfy this outcome.
+A usable release must create an editable project from generated or uploaded media; let the creator trim, split and reorder footage, correct captions, set audio levels and add motion presets; save/reopen the project; and export the accepted edits together. Opening two unrelated upstream interfaces or importing only a flattened MP4 does not satisfy this outcome. A newly created empty project is a valid draft but cannot preview/export before it has a valid nonempty timeline.
 
 The first release supports projects up to 10 minutes and 100 video clips, with portrait 1080×1920, landscape 1920×1080 and square 1080×1080 canvases. Export rates are 30 or 60 fps, default 30. Original source files and their frame-rate metadata are preserved. These are proposed first-release bounds, not limitations claimed for the upstream projects.
 
@@ -51,7 +51,7 @@ First-release generated compositions are trusted, application-authored output wi
 
 ### Connected generation
 
-The creator provides a script or explicitly configures a script-generation provider, chooses Pexels footage, and chooses Edge TTS or supplied narration. Captions use available narration timing or an imported SRT; captions can also be disabled. Present the selected remote services before starting. Never infer that a service is offline merely because it needs no API key.
+The creator provides a script or explicitly configures a script-generation provider, chooses Pexels footage, and chooses Edge TTS or supplied narration. For a supplied script, require search keywords unless an explicitly selected LLM will generate them; do not silently invoke MoneyPrinter's default provider for terms. Captions use available narration timing or an imported SRT; captions can also be disabled. Present the selected remote services before starting. Never infer that a service is offline merely because it needs no API key.
 
 Invoke MoneyPrinter CLI with `stop_at="materials"`, a job-specific `MPT_HOME`, `material_directory="task"`, and publishing disabled. Capture actual script, narration, subtitle and material artifacts before final assembly. Use the supplied narration path when present; never assume the audio filename is `audio.mp3`.
 
@@ -164,7 +164,7 @@ Follow the user's verification policy: automated checks by default; no routine f
 
 Current evidence remains source analysis plus Herk's 11 passing existing unit tests. FFmpeg/FFprobe were unavailable on PATH during analysis; a later runtime preflight must explain missing tools and use an explicit documented setup path. No render, connected-provider run or browser inspection has verified the proposed integration yet.
 
-After written-spec approval, the implementation plan should organize this one product into independently testable milestones: owned project/revisions and vendor provenance; generation-to-timeline adapters; editing/cleanup and deterministic composition; integrated studio/export acceptance. These are design boundaries, not an implementation plan or authorization to scaffold now.
+The [implementation plan](../plans/2026-10-28-pixelmotion-implementation.md) organizes this product into independently testable milestones: owned project/revisions and vendor provenance; generation-to-timeline adapters; editing/cleanup and deterministic composition; integrated studio/export acceptance. The plan still requires review before scaffolding.
 
 ## 13. Review record
 
@@ -172,4 +172,5 @@ After written-spec approval, the implementation plan should organize this one pr
 - User choice: prioritize one generate-then-refine workflow.
 - User approval: proceed with the proposed standalone, local-first studio, pinned engines and shared editable project architecture.
 - Decisions proposed by this written specification: exact initial feature bounds, React/FastAPI shell, offline/connected creation contracts, native motion starter presets, canonical clock, job/revision semantics and acceptance gates.
-- Next required review: user review of this document before writing the implementation plan. No product implementation or remote publication has occurred.
+- Written-spec approval: user requested implementation after the written-spec review handoff. Planning clarifications explicitly cover empty drafts and the upstream keyword-generation seam.
+- Next required review: the implementation plan and execution method. No product implementation or remote publication has occurred.

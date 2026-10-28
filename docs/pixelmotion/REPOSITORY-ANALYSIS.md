@@ -1,6 +1,6 @@
 # PixelMotion repository analysis and merge recommendation
 
-Prepared 2026-10-28, Asia/Manila. This is the source-backed analysis behind the architecture the user subsequently approved with “PROCEED”. The [formal specification](../superpowers/specs/2026-10-28-pixelmotion-design.md) is now prepared for review. No PixelMotion application, standalone repository, GitHub repository, or deployment has been created. PixelCore application code is unchanged.
+Prepared 2026-10-28, Asia/Manila. This is the source-backed analysis behind the architecture the user subsequently approved with “PROCEED”. The [formal specification](../superpowers/specs/2026-10-28-pixelmotion-design.md) is approved; the [implementation plan](../superpowers/plans/2026-10-28-pixelmotion-implementation.md) is prepared for review. No PixelMotion application, standalone repository, GitHub repository, or deployment has been created. PixelCore application code is unchanged.
 
 ## Intended product
 
@@ -8,7 +8,7 @@ Prepared 2026-10-28, Asia/Manila. This is the source-backed analysis behind the 
 
 The user selected **generate a video, then refine it with editing and motion graphics** as the first usable version's priority. Success means that generated footage, narration, captions, and motion remain editable together; saving and reopening a project must preserve those editing decisions.
 
-The approved architecture uses a separate, local-first repository at `/home/micxsz/projects/pixelmotion`, with a browser studio and local media workers. A hosted multi-user service is a later deployment decision. The repository has not yet been created, and the written specification still requires review.
+The approved architecture uses a separate, local-first repository at `/home/micxsz/projects/pixelmotion`, with a browser studio and local media workers. A hosted multi-user service is a later deployment decision. The repository has not yet been created; implementation-plan review is the current handoff.
 
 ## Audited sources
 
@@ -160,4 +160,4 @@ Application tests and schema/adapter checks should be scoped to implementation c
 
 The user selected the product workflow and approved the recommended standalone, local-first studio with curated pinned engines and a shared editable project format.
 
-The [formal design specification](../superpowers/specs/2026-10-28-pixelmotion-design.md) turns that approval into a concrete reviewable contract. Review it before writing the implementation plan and scaffolding the product, as required by the active brainstorming skill. The merger has not been implemented.
+The approved [formal design specification](../superpowers/specs/2026-10-28-pixelmotion-design.md) is the product contract. Review the [implementation plan](../superpowers/plans/2026-10-28-pixelmotion-implementation.md) and select its execution method before scaffolding, as required by the active brainstorming/writing-plans workflow. The merger has not been implemented.
